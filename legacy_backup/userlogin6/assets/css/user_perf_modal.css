@@ -1,0 +1,526 @@
+@media (max-width: 415px) {
+  .dashboard-card.next-game-card .perf-badge {
+    margin-top: 32px !important;
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+  }
+  .dashboard-card.next-game-card .perf-badge .badge-left,
+  .dashboard-card.next-game-card .perf-badge .badge-mid,
+  .dashboard-card.next-game-card .perf-badge .badge-right {
+    font-size: 0.5rem !important;
+    line-height: 1.1 !important;
+  }
+}
+/* assets/css/user_perf_modal.css
+   Refined professional layout — fluid charts, balanced columns, and perfect responsiveness.
+   Scoped only to .upm-modal__dialog.
+*/
+
+.upm-modal, .upm-modal * { box-sizing: border-box; }
+
+/* Overlay */
+.upm-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 22, 28, 0.34);
+  z-index: 12000;
+  padding: 28px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Dialog container */
+.upm-modal__dialog {
+  --bg-top: #f3fbfc;
+  --bg-bottom: #eef8fb;
+  --primary: #2b7cff;
+  --accent: #f7b500;
+  --muted: #7b9498;
+  --text: #0e3b45;
+  --panel: rgba(255, 255, 255, 0.98);
+
+  width: 100%;
+  max-width: 1250px;
+  max-height: calc(100vh - 56px);
+  overflow: auto;
+  background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  border-radius: 16px;
+  box-shadow: 0 32px 80px rgba(8, 36, 44, 0.28);
+  padding: 20px 24px;
+  border: 1px solid rgba(18, 78, 90, 0.05);
+  font-family: "Lexend Deca", sans-serif;
+  color: var(--text);
+}
+
+/* Close */
+.upm-close {
+  width: 100%;
+  text-align: right;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Header */
+.upm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.upm-title { margin: 0; font-size: 20px; font-weight: 700; }
+.upm-sub { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+
+/* Controls */
+.upm-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.upm-select, .upm-date {
+  min-width: 150px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 40, 46, 0.08);
+  background: #fff;
+  font-size: 14px;
+  color: var(--text);
+  box-shadow: 0 6px 16px rgba(16, 50, 56, 0.05);
+}
+.upm-btn {
+  color: #1a73e8;
+  border:none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Cards section */
+.upm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+.upm-card {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(6, 40, 48, 0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.upm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(6, 40, 48, 0.08);
+}
+.upm-card .count { font-size: 20px; font-weight: 700; }
+.upm-card .label { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+/* Charts section */
+.upm-charts {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* Chart panels */
+.upm-chart-panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(8, 32, 36, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  min-height: 360px;
+}
+.upm-chart-panel canvas {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16/9;
+  display: block;
+}
+/* Right panel canvas (donut chart) should take full available height - override aspect-ratio */
+.upm-chart-panel--right canvas {
+  aspect-ratio: auto !important;
+  flex: 1;
+  min-height: 300px;
+  max-height: 100%;
+  height: 100% !important;
+}
+
+/* Donut (right chart) center alignment */
+.upm-chart-panel--right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Chart info box - completely hidden */
+.upm-click-info {
+  display: none !important;
+}
+.upm-click-info .big { font-size: 24px; font-weight: 700; color: var(--primary); }
+.upm-click-info .muted { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* Footer */
+.upm-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(10, 40, 46, 0.05);
+}
+.upm-note { color: var(--muted); font-size: 13px; }
+
+/* Responsive (tablet) */
+@media (max-width: 1024px) {
+  .upm-charts { grid-template-columns: 1fr; }
+  .upm-chart-panel { min-height: 300px; }
+  .upm-chart-panel canvas { aspect-ratio: auto; height: 280px !important; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .upm-modal { padding: 14px; }
+  .upm-modal__dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .upm-cards { grid-template-columns: 1fr 1fr; }
+  .upm-chart-panel { min-height: 220px; padding: 12px; }
+  .upm-chart-panel canvas { height: 200px !important; }
+}
+
+/*this is user profile status Start*/
+/* PERF PROFILE BORDER STYLES - isolated and high specificity */
+#borderColorChange.dashboard-card.next-game-card {
+  transition: border-color .28s ease, box-shadow .28s ease, transform .12s ease;
+  border: 3px solid transparent; /* default */
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Stronger selectors to beat other rules that might override */
+/* PERF PROFILE BORDER STYLES - ID-specific (replace older div.dashboard-card rules) */
+#borderColorChange.dashboard-card.next-game-card {
+  transition: border-color .28s ease, box-shadow .28s ease, transform .12s ease;
+  border: 3px solid transparent; /* default (no visible border) */
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Dark Mode Override directly in specific file */
+/* Dark Mode Override - Ultra Specific to beat status variants */
+html[data-theme="dark"] body #borderColorChange.dashboard-card.next-game-card,
+html[data-theme="dark"] body #borderColorChange.dashboard-card.next-game-card.border-low,
+html[data-theme="dark"] body #borderColorChange.dashboard-card.next-game-card.border-medium,
+html[data-theme="dark"] body #borderColorChange.dashboard-card.next-game-card.border-high,
+html[data-theme="dark"] body #borderColorChange.dashboard-card.next-game-card.border-dangerous {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+/* Status variants (explicit full-border + box-shadow) */
+#borderColorChange.dashboard-card.next-game-card.border-low {
+  border: 3px solid #e63946 !important; /* red */
+  box-shadow: 0 10px 30px rgba(230,57,70,0.10) !important;
+}
+
+#borderColorChange.dashboard-card.next-game-card.border-medium {
+  border: 3px solid #f9c74f !important; /* yellow/orange */
+  box-shadow: 0 10px 30px rgba(249,199,79,0.10) !important;
+}
+
+#borderColorChange.dashboard-card.next-game-card.border-high {
+  border: 3px solid #43aa8b !important; /* green */
+  box-shadow: 0 10px 30px rgba(67,170,139,0.10) !important;
+}
+
+/* dangerous: keep a visible border (red) and add dashed outline */
+#borderColorChange.dashboard-card.next-game-card.border-dangerous {
+  border: 3px solid #e63946 !important;
+  outline: 2px dashed rgba(230,57,70,0.12) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* small badge (kept as-is) */
+/* ===== Responsive centered perf-badge (replace existing .perf-badge rules) ===== */
+
+.dashboard-card.next-game-card {
+  position: relative; /* ensure badge positions relative to this card */
+  box-sizing: border-box;
+  overflow: visible; /* Allow badge to extend beyond card */
+}
+
+/* Hide card border where badge overlaps */
+.dashboard-card.next-game-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 520px); /* Match badge max-width */
+  min-width: 120px; /* Match badge min-width */
+  height: 10px;
+  background: inherit; /* Match card background */
+  z-index: 14; /* Just below badge (15) but above card border */
+  border-radius: 8px 8px 0 0;
+}
+
+/* Default: centered-top floating badge */
+.dashboard-card.next-game-card .perf-badge {
+  position: absolute;
+  top: -6px;  /* CHANGED: from -10px to -6px - much closer to card */
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* CENTER THE CONTENT */
+  gap: 6px;  /* CHANGED: from 8px to 6px - even tighter spacing */
+
+  /* flexible sizing */
+  min-width: 120px;
+  max-width: min(92%, 520px);   /* never exceed card width or huge desktop value */
+  width: auto;
+  box-sizing: border-box;
+
+  padding: 3px 10px;  /* CHANGED: from 5px 12px to 3px 10px - minimal height */
+  background: #fff;
+  color: #0e3b45;
+  border-radius: 8px;  /* CHANGED: from 10px to 8px - smaller radius */
+  border: 1px solid rgba(12,40,46,0.10);
+  box-shadow: 0 3px 10px rgba(6,40,48,0.06);  /* CHANGED: smaller shadow */
+  z-index: 15;
+  font-size: 11px;  /* CHANGED: from 12px to 11px - smaller text */
+  font-weight: 500;
+  line-height: 2;  /* CHANGED: from 1.1 to 1 - minimal line height */
+
+  /* keep long text tidy */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  transition: all .28s ease;
+}
+
+/* Dark Mode Override for Perf Badge */
+[data-theme="dark"] .dashboard-card.next-game-card .perf-badge {
+  background: rgba(44, 44, 46, 0.6);
+  color: #e5e5ea;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .dashboard-card.next-game-card .perf-badge .badge-left,
+[data-theme="dark"] .dashboard-card.next-game-card .perf-badge .badge-mid,
+[data-theme="dark"] .dashboard-card.next-game-card .perf-badge .badge-right {
+  color: #e5e5ea !important;
+}
+
+[data-theme="dark"] .dashboard-card.next-game-card .perf-badge .perf-progress {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Make inner text elements able to truncate/stack gracefully */
+.dashboard-card.next-game-card .perf-badge .badge-left,
+.dashboard-card.next-game-card .perf-badge .badge-mid,
+.dashboard-card.next-game-card .perf-badge .badge-right {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%; /* prevents any one segment from taking all space */
+}
+
+/* progress bar */
+.dashboard-card.next-game-card .perf-badge .perf-progress {
+  display: inline-block;
+  width: 72px;
+  height: 6px;
+  background: rgba(12,40,46,0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.dashboard-card.next-game-card .perf-badge .perf-progress-fill {
+  height: 100%;
+  width: 0%;
+  transition: width .44s ease;
+  background: linear-gradient(90deg,#43aa8b,#6fe5b2);
+}
+
+/* Tablet tweaks */
+@media (max-width: 1024px) {
+  .dashboard-card.next-game-card .perf-badge {
+    min-width: 150px;
+    max-width: calc(100% - 32px);
+    padding: 8px 14px;
+    top: -14px;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .dashboard-card.next-game-card .perf-badge .badge-left,
+  .dashboard-card.next-game-card .perf-badge .badge-mid,
+  .dashboard-card.next-game-card .perf-badge .badge-right {
+    max-width: 100% !important;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+}
+
+/* Smaller tablets - allow wrapping */
+@media (max-width: 900px) {
+  .dashboard-card.next-game-card .perf-badge {
+    white-space: normal;
+    line-height: 0.9;
+    padding: 10px 12px;
+  }
+  
+  .dashboard-card.next-game-card .perf-badge .badge-left,
+  .dashboard-card.next-game-card .perf-badge .badge-mid,
+  .dashboard-card.next-game-card .perf-badge .badge-right {
+    display: inline;
+    white-space: normal;
+  }
+}
+
+/* Mobile: move to bottom-center and allow multi-line content + clamp width */
+@media (max-width: 640px) {
+  .dashboard-card.next-game-card .perf-badge {
+    margin-bottom: 5px;
+    top: auto;
+    bottom: -2rem; /* move badge further down to prevent overlap with next card */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);   /* keep a small margin from card edges */
+    max-width: calc(100% - 24px);
+    min-width: auto;
+    white-space: normal;        /* allow wrapping on small screens */
+    text-align: center;
+    padding: 10px 10px;
+    gap: 6px;
+    font-size: 12px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(6,40,48,0.12);
+    line-height: 1.4;
+    z-index: 10;
+  }
+
+  /* allow segments to wrap and center, improve visibility */
+  .dashboard-card.next-game-card .perf-badge .badge-left,
+  .dashboard-card.next-game-card .perf-badge .badge-mid,
+  .dashboard-card.next-game-card .perf-badge .badge-right {
+    max-width: 100%;
+    display: block;
+    white-space: normal;
+    text-overflow: clip;
+    margin: 2px auto;
+    font-size: 0.6rem;
+    color: #0e3b45;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .dashboard-card.next-game-card .perf-badge .perf-progress {
+    margin: 6px auto 0;
+    width: 35%;
+  }
+}
+/*this is user profile status End*/
+/* Dark Mode support for inputs */
+[data-theme="dark"] .upm-select, 
+[data-theme="dark"] .upm-date,
+[data-theme="dark"] #popupStartDate,
+[data-theme="dark"] #popupEndDate {
+  background: rgba(44, 44, 46, 0.4) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  color-scheme: dark; /* Ensures calendar icon is light */
+}
+
+[data-theme="dark"] .upm-select:focus, 
+[data-theme="dark"] .upm-date:focus,
+[data-theme="dark"] #popupStartDate:focus,
+[data-theme="dark"] #popupEndDate:focus {
+  border-color: #4b7bec !important;
+  background: rgba(44, 44, 46, 0.6) !important;
+}
+
+/* Dark Mode support for Multi-Select Dropdowns (Team User & Project) */
+[data-theme="dark"] .multi-select-dropdown,
+[data-theme="dark"] .project-dropdown-input {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .project-dropdown-container{
+  background: transparent !important;
+  color: #fff !important;
+}
+
+[data-theme="dark"] .dropdown-options,
+[data-theme="dark"] .project-dropdown-options {
+  background: rgba(44, 44, 46, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Dark Mode for Project Selected Tags - Transparent */
+[data-theme="dark"] .project-selected-tag {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+}
+
+/* Custom Dropdown Dark Mode Fix (Searchable User Select) */
+[data-theme="dark"] .upm-dropdown {
+  background: rgba(44, 44, 46, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .upm-dropdown-search {
+  background: transparent !important;
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .upm-option,
+[data-theme="dark"] .upm-combobox-value,
+[data-theme="dark"] .upm-combobox-caret{
+  color: #fff !important;
+}
+
+[data-theme="dark"] .upm-option:hover,
+[data-theme="dark"] .upm-option.active {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .upm-combobox {
+  background: rgba(44, 44, 46, 0.4) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}

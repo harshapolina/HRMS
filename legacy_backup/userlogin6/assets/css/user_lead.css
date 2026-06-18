@@ -1,0 +1,1464 @@
+/* Assign role badges in Leads bulk & reassign popups */
+.assign-role-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.assign-role-badge.role-P {
+    background: #7c2d12;
+}
+
+.assign-role-badge.role-BH {
+    background: #b91c1c;
+}
+
+.assign-role-badge.role-M {
+    background: #2563eb;
+}
+
+.assign-role-badge.role-TL {
+    background: #7c3aed;
+}
+
+.assign-role-badge.role-U {
+    background: #0f766e;
+}
+
+.assign-role-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+}
+
+[data-theme="dark"] .assign-role-label {
+    color: #f9fafb;
+}
+
+/* Overdue Modal Overlay */
+fieldset.custom-msg-fieldset {
+    max-height: 116px !important;
+}
+
+#overdueNotificationModal {
+    display: none;
+    z-index: 100000;
+}
+
+#overdueNotificationModal .modal-container-eoi {
+    max-width: 500px;
+    border-radius: 16px;
+}
+
+/* Modal Header */
+#overdueNotificationModal .modal-header {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+    color: white;
+    border-radius: 16px 16px 0 0;
+    padding: 20px;
+    position: relative;
+}
+
+#overdueNotificationModal .overdue-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 15px;
+}
+
+#overdueNotificationModal .overdue-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    min-width: 0;
+}
+
+#overdueNotificationModal .overdue-icon-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#overdueNotificationModal .overdue-icon-circle i {
+    font-size: 24px;
+    color: white !important;
+}
+
+#overdueNotificationModal .overdue-header-title {
+    flex: 1;
+    min-width: 0;
+}
+
+#overdueNotificationModal .overdue-header-title h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white !important;
+}
+
+#overdueNotificationModal .overdue-header-title p {
+    margin: 5px 0 0 0;
+    font-size: 13px;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white !important;
+}
+
+#overdueNotificationModal .overdue-header-right {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 70px;
+    margin-left: auto;
+}
+
+#overdueNotificationModal #overdueRemainingCount {
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: white !important;
+}
+
+#overdueNotificationModal .overdue-remaining-text {
+    font-size: 11px;
+    opacity: 0.9;
+    white-space: nowrap;
+    color: white !important;
+}
+
+/* Modal Body */
+#overdueNotificationModal .modal-body {
+    padding: 30px;
+}
+
+/* Lead Info Card */
+#overdueNotificationModal .overdue-lead-info {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#overdueNotificationModal .overdue-lead-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+#overdueNotificationModal .overdue-lead-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#overdueNotificationModal .overdue-lead-details {
+    flex: 1;
+}
+
+#overdueNotificationModal #overdueLeadName {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+#overdueNotificationModal .overdue-lead-phone {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+#overdueNotificationModal .overdue-lead-phone i {
+    margin-right: 5px;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.32);
+    }
+
+    50% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.32);
+    }
+
+    50% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* Make phone icon clickable to initiate call */
+#overdueNotificationModal .overdue-lead-phone i.fa-phone {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: pulse 1.2s ease-in-out infinite !important;
+    animation: pulse 1.2s ease-in-out infinite !important;
+    transform-origin: center;
+    will-change: transform;
+}
+
+#exactTimeFollowupModal .followup-lead-phone i.fa-phone {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: pulse 1.2s ease-in-out infinite !important;
+    animation: pulse 1.2s ease-in-out infinite !important;
+    transform-origin: center;
+    will-change: transform;
+}
+
+#overdueNotificationModal .overdue-lead-phone i.fa-phone:hover {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    transform: scale(1.1);
+}
+
+#overdueNotificationModal .overdue-lead-phone i.fa-phone:active {
+    transform: scale(0.95);
+}
+
+#exactTimeFollowupModal .followup-lead-phone i.fa-phone:hover {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    transform: scale(1.1);
+}
+
+#exactTimeFollowupModal .followup-lead-phone i.fa-phone:active {
+    transform: scale(0.95);
+}
+
+/* Make phone number clickable to reveal full number */
+#overdueNotificationModal .overdue-lead-phone #overdueLeadPhone {
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    user-select: none;
+}
+
+#overdueNotificationModal .overdue-lead-phone #overdueLeadPhone:hover {
+    background: rgba(0, 102, 255, 0.1);
+    color: #0066ff;
+}
+
+#overdueNotificationModal .overdue-lead-phone #overdueLeadPhone:active {
+    transform: scale(0.98);
+}
+
+#overdueNotificationModal .overdue-lead-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+}
+
+#overdueNotificationModal .overdue-field-label {
+    margin: 0 0 5px 0;
+    font-size: 11px;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+#overdueNotificationModal .overdue-field-value {
+    margin: 0;
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+#overdueNotificationModal .overdue-field-value.text-danger {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Warning Box */
+#overdueNotificationModal .overdue-warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#overdueNotificationModal .overdue-warning p {
+    margin: 0;
+    color: #856404;
+    font-size: 13px;
+}
+
+#overdueNotificationModal .overdue-warning i {
+    margin-right: 8px;
+}
+
+/* Action Buttons */
+#overdueNotificationModal .overdue-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: nowrap;
+}
+
+#overdueNotificationModal #updateOverdueLeadBtn {
+    flex: 1;
+    min-width: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+#overdueNotificationModal #updateOverdueLeadBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+#overdueNotificationModal #overdueHistoryBtn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#overdueNotificationModal #overdueHistoryBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+#overdueNotificationModal #skipOverdueLeadBtn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+#overdueNotificationModal #skipOverdueLeadBtn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+#overdueNotificationModal #skipAllOverdueLeadsBtn {
+    width: 100%;
+    background: #fff;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#overdueNotificationModal #skipAllOverdueLeadsBtn:hover {
+    background: #dc3545;
+    color: #fff;
+}
+
+.remarks-column .remarks-info {
+    white-space: normal;
+    word-break: break-word;
+    min-width: 180px;
+    max-width: 320px;
+    line-height: 1.35;
+}
+
+.remarks-column .remarks-cell-scroll {
+    display: block !important;
+    white-space: pre-wrap !important;
+    word-break: break-word;
+    min-width: 180px;
+    max-width: 320px;
+    line-height: 1.25 !important;
+    height: calc(1.25em * 3) !important;
+    min-height: calc(1.25em * 3) !important;
+    max-height: calc(1.25em * 3) !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #c6c9d4 #f1f1f1;
+}
+
+.remarks-column .remarks-cell-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.remarks-column .remarks-cell-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.remarks-column .remarks-cell-scroll::-webkit-scrollbar-thumb {
+    background: #c6c9d4;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    #overdueNotificationModal .modal-container-eoi {
+        max-width: 95%;
+        margin: 20px;
+    }
+
+    #overdueNotificationModal .modal-body {
+        padding: 20px;
+    }
+
+    #overdueNotificationModal .overdue-lead-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    #overdueNotificationModal .overdue-header-left {
+        gap: 10px;
+    }
+
+    #overdueNotificationModal .overdue-icon-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    #overdueNotificationModal .overdue-icon-circle i {
+        font-size: 20px;
+    }
+
+    #overdueNotificationModal .overdue-header-title h3 {
+        font-size: 16px;
+    }
+
+    #overdueNotificationModal .overdue-header-title p {
+        font-size: 11px;
+    }
+
+    #overdueNotificationModal #overdueRemainingCount {
+        font-size: 20px;
+    }
+
+    #overdueNotificationModal .overdue-remaining-text {
+        font-size: 10px;
+    }
+
+    #overdueNotificationModal .overdue-lead-avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    #overdueNotificationModal #overdueLeadName {
+        font-size: 16px;
+    }
+
+    #overdueNotificationModal .overdue-actions {
+        gap: 8px;
+    }
+
+    #overdueNotificationModal #updateOverdueLeadBtn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    #overdueNotificationModal #overdueHistoryBtn {
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+
+    #overdueNotificationModal #skipOverdueLeadBtn {
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #overdueNotificationModal .modal-header {
+        padding: 15px;
+    }
+
+    #overdueNotificationModal .modal-body {
+        padding: 15px;
+    }
+
+    #overdueNotificationModal .overdue-header-content {
+        gap: 10px;
+    }
+
+    #overdueNotificationModal .overdue-header-title h3 {
+        font-size: 14px;
+    }
+
+    #overdueNotificationModal .overdue-header-title p {
+        font-size: 10px;
+    }
+
+    #overdueNotificationModal #overdueRemainingCount {
+        font-size: 18px;
+    }
+
+    #overdueNotificationModal .overdue-icon-circle {
+        width: 35px;
+        height: 35px;
+    }
+
+    #overdueNotificationModal .overdue-icon-circle i {
+        font-size: 16px;
+    }
+
+    #overdueNotificationModal .overdue-actions {
+        gap: 6px;
+    }
+
+    #overdueNotificationModal #updateOverdueLeadBtn {
+        font-size: 13px;
+        padding: 10px 8px;
+        gap: 4px;
+    }
+
+    #overdueNotificationModal #updateOverdueLeadBtn i {
+        font-size: 12px;
+    }
+
+    #overdueNotificationModal #overdueHistoryBtn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+
+    #overdueNotificationModal #overdueHistoryBtn i {
+        font-size: 12px;
+    }
+
+    #overdueNotificationModal #skipOverdueLeadBtn {
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+
+    #overdueNotificationModal .overdue-lead-info {
+        padding: 15px;
+    }
+
+    #overdueNotificationModal .overdue-lead-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #overdueNotificationModal .overdue-field-label {
+        font-size: 10px;
+    }
+
+    #overdueNotificationModal .overdue-field-value {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #overdueNotificationModal .overdue-header-title h3 {
+        font-size: 13px;
+    }
+
+    #overdueNotificationModal #updateOverdueLeadBtn {
+        font-size: 12px;
+        padding: 10px 6px;
+    }
+
+    #overdueNotificationModal #overdueHistoryBtn {
+        font-size: 12px;
+        padding: 10px 10px;
+    }
+
+    #overdueNotificationModal #skipOverdueLeadBtn {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+/* Exact-Time Follow-up Modal Button Styles */
+#exactTimeFollowupModal #updateExactTimeLeadBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+#exactTimeFollowupModal #skipExactTimeLeadBtn:hover {
+    background: #c82333 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+#exactTimeFollowupModal #skipAllExactTimeLeadsBtn:hover {
+    background: rgba(220, 53, 69, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}
+
+/* Exact-Time Follow-up Modal Responsive Styles */
+@media screen and (max-width: 768px) {
+    #exactTimeFollowupModal #updateExactTimeLeadBtn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    #exactTimeFollowupModal #skipExactTimeLeadBtn {
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #exactTimeFollowupModal #updateExactTimeLeadBtn {
+        font-size: 13px;
+        padding: 10px 8px;
+        gap: 4px;
+    }
+
+    #exactTimeFollowupModal #updateExactTimeLeadBtn i {
+        font-size: 12px;
+    }
+
+    #exactTimeFollowupModal #skipExactTimeLeadBtn {
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #exactTimeFollowupModal #updateExactTimeLeadBtn {
+        font-size: 12px;
+        padding: 10px 6px;
+    }
+
+    #exactTimeFollowupModal #skipExactTimeLeadBtn {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+/* Dark Mode Overrides for Overdue Modal */
+[data-theme="dark"] #overdueNotificationModal .modal-container-eoi {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal .overdue-lead-info {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal #overdueLeadName,
+[data-theme="dark"] #overdueNotificationModal .overdue-field-value {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal .overdue-lead-phone,
+[data-theme="dark"] #overdueNotificationModal .overdue-field-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Dark mode clickable phone icon hover effect */
+[data-theme="dark"] #overdueNotificationModal .overdue-lead-phone i.fa-phone:hover {
+    background: rgba(34, 197, 94, 0.2) !important;
+    color: #4ade80 !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-lead-phone i.fa-phone:hover {
+    background: rgba(34, 197, 94, 0.2) !important;
+    color: #4ade80 !important;
+}
+
+/* Dark mode clickable phone number hover effect */
+[data-theme="dark"] #overdueNotificationModal .overdue-lead-phone #overdueLeadPhone:hover {
+    background: rgba(0, 102, 255, 0.2) !important;
+    color: #5ba3ff !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal .overdue-lead-grid {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal .overdue-warning {
+    background: rgba(255, 193, 7, 0.15) !important;
+    border-left-color: #ffc107 !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal .overdue-warning p {
+    color: #ffe082 !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal #skipAllOverdueLeadsBtn {
+    background: transparent !important;
+    color: #ff5252 !important;
+    border-color: #ff5252 !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal #skipAllOverdueLeadsBtn:hover {
+    background: rgba(255, 82, 82, 0.1) !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal #overdueHistoryBtn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+[data-theme="dark"] #overdueNotificationModal #overdueHistoryBtn:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Dark Mode Overrides for Follow-Up Modal */
+[data-theme="dark"] #exactTimeFollowupModal .modal-container-eoi {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-lead-info {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #exactTimeLeadName,
+[data-theme="dark"] #exactTimeFollowupModal .followup-field-value {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-lead-phone,
+[data-theme="dark"] #exactTimeFollowupModal .followup-field-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-lead-grid {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-warning {
+    background: rgba(255, 193, 7, 0.15) !important;
+    border-left-color: #ffc107 !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal .followup-warning p {
+    color: #ffe082 !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #skipAllExactTimeLeadsBtn {
+    background: transparent !important;
+    color: #ff5252 !important;
+    border-color: #ff5252 !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #skipAllExactTimeLeadsBtn:hover {
+    background: rgba(255, 82, 82, 0.1) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #updateExactTimeLeadBtn {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #updateExactTimeLeadBtn:hover {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5) !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #skipExactTimeLeadBtn {
+    background: #dc3545 !important;
+}
+
+[data-theme="dark"] #exactTimeFollowupModal #skipExactTimeLeadBtn:hover {
+    background: #c82333 !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.5) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    #overdueNotificationModal .overdue-lead-phone i.fa-phone,
+    #exactTimeFollowupModal .followup-lead-phone i.fa-phone {
+        -webkit-animation: none !important;
+        animation: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* SweetAlert high z-index to appear above overdue popup */
+.swal-high-zindex,
+.swal2-container.swal-high-zindex {
+    z-index: 100001 !important;
+}
+
+.swal2-container.swal-high-zindex .swal2-popup {
+    z-index: 100002 !important;
+}
+
+#audioPopupPlayer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 20px;
+    z-index: 999999;
+    display: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#audioPopupPlayer .controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#audioPopupPlayer .player-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+#audioPopupPlayer .player-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#audioPopupPlayer input[type=range] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    outline: none;
+}
+
+#audioPopupPlayer input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#audioPopupPlayer .time-display {
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    min-width: 40px;
+    color: #ccc;
+}
+
+#popupClose {
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 5px;
+}
+
+#popupClose:hover {
+    color: #fff;
+}
+
+/* Recording button styles */
+.play-recording-btn {
+    background: #22c55e;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.play-recording-btn:hover:not(:disabled) {
+    background: #16a34a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.play-recording-btn:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.play-recording-btn i {
+    font-size: 16px;
+}
+
+/* Leads delete button (DataTable controls) */
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn,
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn:focus {
+    background: #f8fafc;
+    border: 1px solid #d0d5dd;
+    color: #475569;
+    border-radius: 10px;
+    padding: 6px 10px;
+    min-width: 36px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    box-shadow: none;
+}
+
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn i {
+    color: #475569;
+    font-size: 14px;
+}
+
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn:hover {
+    background: #eef2f7;
+    border-color: #cbd5e1;
+}
+
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn.disabled,
+#tableControlsContainer .dt-buttons .dt-button.delete-leads-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+}
+
+@media (max-width: 900px) {
+    #tableControlsContainer .top-container {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    #tableControlsContainer .button-container {
+        order: 0;
+        width: auto;
+    }
+
+    #tableControlsContainer .length-container {
+        order: 1;
+        margin-left: auto;
+    }
+
+    #tableControlsContainer .search-container {
+        order: 2;
+        width: 100%;
+    }
+
+    #tableControlsContainer .dt-buttons {
+        gap: 8px;
+    }
+
+    #tableControlsContainer .dt-buttons .dt-button {
+        padding: 6px 8px;
+        min-width: 34px;
+        height: 32px;
+    }
+}
+
+/* Dark mode overrides for delete button */
+[data-theme="dark"] #tableControlsContainer .dt-buttons .dt-button.delete-leads-btn,
+[data-theme="dark"] #tableControlsContainer .dt-buttons .dt-button.delete-leads-btn:focus {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] #tableControlsContainer .dt-buttons .dt-button.delete-leads-btn i {
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] #tableControlsContainer .dt-buttons .dt-button.delete-leads-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* ── Bulk Assign — Duplicate Check Popup ───────────────────────────────────── */
+.bulk-dup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 15, 35, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+}
+
+.bulk-dup-overlay--visible {
+    opacity: 1;
+}
+
+.bulk-dup-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow:
+        0 32px 64px rgba(0, 0, 0, 0.16),
+        0 6px 20px rgba(0, 0, 0, 0.08);
+    max-width: 460px;
+    width: 100%;
+    overflow: hidden;
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bulk-dup-overlay--visible .bulk-dup-card {
+    transform: translateY(0) scale(1);
+}
+
+/* Header */
+.bulk-dup-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 20px 20px 16px;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-bottom: 1.5px solid rgba(245, 158, 11, 0.18);
+}
+
+.bulk-dup-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.bulk-dup-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.bulk-dup-title h4 {
+    margin: 0 0 3px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #92400e;
+    line-height: 1.3;
+}
+
+.bulk-dup-title p {
+    margin: 0;
+    font-size: 12.5px;
+    color: #b45309;
+}
+
+.bulk-dup-close {
+    background: rgba(180, 83, 9, 0.1);
+    border: none;
+    color: #b45309;
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    padding: 0;
+    line-height: 1;
+}
+
+.bulk-dup-close:hover {
+    background: rgba(180, 83, 9, 0.22);
+}
+
+/* Body */
+.bulk-dup-body {
+    padding: 20px;
+}
+
+.bulk-dup-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.bulk-dup-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 8px;
+    border-radius: 14px;
+    text-align: center;
+    gap: 5px;
+    transition: transform 0.15s;
+}
+
+.bulk-dup-stat:hover {
+    transform: translateY(-2px);
+}
+
+.bulk-dup-stat--warn {
+    background: linear-gradient(145deg, #fef3c7, #fde68a);
+    border: 1.5px solid #f59e0b;
+}
+
+.bulk-dup-stat--ok {
+    background: linear-gradient(145deg, #d1fae5, #a7f3d0);
+    border: 1.5px solid #10b981;
+}
+
+.bulk-dup-stat--total {
+    background: linear-gradient(145deg, #ede9fe, #ddd6fe);
+    border: 1.5px solid #8b5cf6;
+}
+
+.bulk-dup-stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.bulk-dup-stat--warn  .bulk-dup-stat-num { color: #d97706; }
+.bulk-dup-stat--ok    .bulk-dup-stat-num { color: #059669; }
+.bulk-dup-stat--total .bulk-dup-stat-num { color: #7c3aed; }
+
+.bulk-dup-stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.bulk-dup-hint {
+    margin: 0;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.65;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border-left: 3px solid #f59e0b;
+}
+
+/* Footer */
+.bulk-dup-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px 18px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.bulk-dup-btn {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.bulk-dup-btn--cancel {
+    flex: 0 0 auto;
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 10px 18px;
+}
+
+.bulk-dup-btn--cancel:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.bulk-dup-btn--unique {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+}
+
+.bulk-dup-btn--unique:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(16, 185, 129, 0.38);
+}
+
+.bulk-dup-btn--all {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.28);
+}
+
+.bulk-dup-btn--all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(99, 102, 241, 0.38);
+}
+
+.bulk-dup-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+    line-height: 1;
+}
+
+/* Dark mode */
+[data-theme="dark"] .bulk-dup-card {
+    background: #1e2130;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.55), 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .bulk-dup-header {
+    background: linear-gradient(135deg, rgba(180,83,9,0.18), rgba(245,158,11,0.1));
+    border-bottom-color: rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .bulk-dup-stat--warn  { background: rgba(245, 158, 11, 0.13); }
+[data-theme="dark"] .bulk-dup-stat--ok    { background: rgba(16, 185, 129, 0.13); }
+[data-theme="dark"] .bulk-dup-stat--total { background: rgba(139, 92, 246, 0.13); }
+[data-theme="dark"] .bulk-dup-stat-label  { color: #9ca3af; }
+
+[data-theme="dark"] .bulk-dup-hint {
+    background: rgba(255, 255, 255, 0.05);
+    color: #d1d5db;
+    border-left-color: #f59e0b;
+}
+
+[data-theme="dark"] .bulk-dup-footer     { border-top-color: rgba(255, 255, 255, 0.08); }
+
+[data-theme="dark"] .bulk-dup-btn--cancel {
+    background: rgba(255, 255, 255, 0.08);
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .bulk-dup-btn--cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #e5e7eb;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .bulk-dup-stats     { gap: 7px; }
+    .bulk-dup-stat-num  { font-size: 22px; }
+    .bulk-dup-stat-label { font-size: 10px; }
+    .bulk-dup-stat      { padding: 10px 6px; }
+
+    .bulk-dup-footer {
+        flex-wrap: wrap;
+    }
+
+    .bulk-dup-btn--cancel {
+        order: 3;
+        width: 100%;
+        flex: unset;
+        justify-content: center;
+    }
+}
+
+/* ── Assign Modal — In-place Duplicate Section ─────────────────────────────── */
+.assign-dup-section {
+    margin: 0 0 8px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1.5px solid rgba(245, 158, 11, 0.25);
+    border-radius: 12px;
+    animation: dupSectionSlideIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dupSectionSlideIn {
+    from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.assign-dup-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.assign-dup-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.assign-dup-stats .bulk-dup-stat {
+    padding: 10px 6px;
+    border-radius: 10px;
+}
+
+.assign-dup-stats .bulk-dup-stat-num  { font-size: 22px; }
+.assign-dup-stats .bulk-dup-stat-label { font-size: 10px; }
+
+.assign-dup-section .bulk-dup-hint {
+    margin: 0;
+    font-size: 12px;
+    padding: 10px 12px;
+}
+
+/* action buttons injected into .form-actions */
+.assign-dup-actions {
+    display: inline-flex;
+    gap: 7px;
+    flex-wrap: nowrap;
+}
+
+.assign-dup-btn {
+    border: none;
+    padding: 9px 15px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.assign-dup-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .assign-dup-section {
+    background: linear-gradient(135deg, rgba(180,83,9,0.14), rgba(245,158,11,0.07));
+    border-color: rgba(245, 158, 11, 0.18);
+}
+
+[data-theme="dark"] .assign-dup-label { color: #fde68a; }
+
+[data-theme="dark"] .assign-dup-stats .bulk-dup-stat--warn  { background: rgba(245,158,11,0.13); }
+[data-theme="dark"] .assign-dup-stats .bulk-dup-stat--ok    { background: rgba(16,185,129,0.13); }
+[data-theme="dark"] .assign-dup-stats .bulk-dup-stat--total { background: rgba(139,92,246,0.13); }
+
+/* Mobile */
+@media (max-width: 480px) {
+    .assign-dup-stats { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    .assign-dup-stats .bulk-dup-stat-num  { font-size: 18px; }
+    .assign-dup-stats .bulk-dup-stat-label { font-size: 9px; }
+    .assign-dup-actions { flex-wrap: wrap; }
+    .assign-dup-btn { font-size: 12px; padding: 8px 12px; }
+}

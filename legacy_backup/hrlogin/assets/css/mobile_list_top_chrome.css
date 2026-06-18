@@ -1,0 +1,200 @@
+/**
+ * Mobile top chrome (max-width: 768px) — matches Attendance Report summary + search + rows selector.
+ * Scoped to Employees, Leave Management, and Offer Letters only.
+ */
+
+@media (max-width: 768px) {
+
+  /* Summary pills row — same spacing as attendance_report.php */
+  .users-page .summary-wrapper,
+  .users-page .summary-wrapper.pt-1,
+  .users-page .summary-wrapper.mb-2,
+  .hr-leaves-page .summary-wrapper,
+  .hr-leaves-page .summary-wrapper.pt-1,
+  .hr-leaves-page .summary-wrapper.mb-2,
+  .hr-offers-page .summary-wrapper,
+  .hr-offers-page .summary-wrapper.pt-1,
+  .hr-offers-page .summary-wrapper.mb-2 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .users-page .summary-section,
+  .hr-leaves-page .summary-section,
+  .hr-offers-page .summary-section {
+    padding: 4px 5px !important;
+  }
+
+  /* Toolbar card — flush with summary */
+  .users-page .users-controls-card.glass-card,
+  .users-page .users-controls-card,
+  .hr-leaves-page .leave-controls-card.glass-card,
+  .hr-leaves-page .leave-controls-card,
+  .hr-offers-page .offer-controls-card.glass-card,
+  .hr-offers-page .offer-controls-card {
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Search + rows on one row */
+  .users-page #usersToolbar,
+  .hr-leaves-page #leaveFilterForm,
+  .hr-offers-page #offerFilterForm {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas: "search limit" !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .users-page .filter-group-search,
+  .hr-leaves-page .filter-group-search,
+  .hr-offers-page .filter-group-search {
+    grid-area: search !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  .users-page .filter-group-actions,
+  .hr-leaves-page .filter-group-actions,
+  .hr-offers-page .filter-group-actions {
+    display: contents !important;
+  }
+
+  .users-page .filter-group-search .search-box,
+  .hr-leaves-page .filter-group-search .search-box,
+  .hr-offers-page .filter-group-search .search-box {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .users-page .filter-group-search .search-input,
+  .hr-leaves-page .filter-group-search .search-input,
+  .hr-offers-page .filter-group-search .search-input {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    padding-left: 44px !important;
+    padding-right: 12px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .users-page .filter-group-search .search-icon,
+  .hr-leaves-page .filter-group-search .search-icon,
+  .hr-offers-page .filter-group-search .search-icon {
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+  }
+
+  /* Rows selector — compact box + native chevron (override Users.css ≤427px) */
+  .users-page .filter-group-actions .page-size-selector::after,
+  .users-page .filter-group-actions .page-size-selector::before,
+  .hr-leaves-page .filter-group-actions .page-size-selector::after,
+  .hr-leaves-page .filter-group-actions .page-size-selector::before,
+  .hr-offers-page .filter-group-actions .page-size-selector::after,
+  .hr-offers-page .filter-group-actions .page-size-selector::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  .users-page .filter-group-actions .page-size-selector,
+  .hr-leaves-page .filter-group-actions .page-size-selector,
+  .hr-offers-page .filter-group-actions .page-size-selector {
+    grid-area: limit !important;
+    flex: none !important;
+    display: flex !important;
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    height: 48px !important;
+    padding: 0 8px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    appearance: unset !important;
+    -webkit-appearance: unset !important;
+    background-image: none !important;
+  }
+
+  .users-page .filter-group-actions .page-size-selector select,
+  .users-page .filter-group-actions .page-size-selector .users-limit-select,
+  .users-page .filter-group-actions .page-size-selector #users-limit,
+  .hr-leaves-page .filter-group-actions .page-size-selector select,
+  .hr-leaves-page .filter-group-actions .page-size-selector .users-limit-select,
+  .hr-leaves-page .filter-group-actions .page-size-selector #leave-rows-limit,
+  .hr-offers-page .filter-group-actions .page-size-selector select,
+  .hr-offers-page .filter-group-actions .page-size-selector .users-limit-select,
+  .hr-offers-page .filter-group-actions .page-size-selector #offer-rows-limit {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    text-align: center !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    line-height: normal !important;
+    cursor: pointer !important;
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    -moz-appearance: menulist !important;
+  }
+
+  body.dark-mode .users-page .filter-group-actions .page-size-selector,
+  body.dark-mode .hr-leaves-page .filter-group-actions .page-size-selector,
+  body.dark-mode .hr-offers-page .filter-group-actions .page-size-selector {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+  }
+
+  body.dark-mode .users-page .filter-group-actions .page-size-selector select,
+  body.dark-mode .users-page .filter-group-actions .page-size-selector .users-limit-select,
+  body.dark-mode .users-page .filter-group-actions .page-size-selector #users-limit,
+  body.dark-mode .hr-leaves-page .filter-group-actions .page-size-selector select,
+  body.dark-mode .hr-leaves-page .filter-group-actions .page-size-selector .users-limit-select,
+  body.dark-mode .hr-leaves-page .filter-group-actions .page-size-selector #leave-rows-limit,
+  body.dark-mode .hr-offers-page .filter-group-actions .page-size-selector select,
+  body.dark-mode .hr-offers-page .filter-group-actions .page-size-selector .users-limit-select,
+  body.dark-mode .hr-offers-page .filter-group-actions .page-size-selector #offer-rows-limit {
+    color: #ffffff !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    font-weight: 500 !important;
+  }
+}

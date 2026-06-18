@@ -1,0 +1,81 @@
+/* this is for calender CSS */
+.container-calendar {
+  background: #daeaea !important;
+  padding: 5px 10px;
+  overflow: visible;
+}
+.dashboard-card .wrapper {
+  background: #daeaea !important;
+}
+.button-container-calendar button {
+  cursor: pointer;
+  background: green;
+  color: #fff;
+  border: 1px solid green;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.table-calendar {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+.table-calendar td,
+.table-calendar th {
+  padding: 3px;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  vertical-align: middle;
+}
+.date-picker.selected {
+  background-color: #f2f2f2;
+  font-weight: 700;
+  outline: #00bcd4 dashed 1px;
+}
+.date-picker.selected span {
+  border-bottom: 2px solid currentColor;
+}
+.date-picker:first-child {
+  color: red;
+}
+.date-picker:nth-child(6) {
+  color: green;
+}
+.date-picker:hover {
+  background-color: green;
+  color: #fff;
+  cursor: pointer;
+}
+#monthAndYear {
+  text-align: center;
+  margin-top: 0;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.button-container-calendar {
+  position: relative;
+  margin-bottom: 5px;
+  overflow: hidden;
+  clear: both;
+}
+#previous {
+  float: left;
+}
+#next {
+  float: right;
+}
+.footer-container-calendar {
+  margin-top: 5px;
+  padding: 5px 0;
+}
+.footer-container-calendar select {
+  cursor: pointer;
+  background: #daeaea;
+  color: #585858;
+  border: 1px solid #bfc5c5;
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 11px;
+}
+/* this is for calender CSS End */

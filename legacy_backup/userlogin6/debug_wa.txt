@@ -1,0 +1,404 @@
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12303 | NO MATCH ENCOUNTERED -> length: 289
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "attached(https://www.w3.org/WAI/ER/...
+Lead ID: 12300 | NO MATCH ENCOUNTERED -> length: 385
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12234 | NO MATCH ENCOUNTERED -> length: 8063
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12233 | NO MATCH ENCOUNTERED -> length: 7988
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12231 | NO MATCH ENCOUNTERED -> length: 1926
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12222 | NO MATCH ENCOUNTERED -> length: 14015
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hii",
+        "sender_number": "963...
+Lead ID: 12218 | NO MATCH ENCOUNTERED -> length: 1159
+Content: [
+    {
+        "lead_number": "9440698690",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12217 | NO MATCH ENCOUNTERED -> length: 3093
+Content: [
+    {
+        "lead_number": "9441749992",
+        "message": "hi",
+        "sender_number": "9632...
+Lead ID: 12214 | NO MATCH ENCOUNTERED -> length: 13007
+Content: [
+    {
+        "lead_number": "8170997368",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12213 | NO MATCH ENCOUNTERED -> length: 15726
+Content: [
+    {
+        "lead_number": "7022475323",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12212 | NO MATCH ENCOUNTERED -> length: 13024
+Content: [
+    {
+        "lead_number": "8885412121",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12211 | Match: INTERESTED
+Lead ID: 12210 | NO MATCH ENCOUNTERED -> length: 70238
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12205 | NO MATCH ENCOUNTERED -> length: 6298
+Content: [
+    {
+        "lead_number": "9182881924",
+        "message": "Esha AI bulk WhatsApp outreach sent...
+Lead ID: 12207 | NO MATCH ENCOUNTERED -> length: 23735
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12203 | NO MATCH ENCOUNTERED -> length: 1206
+Content: [
+    {
+        "lead_number": "",
+        "message": "hlo",
+        "sender_number": "9632056699",
+...
+Lead ID: 12202 | NO MATCH ENCOUNTERED -> length: 244
+Content: [
+    {
+        "lead_number": "6264159418",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12303 | NO MATCH ENCOUNTERED -> length: 289
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "attached(https://www.w3.org/WAI/ER/...
+Lead ID: 12300 | NO MATCH ENCOUNTERED -> length: 385
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12234 | NO MATCH ENCOUNTERED -> length: 8063
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12233 | NO MATCH ENCOUNTERED -> length: 7988
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12231 | NO MATCH ENCOUNTERED -> length: 1926
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12222 | NO MATCH ENCOUNTERED -> length: 14015
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hii",
+        "sender_number": "963...
+Lead ID: 12218 | NO MATCH ENCOUNTERED -> length: 1159
+Content: [
+    {
+        "lead_number": "9440698690",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12217 | NO MATCH ENCOUNTERED -> length: 3093
+Content: [
+    {
+        "lead_number": "9441749992",
+        "message": "hi",
+        "sender_number": "9632...
+Lead ID: 12214 | NO MATCH ENCOUNTERED -> length: 13007
+Content: [
+    {
+        "lead_number": "8170997368",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12213 | NO MATCH ENCOUNTERED -> length: 15726
+Content: [
+    {
+        "lead_number": "7022475323",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12212 | NO MATCH ENCOUNTERED -> length: 13024
+Content: [
+    {
+        "lead_number": "8885412121",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12211 | Match: INTERESTED
+Lead ID: 12210 | NO MATCH ENCOUNTERED -> length: 70238
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12205 | NO MATCH ENCOUNTERED -> length: 6298
+Content: [
+    {
+        "lead_number": "9182881924",
+        "message": "Esha AI bulk WhatsApp outreach sent...
+Lead ID: 12207 | NO MATCH ENCOUNTERED -> length: 23735
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12203 | NO MATCH ENCOUNTERED -> length: 1206
+Content: [
+    {
+        "lead_number": "",
+        "message": "hlo",
+        "sender_number": "9632056699",
+...
+Lead ID: 12202 | NO MATCH ENCOUNTERED -> length: 244
+Content: [
+    {
+        "lead_number": "6264159418",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: NEUTRAL
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: NEUTRAL
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12303 | NO MATCH ENCOUNTERED -> length: 289
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "attached(https://www.w3.org/WAI/ER/...
+Lead ID: 12300 | NO MATCH ENCOUNTERED -> length: 385
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12234 | NO MATCH ENCOUNTERED -> length: 8063
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12233 | NO MATCH ENCOUNTERED -> length: 7988
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12231 | NO MATCH ENCOUNTERED -> length: 1926
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12222 | NO MATCH ENCOUNTERED -> length: 14015
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hii",
+        "sender_number": "963...
+Lead ID: 12218 | NO MATCH ENCOUNTERED -> length: 1159
+Content: [
+    {
+        "lead_number": "9440698690",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12217 | NO MATCH ENCOUNTERED -> length: 3093
+Content: [
+    {
+        "lead_number": "9441749992",
+        "message": "hi",
+        "sender_number": "9632...
+Lead ID: 12214 | NO MATCH ENCOUNTERED -> length: 13007
+Content: [
+    {
+        "lead_number": "8170997368",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12213 | NO MATCH ENCOUNTERED -> length: 15726
+Content: [
+    {
+        "lead_number": "7022475323",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12212 | NO MATCH ENCOUNTERED -> length: 13024
+Content: [
+    {
+        "lead_number": "8885412121",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12211 | Match: INTERESTED
+Lead ID: 12210 | NO MATCH ENCOUNTERED -> length: 70238
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12205 | NO MATCH ENCOUNTERED -> length: 6298
+Content: [
+    {
+        "lead_number": "9182881924",
+        "message": "Esha AI bulk WhatsApp outreach sent...
+Lead ID: 12207 | NO MATCH ENCOUNTERED -> length: 23735
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12203 | NO MATCH ENCOUNTERED -> length: 1206
+Content: [
+    {
+        "lead_number": "",
+        "message": "hlo",
+        "sender_number": "9632056699",
+...
+Lead ID: 12202 | NO MATCH ENCOUNTERED -> length: 244
+Content: [
+    {
+        "lead_number": "6264159418",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12314 | Match: INTERESTED
+Lead ID: 12313 | Match: INTERESTED
+Lead ID: 12312 | Match: INTERESTED
+Lead ID: 12311 | Match: INTERESTED
+Lead ID: 12310 | Match: INTERESTED
+Lead ID: 12307 | Match: NEUTRAL
+Lead ID: 12306 | Match: NEUTRAL
+Lead ID: 12305 | Match: NEUTRAL
+Lead ID: 12303 | NO MATCH ENCOUNTERED -> length: 289
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "attached(https://www.w3.org/WAI/ER/...
+Lead ID: 12300 | NO MATCH ENCOUNTERED -> length: 385
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12234 | NO MATCH ENCOUNTERED -> length: 8063
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12233 | NO MATCH ENCOUNTERED -> length: 7988
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12231 | NO MATCH ENCOUNTERED -> length: 1926
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Hi, this is rahul00761, your proper...
+Lead ID: 12222 | NO MATCH ENCOUNTERED -> length: 14015
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Hii",
+        "sender_number": "963...
+Lead ID: 12218 | NO MATCH ENCOUNTERED -> length: 1159
+Content: [
+    {
+        "lead_number": "9440698690",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12217 | NO MATCH ENCOUNTERED -> length: 3093
+Content: [
+    {
+        "lead_number": "9441749992",
+        "message": "hi",
+        "sender_number": "9632...
+Lead ID: 12214 | NO MATCH ENCOUNTERED -> length: 13007
+Content: [
+    {
+        "lead_number": "8170997368",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12213 | NO MATCH ENCOUNTERED -> length: 15726
+Content: [
+    {
+        "lead_number": "7022475323",
+        "message": "Hi, this is Saswata, your property ...
+Lead ID: 12212 | NO MATCH ENCOUNTERED -> length: 13024
+Content: [
+    {
+        "lead_number": "8885412121",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12211 | Match: INTERESTED
+Lead ID: 12210 | NO MATCH ENCOUNTERED -> length: 70238
+Content: [
+    {
+        "lead_number": "9440698613",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12205 | NO MATCH ENCOUNTERED -> length: 6298
+Content: [
+    {
+        "lead_number": "9182881924",
+        "message": "Esha AI bulk WhatsApp outreach sent...
+Lead ID: 12207 | NO MATCH ENCOUNTERED -> length: 23735
+Content: [
+    {
+        "lead_number": "9676104485",
+        "message": "Esha AI Auto-WhatsApp outreach sent...
+Lead ID: 12203 | NO MATCH ENCOUNTERED -> length: 1206
+Content: [
+    {
+        "lead_number": "",
+        "message": "hlo",
+        "sender_number": "9632056699",
+...
+Lead ID: 12202 | NO MATCH ENCOUNTERED -> length: 244
+Content: [
+    {
+        "lead_number": "6264159418",
+        "message": "Esha AI Auto-WhatsApp outreach sent...

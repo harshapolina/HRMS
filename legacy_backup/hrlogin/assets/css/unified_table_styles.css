@@ -1,0 +1,2171 @@
+/* =====================================================
+   UNIFIED TABLE STYLES - Matches Property Bookings Table
+   ===================================================== */
+
+/* -------------------- CSS Variables -------------------- */
+:root {
+    --table-bg: #fff;
+    --table-border: #e2e8f0;
+    --table-hover: #f8fafc;
+    --table-head-bg: linear-gradient(135deg, #f1f5f9, #f8fafc);
+    --table-row-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+    --table-row-hover-shadow: 0 6px 10px -1px rgba(0, 0, 0, .15);
+    --text-primary: #1e293b;
+    --text-secondary: #374151;
+    --text-muted: #64748b;
+    --accent-blue: #3b82f6;
+    --accent-gradient: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+/* -------------------- Main Table Card -------------------- */
+.table-card,
+.table-container,
+.scrollable-table,
+.maintablewrap {
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: 0;
+    overflow: hidden;
+}
+
+/* -------------------- Table Container -------------------- */
+.table-container,
+.scrollable-table,
+.maintablewrap {
+    overflow-x: auto !important;
+    overflow-y: auto;
+    max-height: 70vh;
+    position: relative;
+}
+
+/* -------------------- Base Table -------------------- */
+.unified-table,
+.fold-table,
+#myTable,
+#example,
+table.stripe,
+table.display {
+    width: 100% !important;
+    min-width: max-content !important;
+    border-collapse: separate !important;
+    border-spacing: 0 12px !important;
+    background: transparent !important;
+}
+
+/* -------------------- Table Header -------------------- */
+.unified-table thead,
+.fold-table thead,
+#myTable thead,
+#example thead,
+table.stripe thead,
+table.display thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: transparent ;
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.unified-table thead th,
+.fold-table thead th,
+#myTable thead th,
+#example thead th,
+table.stripe thead th,
+table.display thead th {
+    padding: 12px 16px !important;
+    text-align: left;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    background: #fff !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    white-space: nowrap;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* First header cell styling */
+.unified-table thead th:first-child,
+.fold-table thead th:first-child,
+#myTable thead th:first-child,
+#example thead th:first-child {
+    border-radius: 0px 0 0 0 !important;
+}
+
+/* Last header cell styling */
+.unified-table thead th:last-child,
+.fold-table thead th:last-child,
+#myTable thead th:last-child,
+#example thead th:last-child {
+    border-radius: 0 0px 0 0 !important;
+}
+
+/* -------------------- Table Body Rows -------------------- */
+.unified-table tbody tr,
+.fold-table tbody tr.view,
+#myTable tbody tr,
+#example tbody tr,
+table.stripe tbody tr,
+table.display tbody tr {
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    cursor: pointer;
+    background: #fff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+    margin-bottom: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    position: relative;
+    z-index: 1;
+}
+
+.unified-table tbody tr:nth-child(2n),
+.fold-table tbody tr.view:nth-child(2n),
+#myTable tbody tr:nth-child(2n),
+#example tbody tr:nth-child(2n) {
+    background: #fff !important;
+}
+
+.unified-table tbody tr:hover,
+.fold-table tbody tr.view:hover,
+#myTable tbody tr:hover,
+#example tbody tr:hover,
+table.stripe tbody tr:hover,
+table.display tbody tr:hover {
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* -------------------- Table Cells -------------------- */
+.unified-table tbody td,
+.fold-table tbody tr td,
+#myTable tbody td,
+#example tbody td,
+table.stripe tbody td,
+table.display tbody td {
+    padding: 4px !important;
+    padding-left: 14px !important;
+    font-weight: 500;
+    color: #334155 !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    vertical-align: middle;
+    font-size: 13px !important;
+}
+
+/* First cell in row */
+.unified-table tbody td:first-child,
+.fold-table tbody tr td:first-child,
+#myTable tbody td:first-child,
+#example tbody td:first-child {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+    border-left: none !important;
+    border-radius: 12px 0 0 12px !important;
+}
+
+/* Last cell in row */
+.unified-table tbody td:last-child,
+.fold-table tbody tr td:last-child,
+#myTable tbody td:last-child,
+#example tbody td:last-child {
+    border-right: none !important;
+    border-radius: 0 12px 12px 0 !important;
+    padding-right: 20px !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+}
+
+/* -------------------- Table Footer -------------------- */
+.unified-table tfoot,
+.fold-table tfoot,
+#myTable tfoot,
+#example tfoot {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background: #fff;
+}
+
+.unified-table tfoot td,
+.fold-table tfoot td,
+#myTable tfoot td,
+#example tfoot td {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--table-head-bg);
+    border-top: 1px solid var(--table-border);
+}
+
+/* -------------------- Expand Icon -------------------- */
+.expand-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.expand-icon.rotated {
+    transform: rotate(90deg);
+}
+
+.expand-icon:hover:not(.rotated) {
+    box-shadow: 0 4px 10px rgba(126, 34, 206, .35);
+}
+
+.expand-icon.rotated:hover {
+    box-shadow: 0 4px 10px rgba(147, 51, 234, .45);
+}
+
+/* -------------------- Nested/Folded Content -------------------- */
+.fold-content,
+.nested-section {
+    background: transparent !important;
+    border-top: 1px solid var(--table-border);
+    padding: 1rem 0;
+    position: relative;
+    overflow: visible;
+}
+
+.nested-table-container,
+.fold-content .table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid var(--table-border);
+    border-radius: 0.75rem;
+    background: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+}
+
+/* -------------------- Compact/Nested Table -------------------- */
+.compact-table,
+.fold-content>table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.compact-table-head,
+.fold-content>table>thead {
+    background: var(--table-head-bg);
+    border-bottom: 1px solid var(--table-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+}
+
+.compact-table-head th,
+.fold-content>table>thead th {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: inherit;
+}
+
+.compact-row,
+.fold-content>table>tbody>tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+}
+
+.compact-row:last-child,
+.fold-content>table>tbody>tr:last-child {
+    border-bottom: none;
+}
+
+.compact-row:hover,
+.fold-content>table>tbody>tr:hover {
+    background: var(--table-hover);
+}
+
+.compact-row td,
+.fold-content>table>tbody>tr>td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+/* -------------------- Nested Controls -------------------- */
+.nested-controls {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.75rem;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+}
+
+.nested-search-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 20rem;
+    min-width: 150px;
+}
+
+.nested-search {
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+    border: 1px solid #c9ccd1;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    background: #fff;
+}
+
+.nested-search:focus {
+    outline: 0;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, .1);
+}
+
+/* -------------------- Per Page Selector -------------------- */
+.per-page-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.per-page-select {
+    padding: 0.5rem;
+    border: 1px solid #caced4;
+    border-radius: 0.375rem;
+    background: #fff;
+    font-size: 0.875rem;
+}
+
+/* -------------------- Pagination -------------------- */
+.pagination,
+.nested-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pagination-info,
+.nested-pagination-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.pagination-controls,
+.nested-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-controls button,
+.nested-pagination-controls button,
+.nested-page-numbers .btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--table-border);
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-controls button:hover,
+.nested-pagination-controls button:hover,
+.nested-page-numbers .btn:hover {
+    background: var(--table-hover);
+    border-color: var(--accent-blue);
+}
+
+.pagination-controls button:disabled,
+.nested-pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.active-page {
+    background: var(--accent-gradient) !important;
+    color: #fff !important;
+    border-color: var(--accent-blue) !important;
+}
+
+/* -------------------- Badges -------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    gap: 0.25rem;
+}
+
+.badge-outline {
+    background: #f1f5f9;
+    color: var(--text-muted);
+    border: 1px solid var(--table-border);
+}
+
+.badge-emerald {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-purple {
+    background: #e9d5ff;
+    color: #7c2d12;
+}
+
+.badge-orange {
+    background: #fed7aa;
+    color: #9a3412;
+}
+
+.badge-amber {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-red {
+    background: #fecaca;
+    color: #991b1b;
+}
+
+/* -------------------- Buttons -------------------- */
+.btn-sm {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+}
+
+.btn-toggle {
+    background: transparent;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    transition: all 0.2s ease;
+}
+
+.btn-toggle:hover {
+    background: rgba(59, 130, 246, .05);
+    color: #1e40af;
+}
+
+.btn-primary {
+    background: var(--accent-gradient);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, .39);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+/* -------------------- Customer Info Display -------------------- */
+.customer-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.customer-avatar {
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #f97316, #dc2626);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.customer-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-contact {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* -------------------- Stat Cards -------------------- */
+.stats-grid {
+    display: flex;
+    overflow: auto;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    flex: 1 1 200px;
+    padding: 1.2rem 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, .1);
+    transition: all 0.3s ease;
+    border: 0;
+    min-width: 207px;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .15);
+}
+
+.stat-card.green {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #166534;
+}
+
+.stat-card.purple {
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+    color: #7c2d12;
+}
+
+.stat-card.teal {
+    background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+    color: #134e4a;
+}
+
+.stat-card.orange {
+    background: linear-gradient(135deg, #fed7aa, #fdba74);
+    color: #9a3412;
+}
+
+.stat-card.blue {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af;
+}
+
+.stat-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* -------------------- Search Section -------------------- */
+.search-section {
+    border-radius: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    background: transparent !important;
+    padding: 0;
+    margin-bottom: 1rem;
+    box-shadow: none;
+    border: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.search-filters {
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.37);
+    border: 0;
+    border-radius: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex: 1 1 auto;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 100rem;
+    min-width: 200px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: 1px solid var(--table-border);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.search-input:focus {
+    outline: 0;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .1);
+}
+
+/* -------------------- Action Buttons -------------------- */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.add-button-container {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.37);
+    border: 0;
+}
+
+/* -------------------- Scroll Buttons -------------------- */
+.scroll-left,
+.scroll-right {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--table-border);
+    width: 35px;
+    height: 35px;
+    z-index: 99;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.scroll-left:hover,
+.scroll-right:hover {
+    background-color: var(--table-hover);
+    border-color: var(--accent-blue);
+}
+
+.scroll-left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.scroll-right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.scroll-left i,
+.scroll-right i {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* -------------------- Save/Edit Buttons -------------------- */
+.save-button,
+.edit-btn,
+.delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-button {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+}
+
+.save-button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-1px);
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    margin-right: 0.25rem;
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* -------------------- Form Inputs in Table -------------------- */
+table input[type="text"],
+table input[type="number"],
+table input[type="date"],
+table select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--table-border);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+table input[type="text"]:focus,
+table input[type="number"]:focus,
+table input[type="date"]:focus,
+table select:focus {
+    outline: 0;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, .1);
+}
+
+/* =====================================================
+   DARK MODE OVERRIDES (Matches userlogin6 Theme)
+   ===================================================== */
+
+body.dark-mode {
+    color-scheme: dark !important;
+    --table-bg: rgba(44, 44, 46, 0.4);
+    --table-border: rgba(255, 255, 255, 0.15);
+    --table-hover: rgba(255, 255, 255, 0.05);
+    --table-head-bg: rgba(255, 255, 255, 0.05);
+    --table-row-shadow: none;
+    --table-row-hover-shadow: none;
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --accent-blue: #60a5fa;
+}
+
+/* Base Table Overrides */
+body.dark-mode .unified-table tbody tr, 
+body.dark-mode .fold-table tbody tr.view, 
+body.dark-mode #myTable tbody tr, 
+body.dark-mode #example tbody tr,
+body.dark-mode .search-input,
+body.dark-mode .nested-search,
+body.dark-mode .nested-table-container,
+body.dark-mode .form-control, /* Ensure generic inputs are covered */
+body.dark-mode input {
+    background: var(--table-bg) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+    backdrop-filter: blur(18px) saturate(135%);
+}
+
+body.dark-mode select {
+    background-color: var(--table-bg) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+    backdrop-filter: blur(18px) saturate(135%);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-right: 2.5rem !important;
+}
+
+body.dark-mode select option {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+}
+
+/* Table Header */
+body.dark-mode .unified-table thead th, 
+body.dark-mode .fold-table thead th, 
+body.dark-mode #myTable thead th, 
+body.dark-mode #example thead th {
+    background: var(--table-head-bg) !important;
+    color: var(--text-secondary) !important;
+    border-bottom: 1px solid var(--table-border) !important;
+}
+
+/* Hover States */
+body.dark-mode .unified-table tbody tr:hover, 
+body.dark-mode .fold-table tbody tr.view:hover, 
+body.dark-mode #myTable tbody tr:hover, 
+body.dark-mode #example tbody tr:hover {
+    background: var(--table-hover) !important;
+    box-shadow: none !important;
+}
+
+/* Text Colors in Cells */
+body.dark-mode .unified-table tbody td, 
+body.dark-mode .fold-table tbody tr td, 
+body.dark-mode #myTable tbody td, 
+body.dark-mode #example tbody td {
+    color: var(--text-secondary) !important;
+}
+
+body.dark-mode .unified-table tbody td:first-child, 
+body.dark-mode .fold-table tbody tr td:first-child, 
+body.dark-mode #myTable tbody td:first-child, 
+body.dark-mode #example tbody td:first-child {
+    color: var(--text-primary) !important;
+}
+
+/* Pagination & Controls */
+body.dark-mode .pagination-controls button, 
+body.dark-mode .nested-pagination-controls button,
+body.dark-mode .per-page-select,
+body.dark-mode .scroll-left,
+body.dark-mode .scroll-right {
+    background: rgba(44, 44, 46, 0.6) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .pagination-controls button:hover, 
+body.dark-mode .nested-pagination-controls button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Badges (Outline) */
+body.dark-mode .badge-outline {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border-color: var(--table-border);
+}
+
+/* Table Footer */
+body.dark-mode .unified-table tfoot td, 
+body.dark-mode .fold-table tfoot td, 
+body.dark-mode #myTable tfoot td, 
+body.dark-mode #example tfoot td {
+    background: var(--table-head-bg);
+    color: var(--text-secondary);
+    border-top: 1px solid var(--table-border);
+}
+
+/* Stat Cards */
+body.dark-mode .stat-card {
+    background: rgba(44, 44, 46, 0.4);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
+/* -------------------- Responsive Styles -------------------- */
+@media (max-width: 1024px) {
+
+    .unified-table tbody td:first-child,
+    .unified-table tbody td:last-child,
+    .fold-table tbody tr td:first-child,
+    .fold-table tbody tr td:last-child,
+    #myTable tbody td:first-child,
+    #myTable tbody td:last-child {
+        border-radius: 0;
+    }
+
+    .unified-table tbody tr,
+    .fold-table tbody tr.view,
+    #myTable tbody tr,
+    #example tbody tr {
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .1);
+    }
+
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .unified-table thead th,
+    .unified-table tbody td,
+    .fold-table thead th,
+    .fold-table tbody tr td,
+    #myTable thead th,
+    #myTable tbody td {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .nested-controls {
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .compact-row td,
+    .compact-table-head th {
+        padding: 0.5rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .pagination,
+    .nested-pagination {
+        flex-direction: row;
+        gap: 1rem;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 670px) {
+
+    .main-content,
+    body,
+    html {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Enable horizontal scrolling for tables on mobile */
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .unified-table,
+    .fold-table,
+    #myTable,
+    #example,
+    table.stripe,
+    table.display {
+        display: table !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.55rem;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        margin-bottom: 0.6rem !important;
+        padding: 0 4px;
+    }
+
+    .stat-card {
+        min-width: 170px;
+        padding: 0.5rem;
+    }
+
+    .stat-title {
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+    }
+
+    .unified-table thead th,
+    .unified-table tbody td,
+    .fold-table thead th,
+    .fold-table tbody tr td,
+    #myTable thead th,
+    #myTable tbody td,
+    #example thead th,
+    #example tbody td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.8rem;
+        word-break: break-word;
+    }
+
+    .unified-table tbody td:first-child,
+    .fold-table tbody tr td:first-child,
+    #myTable tbody td:first-child,
+    #example tbody td:first-child {
+        font-size: 0.9rem;
+        font-weight: 600;
+        max-width: 120px;
+    }
+
+    .nested-section,
+    .fold-content {
+        padding: 0;
+    }
+
+    .nested-controls {
+        gap: 0.3rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .nested-search {
+        padding-left: 1.5rem !important;
+        border-radius: 0.3rem !important;
+        font-size: 0.7rem !important;
+    }
+
+    .per-page-select {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.2rem;
+    }
+
+    .compact-row td,
+    .compact-table-head th {
+        padding: 0.3rem 0.2rem;
+        text-align: center;
+        font-size: 0.7rem;
+    }
+
+    .customer-info {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .customer-avatar {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .customer-contact,
+    .customer-name {
+        font-size: 0.65rem;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    .btn-sm,
+    .btn-toggle {
+        min-width: unset !important;
+        height: 31px;
+    }
+
+    .badge {
+        padding: 0.05rem 0.15rem;
+        font-size: 0.6rem;
+    }
+
+    .pagination,
+    .nested-pagination {
+        flex-direction: row;
+        gap: 0.6rem;
+        padding: 0.75rem;
+    }
+
+    .pagination-info,
+    .nested-pagination-info {
+        font-size: 0.7rem;
+    }
+
+    .pagination-controls button,
+    .nested-pagination-controls button {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        min-width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .scroll-left {
+        left: 10px;
+    }
+
+    .scroll-right {
+        right: 10px;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .container,
+    .container-fluid,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 540px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        max-width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.1rem;
+    }
+
+    .unified-table,
+    .fold-table,
+    #myTable,
+    #example,
+    table.stripe,
+    table.display {
+        width: 100% !important;
+    }
+
+    .fold-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 545px) {
+
+    .container,
+    .container-fluid,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 450px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        max-width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.1rem;
+    }
+
+    .unified-table,
+    .fold-table,
+    #myTable,
+    #example,
+    table.stripe,
+    table.display {
+        width: 100% !important;
+    }
+
+    .fold-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .container,
+    .container-fluid,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        max-width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.1rem;
+    }
+
+    .unified-table,
+    .fold-table,
+    #myTable,
+    #example,
+    table.stripe,
+    table.display {
+        width: 100% !important;
+    }
+
+    .fold-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .container,
+    .container-fluid,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 310px;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+
+    .table-container,
+    .scrollable-table,
+    .maintablewrap {
+        max-width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
+    }
+
+    .unified-table,
+    .fold-table,
+    #myTable,
+    #example,
+    table.stripe,
+    table.display {
+        width: 100% !important;
+    }
+
+    .fold-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* -------------------- Hide scrollbar styling -------------------- */
+.table-container::-webkit-scrollbar,
+.scrollable-table::-webkit-scrollbar,
+.maintablewrap::-webkit-scrollbar,
+.nested-table-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track,
+.scrollable-table::-webkit-scrollbar-track,
+.maintablewrap::-webkit-scrollbar-track,
+.nested-table-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb,
+.scrollable-table::-webkit-scrollbar-thumb,
+.maintablewrap::-webkit-scrollbar-thumb,
+.nested-table-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(59, 130, 246, .4), rgba(99, 102, 241, .4));
+    border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover,
+.scrollable-table::-webkit-scrollbar-thumb:hover,
+.maintablewrap::-webkit-scrollbar-thumb:hover,
+.nested-table-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(59, 130, 246, .7), rgba(99, 102, 241, .7));
+}
+
+/* -------------------- Override old table styles -------------------- */
+.fold-table tbody tr.view td:first-child:before,
+.fold-table tbody tr.view th:first-child:before {
+    display: none;
+}
+
+/* Remove old sticky header colors */
+/* .maintablewrap table thead,
+.maintablewrap table tfoot {
+    background: #fff !important;
+} */
+
+.maintablewrap table thead th,
+.maintablewrap table tfoot td {
+    color: var(--text-secondary) !important;
+    background: var(--table-head-bg) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--table-border) !important;
+}
+
+/* DataTables override */
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 0.5rem !important;
+}
+
+table.dataTable thead th,
+table.dataTable thead td {
+    border-bottom: 1px solid var(--table-border) !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: none !important;
+}
+
+/* -------------------- CRM/Scrollable Table Override -------------------- */
+.scrollable-table {
+    border-radius: 0.75rem !important;
+    overflow: hidden;
+}
+
+.scrollable-table table {
+    border-collapse: separate !important;
+    border-spacing: 0 0.5rem !important;
+    background: transparent !important;
+}
+
+.scrollable-table table thead,
+.scrollable-table table tfoot {
+    background: var(--table-head-bg) !important;
+}
+
+.scrollable-table table thead th,
+.scrollable-table table tfoot td {
+    background: transparent !important;
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1.25rem !important;
+    border-bottom: 1px solid var(--table-border) !important;
+}
+
+.scrollable-table table tbody tr {
+    background: #fff !important;
+    box-shadow: var(--table-row-shadow);
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.scrollable-table table tbody tr:hover {
+    background: var(--table-hover) !important;
+    box-shadow: var(--table-row-hover-shadow);
+    transform: translateY(-1px);
+}
+
+.scrollable-table table tbody td {
+    padding: 1rem 1.25rem !important;
+    color: var(--text-primary) !important;
+    font-size: 0.9rem !important;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.scrollable-table table tbody td:first-child {
+    border-left: 1px solid #f1f5f9;
+    border-radius: 0.75rem 0 0 0.75rem;
+    background: #fff !important;
+}
+
+.scrollable-table table tbody td:last-child {
+    border-right: 1px solid #f1f5f9;
+    border-radius: 0 0.75rem 0.75rem 0;
+}
+
+/* Sticky column override for CRM */
+.scrollable-table table thead th:nth-child(1),
+.scrollable-table table tfoot td:nth-child(1) {
+    background: var(--table-head-bg) !important;
+}
+
+/* -------------------- DT Layout Wrapper Styling -------------------- */
+.dt-layout-row-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 1rem;
+    overflow: visible;
+}
+
+.dt-layout-row-top-header {
+    background: linear-gradient(135deg, rgba(248, 250, 252, .8), rgba(241, 245, 249, .8));
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--table-border);
+}
+
+.dt-layout-row-top {
+    background: linear-gradient(135deg, rgba(248, 250, 252, .8), rgba(241, 245, 249, .8));
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--table-border);
+    position: relative;
+    z-index: 100;
+}
+
+.dt-layout-row-mid {
+    padding-top: 4px;
+    background: transparent;
+}
+
+.dt-layout-foot {
+    background: linear-gradient(135deg, rgba(248, 250, 252, .8), rgba(241, 245, 249, .8));
+    border-radius: 0.75rem;
+}
+
+/* -------------------- Access Buttons Styling -------------------- */
+.accessbtn {
+    background: #fff !important;
+    border: 1px solid var(--table-border) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08) !important;
+}
+
+.accessbtn:hover {
+    background: var(--table-hover) !important;
+    border-color: var(--accent-blue) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .1) !important;
+}
+
+.accessbtn i {
+    margin-right: 0.25rem;
+}
+
+/* Active button states */
+.activebutton.accessbtn {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0) !important;
+    border-color: #86efac !important;
+    color: #166534 !important;
+}
+
+.deactivebutton.accessbtn {
+    background: linear-gradient(135deg, #fecaca, #fca5a5) !important;
+    border-color: #f87171 !important;
+    color: #991b1b !important;
+}
+
+.salarybutton.accessbtn {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe) !important;
+    border-color: #93c5fd !important;
+    color: #1e40af !important;
+}
+
+.filterbutton.accessbtn {
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff) !important;
+    border-color: #c4b5fd !important;
+    color: #7c2d12 !important;
+}
+
+.assignbutton.accessbtn,
+.assignmodalbutton.accessbtn {
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+    border-color: #7dd3fc !important;
+    color: #0369a1 !important;
+}
+
+.uploadbutton.accessbtn {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0) !important;
+    border-color: #6ee7b7 !important;
+    color: #065f46 !important;
+}
+
+.deletebutton.accessbtn {
+    background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
+    border-color: #fca5a5 !important;
+    color: #dc2626 !important;
+}
+
+.excelbutton.accessbtn {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0) !important;
+    border-color: #6ee7b7 !important;
+    color: #047857 !important;
+}
+
+/* -------------------- Row Selector & Search Styling -------------------- */
+.rowSelector_wrap,
+.leadstatus_wrap {
+    background: #fff !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08) !important;
+}
+
+.rowSelector_wrap select,
+.leadstatus_wrap select {
+    background: transparent !important;
+    border: none !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+}
+
+.search {
+    background: #fff !important;
+    border: 1px solid var(--table-border) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08) !important;
+}
+
+.search:focus-within {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .1) !important;
+}
+
+.searchTerm {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* -------------------- Column Visibility Dropdown -------------------- */
+.Visibility_dropdown button {
+    background: #fff !important;
+    border: 1px solid var(--table-border) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08) !important;
+}
+
+/* -------------------- Column Visibility Dropdown -------------------- */
+.Visibility_dropdown {
+    display: inline-block;
+    position: relative;
+    z-index: 100 !important;
+}
+
+.Visibility_dropdown-content {
+    display: none;
+    position: absolute;
+    background: #fff !important;
+    border: 1px solid var(--table-border) !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15) !important;
+    z-index: 9999 !important;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+}
+
+.Visibility_dropdown:hover .Visibility_dropdown-content {
+    display: block;
+}
+
+.Visibility_dropdown-content label {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.8rem !important;
+    color: var(--text-secondary) !important;
+    transition: all 0.2s ease;
+}
+
+.Visibility_dropdown-content label:hover {
+    background: var(--table-hover) !important;
+}
+
+/* Mobile responsive dropdown positioning */
+/* @media (max-width: 768px) {
+    .Visibility_dropdown-content {
+        right: auto !important;
+        left: 0 !important;
+        max-width: 90vw !important;
+    }
+} */
+
+@media (max-width: 425px) {
+    .Visibility_dropdown-content {
+        right: auto !important;
+        left: -100px !important;
+        min-width: 160px !important;
+        max-width: 85vw !important;
+    }
+}
+
+/* -------------------- cURL and Report Buttons -------------------- */
+.invoice-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: #fff;
+}
+
+.invoice-button:first-of-type {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, .35);
+}
+
+.invoice-button:first-of-type:hover {
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, .45);
+}
+
+.invoice-button[style*="lightseagreen"],
+.invoice-button:last-of-type {
+    background: linear-gradient(135deg, #14b8a6, #0d9488) !important;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, .35);
+}
+
+.invoice-button[style*="lightseagreen"]:hover,
+.invoice-button:last-of-type:hover {
+    background: linear-gradient(135deg, #0d9488, #0f766e) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 184, 166, .45);
+}
+
+.invoice-button a {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.invoice-button i {
+    font-size: 0.85rem;
+}
+
+/* -------------------- Edit and Delete Item Buttons -------------------- */
+.item-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.item-icon.edit-item {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0) !important;
+    color: #065f46 !important;
+    border: 1px solid #6ee7b7;
+}
+
+.item-icon.edit-item:hover {
+    background: linear-gradient(135deg, #a7f3d0, #6ee7b7) !important;
+    transform: translateY(-1px);
+}
+
+.item-icon.delete-item {
+    background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
+    color: #dc2626 !important;
+    border: 1px solid #fca5a5;
+}
+
+.item-icon.delete-item:hover {
+    background: linear-gradient(135deg, #fecaca, #fca5a5) !important;
+    transform: translateY(-1px);
+}
+
+/* -------------------- Fix Horizontal Scroll for Tables -------------------- */
+.scrollable-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scrollable-table table {
+    min-width: max-content !important;
+}
+
+/* -------------------- Download Button Styling -------------------- */
+.downloadbutton.accessbtn {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe) !important;
+    border-color: #93c5fd !important;
+    color: #1e40af !important;
+}
+
+.downloadbutton.accessbtn i {
+    color: #1e40af !important;
+}
+
+/* -------------------- Pagination Active State -------------------- */
+#pageNumbers button.active,
+.pagination button.active {
+    background: #007bff !important;
+    color: #fff !important;
+    border-color: var(--accent-blue) !important;
+}
+
+#pageNumbers button,
+.pagination #pageNumbers button {
+    margin: 0 0.15rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--table-border);
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+}
+
+#pageNumbers button:hover {
+    background: var(--table-hover);
+    border-color: var(--accent-blue);
+}
+
+/* =====================================================
+   DARK MODE OVERRIDES (Matches userlogin6 Theme)
+   ===================================================== */
+
+body.dark-mode {
+    color-scheme: dark !important;
+    --table-bg: rgba(44, 44, 46, 0.4);
+    --table-border: rgba(255, 255, 255, 0.15);
+    --table-hover: rgba(255, 255, 255, 0.05);
+    --table-head-bg: rgba(255, 255, 255, 0.05);
+    --table-row-shadow: none;
+    --table-row-hover-shadow: none;
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --accent-blue: #60a5fa;
+}
+
+/* Base Table Overrides */
+body.dark-mode .unified-table tbody tr, 
+body.dark-mode .fold-table tbody tr.view, 
+body.dark-mode #myTable tbody tr, 
+body.dark-mode #example tbody tr,
+body.dark-mode .search-input,
+body.dark-mode .nested-search,
+body.dark-mode .nested-table-container,
+body.dark-mode .form-control, /* Ensure generic inputs are covered */
+body.dark-mode input {
+    background: var(--table-bg) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+    backdrop-filter: blur(18px) saturate(135%);
+}
+
+body.dark-mode select {
+    background-color: var(--table-bg) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+    backdrop-filter: blur(18px) saturate(135%);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-right: 2.5rem !important;
+}
+
+body.dark-mode select option {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+}
+
+/* Table Header */
+body.dark-mode .unified-table thead th, 
+body.dark-mode .fold-table thead th, 
+body.dark-mode #myTable thead th, 
+body.dark-mode #example thead th {
+    background: var(--table-head-bg) !important;
+    color: var(--text-secondary) !important;
+    border-bottom: 1px solid var(--table-border) !important;
+}
+
+/* Hover States */
+body.dark-mode .unified-table tbody tr:hover, 
+body.dark-mode .fold-table tbody tr.view:hover, 
+body.dark-mode #myTable tbody tr:hover, 
+body.dark-mode #example tbody tr:hover {
+    background: var(--table-hover) !important;
+    box-shadow: none !important;
+}
+
+/* Text Colors in Cells */
+body.dark-mode .unified-table tbody td, 
+body.dark-mode .fold-table tbody tr td, 
+body.dark-mode #myTable tbody td, 
+body.dark-mode #example tbody td {
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+}
+
+body.dark-mode .unified-table tbody td:first-child, 
+body.dark-mode .fold-table tbody tr td:first-child, 
+body.dark-mode #myTable tbody td:first-child, 
+body.dark-mode #example tbody td:first-child {
+    color: var(--text-primary) !important;
+}
+
+/* Pagination & Controls */
+body.dark-mode .pagination-controls button, 
+body.dark-mode .nested-pagination-controls button,
+body.dark-mode .per-page-select,
+body.dark-mode .scroll-left,
+body.dark-mode .scroll-right {
+    background: rgba(44, 44, 46, 0.6) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .pagination-controls button:hover, 
+body.dark-mode .nested-pagination-controls button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Badges (Outline) */
+body.dark-mode .badge-outline {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border-color: var(--table-border);
+}
+
+/* Table Footer */
+body.dark-mode .unified-table tfoot td, 
+body.dark-mode .fold-table tfoot td, 
+body.dark-mode #myTable tfoot td, 
+body.dark-mode #example tfoot td {
+    background: var(--table-head-bg);
+    color: var(--text-secondary);
+    border-top: 1px solid var(--table-border);
+}
+
+/* Stat Cards */
+body.dark-mode .stat-card {
+    background: rgba(44, 44, 46, 0.4);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Specific Container Overrides for Dark Mode */
+body.dark-mode .search-filters,
+body.dark-mode .leads-search-box,
+body.dark-mode .add-button-container {
+    background: rgba(44, 44, 46, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .leads-search-box input,
+body.dark-mode .search {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .leads-search-box i {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark-mode .dt-layout-row-top-header,
+body.dark-mode .dt-layout-row-top,
+body.dark-mode .dt-layout-row-mid {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .accessbtn {
+    background: rgba(44, 44, 46, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-mode .accessbtn:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .column-visibility-btn{
+    background: rgba(44, 44, 46, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+}
+
+body.dark-mode .rowSelector_wrap select,
+body.dark-mode .rowSelector_wrap select option {
+    background: rgba(44, 44, 46, 0.4) !important;
+    border: none !important;
+    color: #fff !important;
+}
+
+body.dark-mode .column-visibility-btn:hover,
+body.dark-mode .rowSelector_wrap select:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-mode .rowSelector_wrap::after {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark-mode .column-visibility-btn i {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-mode .column-visibility-menu{
+    border: none;
+    background: rgba(30, 30, 30, 0.95) !important;
+}
+
+body.dark-mode .column-visibility-item label{
+    color: white !important;
+}
+
+body.dark-mode .rowSelector_wrap{
+    background: rgba(44, 44, 46, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .unified-table thead,
+body.dark-mode .fold-table thead,
+body.dark-mode #myTable thead,
+body.dark-mode #example thead,
+body.dark-mode table.stripe thead,
+body.dark-mode table.display thead {
+    background: #454545 !important;
+}
+
+/* ==========================================================================
+   UNIFIED & PREMIUM PAGINATION STYLES (ANTIGRAVITY UNIFIED DESIGN)
+   ========================================================================== */
+
+/* 1. Main Pagination Containers */
+.pagination-section,
+.offer-pagination-section,
+#payrollPaginationWrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 20px 0 0 0 !important;
+    width: 100% !important;
+}
+
+/* Force inner d-flex containers to column layout for stack centering */
+.pagination-section .d-flex,
+.offer-pagination-section .d-flex,
+#payrollPaginationWrap .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 8px !important;
+}
+
+/* 2. Pagination Info (Showing X to Y of Z entries) */
+.pagination-section .pagination-info,
+.offer-pagination-section .pagination-info,
+#payrollPaginationWrap .pagination-info {
+    font-size: 13px !important;
+    color: #64748b !important;
+    font-weight: 500 !important;
+    text-align: center !important;
+    margin: 0 0 8px 0 !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Dark Mode override for Info */
+body.dark-mode .pagination-section .pagination-info,
+body.dark-mode .offer-pagination-section .pagination-info,
+body.dark-mode #payrollPaginationWrap .pagination-info {
+    color: #94a3b8 !important;
+}
+
+/* 3. Pagination Controls (Buttons Row) */
+.pagination-section .pagination-controls,
+.offer-pagination-section .pagination-controls,
+#payrollPaginationWrap .pagination-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 4. Page Buttons (Standard Compact Shape & Modern Colors) */
+body .page-btn,
+body .pagination-section .page-btn,
+body .offer-pagination-section .page-btn,
+body #payrollPaginationWrap .page-btn,
+body .pagination-controls .page-btn {
+    min-width: 36px !important;
+    height: 36px !important;
+    padding: 0 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    background: #f1f5f9 !important; /* Premium soft light-slate background */
+    border: 1px solid #e2e8f0 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    box-sizing: border-box !important;
+}
+
+/* Hover State for Inactive Buttons */
+body .page-btn:hover:not(.active):not(.disabled),
+body .pagination-section .page-btn:hover:not(.active):not(.disabled),
+body .offer-pagination-section .page-btn:hover:not(.active):not(.disabled),
+body #payrollPaginationWrap .page-btn:hover:not(.active):not(.disabled),
+body .pagination-controls .page-btn:hover:not(.active):not(.disabled) {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Active State (Vibrant Blue) */
+body .page-btn.active,
+body .pagination-section .page-btn.active,
+body .offer-pagination-section .page-btn.active,
+body #payrollPaginationWrap .page-btn.active,
+body .pagination-controls .page-btn.active {
+    background: #0d6efd !important; /* Premium vibrant blue */
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.25) !important;
+    font-weight: 700 !important;
+}
+
+/* Disabled State (Muted, grayed out) */
+body .page-btn.disabled,
+body .page-btn:disabled,
+body .pagination-section .page-btn.disabled,
+body .pagination-section .page-btn:disabled,
+body .offer-pagination-section .page-btn.disabled,
+body .offer-pagination-section .page-btn:disabled,
+body #payrollPaginationWrap .page-btn.disabled,
+body #payrollPaginationWrap .page-btn:disabled,
+body .pagination-controls .page-btn.disabled,
+body .pagination-controls .page-btn:disabled {
+    background: #f8fafc !important;
+    color: #94a3b8 !important;
+    border-color: #e2e8f0 !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Dark Mode Overrides for Premium Aesthetic */
+body.dark-mode .page-btn,
+body.dark-mode .pagination-section .page-btn,
+body.dark-mode .offer-pagination-section .page-btn,
+body.dark-mode #payrollPaginationWrap .page-btn,
+body.dark-mode .pagination-controls .page-btn {
+    background: #1e293b !important; /* Soft dark slate background */
+    border: 1px solid #334155 !important;
+    color: #cbd5e1 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .page-btn:hover:not(.active):not(.disabled),
+body.dark-mode .pagination-section .page-btn:hover:not(.active):not(.disabled),
+body.dark-mode .offer-pagination-section .page-btn:hover:not(.active):not(.disabled),
+body.dark-mode #payrollPaginationWrap .page-btn:hover:not(.active):not(.disabled),
+body.dark-mode .pagination-controls .page-btn:hover:not(.active):not(.disabled) {
+    background: #334155 !important;
+    color: #ffffff !important;
+    border-color: #475569 !important;
+}
+
+body.dark-mode .page-btn.active,
+body.dark-mode .pagination-section .page-btn.active,
+body.dark-mode .offer-pagination-section .page-btn.active,
+body.dark-mode #payrollPaginationWrap .page-btn.active,
+body.dark-mode .pagination-controls .page-btn.active {
+    background: #0d6efd !important;
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.4) !important;
+}
+
+body.dark-mode .page-btn.disabled,
+body.dark-mode .page-btn:disabled,
+body.dark-mode .pagination-section .page-btn.disabled,
+body.dark-mode .pagination-section .page-btn:disabled,
+body.dark-mode .offer-pagination-section .page-btn.disabled,
+body.dark-mode .offer-pagination-section .page-btn:disabled,
+body.dark-mode #payrollPaginationWrap .page-btn.disabled,
+body.dark-mode #payrollPaginationWrap .page-btn:disabled,
+body.dark-mode .pagination-controls .page-btn.disabled,
+body.dark-mode .pagination-controls .page-btn:disabled {
+    background: #0f172a !important;
+    color: #475569 !important;
+    border-color: #1e293b !important;
+    opacity: 0.4 !important;
+}

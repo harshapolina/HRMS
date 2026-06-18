@@ -1,0 +1,806 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lexend Deca", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+body button:focus-visible{
+    outline: none;
+}
+
+/* pagination css */
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination #prevButton,.pagination #nextButton {
+    border: none;
+    padding: 3px 6px;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.pagination #prevButton {
+    margin-right: 20px;
+}
+
+.pagination #nextButton {
+    margin-left: 20px;
+}
+
+.pagination #prevButton i,.pagination #nextButton i {
+   font-size: 20px;
+}
+
+.pagination #pageNumbers button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #eaeaf8!important;
+    color: black;
+}
+
+.pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.dots {
+    padding: 8px 12px;
+    display: inline-block;
+}
+
+/* coulmn  visibilty css */
+.Visibility_dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.Visibility_dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 11px;
+}
+
+.Visibility_dropdown-content::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.Visibility_dropdown-content::-webkit-scrollbar{
+	width: 4px;
+	height: 4px;
+}
+
+.Visibility_dropdown-content::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #eaeaf8;
+}
+
+.Visibility_dropdown:hover .Visibility_dropdown-content {
+    display: block;
+}
+
+.Visibility_dropdown-content label {
+    display: block;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.Visibility_dropdown-content label:last-child {
+    border-bottom: none;
+}
+
+.Visibility_dropdown-content input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* table css  */
+.dt-layout-row-wrapper{
+    box-shadow: 0px 0px 3px 0px black;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.scrollable-table {
+    width: 100%;
+    max-width: 100vw;
+    height: 100%;
+    max-height: 80vh;
+    overflow: auto;
+    position: relative;
+    box-shadow: 0px 2px 2px 0px #00000033;
+    border-radius: 10px;
+}
+
+.scrollable-table table,
+#viewStatusModal table,
+#viewRemarksModal table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.scrollable-table table tbody tr:hover {
+    background-color: #f4f4fc;
+}
+
+.scrollable-table table thead,
+.scrollable-table table tfoot,
+#viewStatusModal  table thead,
+#viewRemarksModal table thead{
+    background-color: #eaeaf8;
+    position: sticky;
+    z-index: 8;
+}
+
+.scrollable-table table thead{
+    top: 0px;
+}
+
+#viewStatusModal  table ,#table thead table {
+   text-align: justify;
+}
+
+#viewStatusModal table thead,
+#viewRemarksModal table thead{
+    top: -17px;
+}
+
+.scrollable-table table thead th,.scrollable-table table tfoot td,
+#viewStatusModal  table thead th,#viewStatusModal table tfoot td,
+#viewRemarksModal  table thead th,#viewRemarksModal table tfoot td{
+    color: #2a2b2c;
+    padding: 10px 20px;
+    white-space: nowrap;
+    font-size: 12px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.scrollable-table table thead th:nth-child(1),.scrollable-table table tbody td:nth-child(1),.scrollable-table table tfoot td:nth-child(1){
+    position: sticky;
+    left: 0px;
+    background-color: #eaeaf8;
+    z-index: 7;
+}
+
+.scrollable-table table tbody td:nth-child(1){
+    background-color: #fff;
+    border-right: 1px solid rgba(117, 116, 116, 0.224);
+}
+
+.scrollable-table table tbody td:nth-child(2) {
+    font-weight: 600;
+}
+
+.scrollable-table table tfoot {
+    bottom: 0px;
+}
+
+.scrollable-table table tbody tr ,
+#viewStatusModal  table tbody tr {
+    border-bottom: 1px solid rgba(225, 222, 222, 0.913);
+}
+
+.scrollable-table table tbody tr td,
+#viewStatusModal table tbody tr td,
+#viewRemarksModal table tbody tr td {
+    padding: 12px 20px;
+    white-space: nowrap;
+    color: #54535C;
+    font-size: 13px;
+    text-align: left;
+}
+
+.scrollable-table::-webkit-scrollbar {
+    display: none;
+}
+
+.activeuser,.deactiveuser {
+    border: none;
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    position: relative;
+    cursor: default!important;
+}
+
+.activeuser{
+ background-color: rgba(3, 141, 3, 0.279);
+ padding: 2px 14px;
+ color: green;
+}
+
+.deactiveuser{
+ background-color: rgb(255 0 0 / 25%);
+ padding: 2px 6px;
+ color: red;
+}
+
+.activeuser::before,.deactiveuser::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.activeuser::before {
+    background-color: green;
+}
+
+.deactiveuser::before {
+    background-color: red;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.item-icon{
+    font-size: 12px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.scrollable-table tbody .edit-item {
+    background-color: #d1f6c5;
+    color: green;
+}
+
+.scrollable-table tbody .edit-item i {
+    color: green;
+}
+
+.scrollable-table tbody .delete-item {
+    background-color: #FEF0F1;
+    color:red ;
+}
+
+.scrollable-table tbody .delete-item i {
+    color: red;
+}
+
+.dt-layout-row-top ,.dt-layout-row-top-header {
+    margin-bottom: 10px;
+}
+
+.dt-layout-row-top-header{
+    border: 1px solid rgba(0, 0, 0, 0.208);
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.dt-layout-header::-webkit-scrollbar{
+    display: none;
+}
+
+.dt-layout-header{
+    width: 100%;
+    display: flex;
+    overflow: auto hidden;
+    gap: 10px;
+}
+
+.dt-layout-header .accessbtn{
+    font-weight: 500;
+    font-size: 13px;
+    background-color: transparent;
+    border-right: 1px solid black;
+    border-radius: 0px;
+    padding: 2px 10px;
+}
+
+.rowSelector_wrap,.leadstatus_wrap{
+    padding: 2px 4px;
+    background-color: #eaeaf8;
+    border-radius: 6px;
+    color: black;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.rowSelector_wrap select,
+.leadstatus_wrap select{
+   border: none;
+   background-color: transparent;
+   color: black;
+   font-weight: 600;
+}
+
+.rowSelector_wrap select:focus-visible,
+.leadstatus_wrap select:focus-visible{
+   outline: none;
+}
+
+.rowSelector_wrap select option,
+.leadstatus_wrap  select option{
+   color: black;
+}
+
+.Visibility_dropdown button i{
+   margin-right: 3px;
+}
+
+.dt-layout-row-top-il,.dt-layout-row-top-ir {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 50%;
+}
+
+
+.dt-layout-row-top-ir{
+    justify-content: flex-end;
+}
+
+.dt-layout-row-top-il{
+    justify-content: flex-start;
+}
+
+.dt-layout-row-top-il{
+    overflow: auto  hidden;
+}
+
+.dt-layout-row-top-il::-webkit-scrollbar,.dt-layout-row-top-ir::-webkit-scrollbar{
+    display: none;
+}
+
+.dt-layout-row-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accessbtn,.dt-layout-row-top-ir button{
+    border: none;
+    padding: 2px 4px;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: #eaeaf8;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.accessbtn i {
+    margin-right: 2px;
+} 
+
+.filterbutton i{
+    color: #661515;
+}
+
+.acitvebutton i {
+    color: green;
+}
+
+.deactivebutton i {
+    color: red;
+}
+
+.assignbutton i {
+    color: #54535C;
+}
+
+.assignmodalbutton i {
+    color: #3b25df;
+}
+
+.uploadbutton i {
+    color: green;
+}
+
+.deletebutton i {
+    color: red;
+}
+
+.excelbutton i {
+    color: darkgreen;
+}
+
+.salarybutton i {
+    color: green;
+}
+
+/* searchbar css*/
+
+.search {
+    display: flex;
+    background-color: #eaeaf8;
+    padding: 0px 5px;
+    padding: 0px 5px;
+    border-radius: 10px;
+}
+
+.searchTerm {
+    width: 100%;
+    border: none;
+    padding: 3px;
+    font-size: 14px;
+    color: #000;
+    background-color: transparent;
+}
+
+.searchTerm:focus-visible {
+    outline: none;
+}
+
+.searchButton i {
+    color: black;
+}
+
+.searchButton {
+    background: transparent;
+    text-align: center;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+#jumpButton {
+    color: #000;
+    border-left: 1px solid #000;
+    padding: 4px;
+    font-size: 14px;
+}
+
+/* save button css */
+.scrollable-table tbody .save-button,.scrollable-table tbody .invoice-button,.scrollable-table tbody .update-button {
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.scrollable-table tbody .save-button {
+    background-color: seagreen;
+    color: white;
+}
+
+.scrollable-table tbody .update-button {
+    background-color: rgb(0, 117, 117);
+    color: white;
+}
+
+.scrollable-table tbody .invoice-button {
+    background-color: cadetblue;
+    color: white;
+}
+
+.scrollable-table tbody .save-button i,.scrollable-table tbody .invoice-button i,.scrollable-table tbody .update-button i {
+    margin-right: 3px;    
+}
+
+.edit_advance {
+    border: none;
+    border-bottom: 1px solid #54535C;
+    color: #54535C;
+    background-color: transparent;
+}
+
+.edit_advance:focus-visible{
+    outline: none;
+}
+
+.status-modal-cls,.status-modal-cls-cmmn{
+    border: 0px;
+    border-radius: 10px;
+    padding: 0px 8px;
+    font-size: 12px;
+    background-color: transparent;
+    text-align: center;
+}
+
+.status-modal-cls-cmmn{
+    background-color: #fdcbcb;
+    color: #661515;
+}
+
+.status-pending{
+    color: #FFA500;
+    padding: 0px 12px;
+}
+
+.status-pending::before {
+    background-color: #FFA500;
+}
+
+.status-fake{
+    color: #FF4500;
+    padding:0px 20px;
+}
+
+.status-fake::before {
+    background-color:#FF4500;
+}
+
+.status-rnr{
+    color: #FFD700;
+    padding:0px 20px;
+}
+
+.status-rnr::before {
+    background-color:#FFD700;
+}
+
+.status-callback{
+    color: #1E90FF;
+    padding:0px 20px;
+}
+
+.status-callback::before {
+    background-color:#1E90FF;
+}
+
+.status-booked{
+    color: #32CD32;
+    padding:0px 20px;
+}
+
+.status-booked::before {
+    background-color:#32CD32;
+}
+
+.status-not-interested{
+    color: #A9A9A9;
+    padding:0px 20px;
+}
+
+.status-not-interested::before {
+    background-color:#A9A9A9;
+}
+
+.status-interested{
+    color: #90EE90;
+    padding:0px 20px;
+}
+
+.status-interested::before {
+    background-color:#90EE90;
+}
+
+.status-follow-up{
+    color: #87CEFA;
+    padding:0px 20px;
+}
+
+.status-follow-up::before {
+    background-color:#87CEFA;
+}
+
+.status-visit{
+    color: #006400;
+    padding:0px 20px;
+}
+
+.status-visit::before {
+    background-color:#006400;
+}
+
+.status-visit-done{
+    color: #9370DB;
+    padding:0px 20px;
+}
+
+.status-visit-done::before {
+    background-color:#9370DB;
+}
+
+.status-eoi-collected{
+    color: #20B2AA;
+    padding:0px 20px;
+}
+
+.status-eoi-collected::before {
+    background-color: #20B2AA;
+}
+.not-connected{
+    color: #ff5733;
+    padding:0px 20px;
+}
+
+.not-connected::before {
+    background-color: #ff5733;
+}
+
+.status-pending::before,.status-fake::before,.status-rnr::before,.status-callback::before,.status-booked::before,.status-not-interested::before,.status-interested::before,.status-follow-up::before,.status-visit::before,.status-visit-done::before,.status-converted::before,.status-eoi-collected::before,.not-connected::before{
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+#assignUserList{
+    text-align: justify;
+    font-size: 14px;
+}
+
+.more-text {
+    text-decoration: underline;
+    color: #181055;
+    font-size: 10px;
+}
+
+/* bootstrap modal css */
+
+.modal .btn-close {
+    font-size: 12px;
+}
+
+.modal .btn-close:focus {
+    box-shadow: none!important;
+}
+
+.modal-header {
+    padding: 0.5rem 1rem!important;
+}
+
+.modal .modal-content .modal-body{
+    text-align: justify;
+}
+
+.modal .modal-content .modal-body::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.modal .modal-content .modal-body::-webkit-scrollbar{
+	width: 4px;
+	height: 4px;
+}
+
+.modal .modal-content .modal-body::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #eaeaf8;
+}
+
+.viewremarks-btn {
+    border: none;
+    font-size: 12px;
+    padding: 2px 6px;
+    color: #0000ff94;
+    background-color: rgba(10, 10, 250, 0.178);
+    border-radius: 10px;
+}
+
+.assignesuser-short {
+    cursor: pointer;
+}
+
+.remarksspan{
+    white-space: pre-line;
+    text-align: justify;
+}
+
+.dt-layout-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dt-layout-foot #rowInfo{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* active row css*/
+
+#myTable tbody tr {
+    cursor: pointer;
+}
+
+#myTable tbody tr.active-row {
+    background-color: #e9e9fa;
+}
+
+.separationheading {
+    font-weight: 700!important;
+}
+
+.separationheading span{
+    font-size: 12px;
+}
+
+.separationheading i{
+    font-size: 12px;
+}
+
+@media only screen and (max-width:1200px){
+
+    .scrollable-table table thead th, .scrollable-table table tfoot td, #viewStatusModal table thead th, #viewStatusModal table tfoot td, #viewRemarksModal table thead th, #viewRemarksModal table tfoot td {
+        padding: 5px 16px;
+    }
+    .scrollable-table table tbody tr td, #viewStatusModal table tbody tr td, #viewRemarksModal table tbody tr td {
+        padding: 8px 16px;
+    }
+
+    .status-modal-cls, .status-modal-cls-cmmn {
+        padding: 1px 7px;
+    }
+
+    .scrollable-table tbody .save-button, .scrollable-table tbody .invoice-button, .scrollable-table tbody .update-button {
+        padding: 1px 8px;
+    }
+
+    .item-icon {
+        padding: 0px 6px;
+    }
+
+    .dt-layout-row-top-il,.dt-layout-row-top-ir{
+        width: 100%;
+    }
+    .dt-layout-row-top,.dt-layout-foot{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        row-gap: 15px;
+    }
+
+    .dt-layout-row-wrapper {
+        box-shadow: none;
+    }
+
+    .dt-layout-row-top-il{
+        width: 100%;
+        overflow: auto hidden;
+    }
+
+    .dt-layout-row-top-ir-label{
+        display: none;
+    }
+
+    .dt-layout-row-top-ir button{
+        padding: 2px 10px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .Visibility_dropdown button i {
+        margin-right: 0px;
+    }
+}

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>NotFoundError: Not Found<br> &nbsp; &nbsp;at createHttpError (/opt/vipul/openclaw-app/node_modules/express/node_modules/send/index.js:861:12)<br> &nbsp; &nbsp;at SendStream.error (/opt/vipul/openclaw-app/node_modules/express/node_modules/send/index.js:168:31)<br> &nbsp; &nbsp;at SendStream.pipe (/opt/vipul/openclaw-app/node_modules/express/node_modules/send/index.js:468:14)<br> &nbsp; &nbsp;at sendfile (/opt/vipul/openclaw-app/node_modules/express/lib/response.js:1014:8)<br> &nbsp; &nbsp;at ServerResponse.sendFile (/opt/vipul/openclaw-app/node_modules/express/lib/response.js:411:3)<br> &nbsp; &nbsp;at /opt/vipul/openclaw-app/server/index.cjs:901:7<br> &nbsp; &nbsp;at Layer.handleRequest (/opt/vipul/openclaw-app/node_modules/router/lib/layer.js:152:17)<br> &nbsp; &nbsp;at next (/opt/vipul/openclaw-app/node_modules/router/lib/route.js:157:13)<br> &nbsp; &nbsp;at Route.dispatch (/opt/vipul/openclaw-app/node_modules/router/lib/route.js:117:3)<br> &nbsp; &nbsp;at handle (/opt/vipul/openclaw-app/node_modules/router/index.js:435:11)</pre>
+</body>
+</html>

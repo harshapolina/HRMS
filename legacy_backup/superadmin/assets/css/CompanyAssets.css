@@ -1,0 +1,6374 @@
+/* ==================== COMPANY ASSETS - SCOPED STYLES ==================== */
+/* All styles scoped to body.companyassets-page to avoid conflicts */
+
+/* ==================== SEARCH & TOOLBAR CONTAINER ==================== */
+
+/* Translucent 'Frosted Glass' container matching Property Bookings style */
+body.companyassets-page .ca-toolbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;;
+  gap: 1rem;
+  min-height: 76px;
+  position: relative;
+  z-index: 50;
+  overflow: visible !important;
+}
+
+/* Search Wrapper - Takes available space on the left */
+body.companyassets-page .ca-search-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: none;
+}
+
+body.companyassets-page .ca-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+body.companyassets-page .ca-search-input {
+  width: 100%;
+  height: 44px;
+  /* Fixed height for alignment */
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  /* Keep input white for contrast */
+  transition: all 0.2s ease;
+  color: #334155;
+}
+
+body.companyassets-page .ca-search-input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+body.companyassets-page .ca-search-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Action Buttons Container - Right aligned */
+body.companyassets-page .ca-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Standard gap matching property bookings */
+  flex-shrink: 0;
+}
+
+/* Filter Button - Secondary Style (White with Border) */
+body.companyassets-page .ca-filter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  /* Fixed height matching input */
+  padding: 0 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  /* Keep button white */
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+body.companyassets-page .ca-filter-btn:hover {
+  /* background: #f8fafc; */
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+body.companyassets-page .ca-filter-btn svg {
+  flex-shrink: 0;
+}
+
+/* Column Visibility Button Wrapper */
+body.companyassets-page .ca-column-visibility-wrapper {
+  position: relative;
+  z-index: 100;
+  /* Ensure this wrapper is above other elements */
+  display: flex;
+  align-items: center;
+}
+
+/* Column Visibility Button - PRIMARY Style (Matches "Add Booking") */
+body.companyassets-page .ca-column-visibility-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  /* Fixed height matching input */
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  /* Primary Blue - Keep opacity 1 */
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+body.companyassets-page .ca-column-visibility-btn:hover {
+  background: #2563eb;
+  /* Darker blue on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+body.companyassets-page .ca-column-visibility-btn svg {
+  flex-shrink: 0;
+}
+
+/* ==================== COLUMN VISIBILITY DROPDOWN ==================== */
+
+body.companyassets-page .ca-column-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  /* High z-index to overlap table header */
+  display: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  visibility: hidden;
+}
+
+body.companyassets-page .ca-column-dropdown.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.companyassets-page .ca-dropdown-header {
+  padding: 1rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: 12px 12px 0 0;
+}
+
+body.companyassets-page .ca-dropdown-body {
+  padding: 0.5rem;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+body.companyassets-page .ca-dropdown-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.companyassets-page .ca-dropdown-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+body.companyassets-page .ca-dropdown-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.4), rgba(99, 102, 241, 0.4));
+  border-radius: 10px;
+}
+
+body.companyassets-page .ca-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+body.companyassets-page .ca-dropdown-item:hover {
+  background: #f8fafc;
+}
+
+body.companyassets-page .ca-dropdown-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  margin-right: 0.75rem;
+  cursor: pointer;
+  accent-color: #3b82f6;
+  flex-shrink: 0;
+}
+
+body.companyassets-page .ca-dropdown-item span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* ==================== TABLE - CARD WRAPPER & SCROLL ==================== */
+
+/* NEW: Card Wrapper for Rounded Corners */
+body.companyassets-page .ca-table-card {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
+  overflow: hidden; /* contains rounded corners */
+}
+
+/* Ensure table expands to fit content */
+/* Allow table to grow when columns are added */
+body.companyassets-page .ca-table-card table {
+  width: max-content !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+}
+
+
+/* Fix 2: Column Visibility Dropdown at 1024px */
+/* [Removed conflicting 1024px query 1] */
+
+/* Horizontal scroll container */
+body.companyassets-page .ca-table-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+
+  /* ✅ scroll here */
+  background: transparent;
+  padding-bottom: 0;
+  /* No external padding needed inside card usually, or keep if scrollbar overlaps */
+}
+
+/* Custom Scrollbar for the table CARD (The actual scrolling container) */
+body.companyassets-page .ca-table-card::-webkit-scrollbar {
+  height: 4px !important;
+  /* Thin horizontal scroll */
+  width: 4px !important;
+  /* Thin vertical scroll if needed */
+}
+
+body.companyassets-page .ca-table-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.companyassets-page .ca-table-card::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Also keep wrapper rules just in case */
+body.companyassets-page .ca-table-wrapper::-webkit-scrollbar {
+  height: 4px !important;
+  width: 4px !important;
+}
+
+body.companyassets-page .ca-table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.companyassets-page .ca-table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Fix 2: Column Visibility Dropdown at 1024px */
+/* Ensure columns are forced visible when JS enables them */
+/* [Removed conflicting 1024px query 2] */
+
+/* Let table expand horizontally */
+body.companyassets-page .ca-table {
+  width: max-content !important;
+  min-width: 100% !important;
+
+  border-collapse: separate;
+  /* Important for border-radius */
+  border-spacing: 0;
+  /* Collapsed rows */
+  text-transform: uppercase;
+}
+
+/* Table Header */
+body.companyassets-page .ca-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  /* Ensure opaque background */
+}
+
+body.companyassets-page .ca-table thead tr {
+  background: transparent;
+}
+
+body.companyassets-page .ca-table thead th {
+  background: #f8fafc;
+  color: #1f2937;
+  /* ✅ Leads Data color */
+  font-size: 14px;
+  /* ✅ Leads Data size */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+/* Header Corners */
+body.companyassets-page .ca-table thead tr th:first-child {
+  border-top-left-radius: 0;
+  /* Let wrapper handle it, OR apply if background needs it */
+}
+
+body.companyassets-page .ca-table thead tr th:last-child {
+  border-top-right-radius: 0;
+  text-align: center;
+}
+
+/* Table Rows - Standard Row Style (Remove Card Style) */
+body.companyassets-page .ca-table tbody tr.ca-table-row {
+  background: #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+body.companyassets-page .ca-table tbody tr.ca-table-row:last-child {
+  border-bottom: none;
+}
+
+body.companyassets-page .ca-table tbody tr.ca-table-row:hover {
+  background: #f8fafc;
+  transform: none;
+  box-shadow: none;
+}
+
+body.companyassets-page .ca-table tbody tr.ca-table-row td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: transparent;
+
+  font-size: 14px;
+  /* ✅ Leads Data size */
+  color: #1f2937;
+  /* ✅ Leads Data color */
+  font-weight: 500;
+
+  text-transform: uppercase;
+  /* ✅ THIS was missing */
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+
+body.companyassets-page .ca-table tbody tr.ca-table-row:last-child td {
+  border-bottom: none;
+  /* Remove last border */
+}
+
+/* Remove individual cell radius */
+body.companyassets-page .ca-table tbody tr.ca-table-row td:first-child {
+  border-radius: 0;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+body.companyassets-page .ca-table tbody tr.ca-table-row td:last-child {
+  border-radius: 0;
+  text-align: center;
+}
+
+/* ==================== ACTION ICONS ==================== */
+
+body.companyassets-page .ca-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+body.companyassets-page .ca-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+body.companyassets-page .ca-action-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+}
+
+/* Edit Icon */
+body.companyassets-page .ca-action-icon.ca-edit {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+  color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+body.companyassets-page .ca-action-icon.ca-edit:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Delete Icon */
+body.companyassets-page .ca-action-icon.ca-delete {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+body.companyassets-page .ca-action-icon.ca-delete:hover {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  border-color: #ef4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* ==================== MASKED ID STYLE ==================== */
+
+body.companyassets-page .ca-mask-toggle {
+  cursor: pointer;
+  font-weight: 600;
+  color: #334155;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+body.companyassets-page .ca-mask-toggle:hover {
+  text-decoration: underline;
+  color: #1e293b;
+}
+
+/* ==================== REDESIGNED MODALS (MATCHING PROPERTY BOOKINGS) ==================== */
+
+/* Backdrop (Blurry) */
+body.companyassets-page .ca-modal-backdrop.show {
+  opacity: 1;
+}
+
+body.companyassets-page .ca-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11000;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black */
+  backdrop-filter: blur(4px);
+  /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity 0.15s linear;
+}
+
+/* Modal Dialog */
+body.companyassets-page .ca-modal-dialog {
+  max-width: 800px;
+  /* Wider modal like Property Bookings */
+  margin: 1.75rem auto;
+  position: relative;
+  width: auto;
+  pointer-events: none;
+  height: calc(100% - 3.5rem);
+  /* For centering */
+  display: flex;
+  align-items: center;
+  /* Vertical Center */
+}
+
+/* Modal Content (White Box) */
+body.companyassets-page .ca-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 16px;
+  /* Large rounded corners */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  outline: 0;
+  overflow: hidden;
+}
+
+/* Header */
+body.companyassets-page .ca-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+body.companyassets-page .ca-modal-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+body.companyassets-page .ca-modal-close {
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.companyassets-page .ca-modal-close:hover {
+  /* background-color: #f1f5f9; */
+  color: #ef4444;
+}
+
+/* Body */
+body.companyassets-page .ca-modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: 70vh;
+  /* Scrollable if tall */
+}
+
+body.companyassets-page .ca-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.companyassets-page .ca-modal-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+body.companyassets-page .ca-modal-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Form Grid */
+body.companyassets-page .ca-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Two columns */
+  gap: 1.25rem;
+}
+
+body.companyassets-page .ca-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+  grid-column: 1 / -1;
+  /* Span full width */
+}
+
+body.companyassets-page .ca-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+body.companyassets-page .ca-form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0;
+}
+
+body.companyassets-page .ca-form-control {
+  display: block;
+  width: 100%;
+  height: 44px;
+  /* Consistent height */
+  padding: 0.625rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1e293b;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+body.companyassets-page .ca-form-control:focus {
+  color: #1e293b;
+  background-color: #fff;
+  border-color: #3b82f6;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ==================== ROWS DROPDOWN (Matches Leads Data) ==================== */
+body.companyassets-page .ca-rows-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* margin-left: 10px; */
+  /* Slight spacing from other buttons */
+}
+
+body.companyassets-page .ca-rows-dropdown select {
+  padding: 6px 34px 6px 12px !important;
+  border: 1px solid #dee2e6 !important;
+  border-radius: 6px !important;
+  background-color: #ffffff !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  /* Remove default arrow */
+  background-image: none !important;
+  height: 44px !important;
+  /* Match other buttons */
+  color: #495057 !important;
+  font-weight: normal !important;
+  font-family: inherit !important;
+  min-width: 80px;
+}
+
+body.companyassets-page .ca-rows-dropdown select:hover {
+  border-color: #adb5bd !important;
+}
+
+body.companyassets-page .ca-rows-dropdown select:focus {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Custom Arrow */
+body.companyassets-page .ca-rows-dropdown::after {
+  content: '\25BE';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #495057;
+  font-size: 24px;
+  pointer-events: none;
+}
+
+/* Footer */
+body.companyassets-page .ca-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* Align right */
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  gap: 0.75rem;
+  background-color: #fff;
+}
+
+/* Buttons */
+body.companyassets-page .ca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0 1.25rem;
+  height: 40px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+/* Button Variants */
+body.companyassets-page .ca-btn-secondary {
+  color: #64748b;
+  background-color: #fff;
+  border-color: #cbd5e1;
+}
+
+body.companyassets-page .ca-btn-secondary:hover {
+  background-color: #f8fafc;
+  color: #334155;
+  border-color: #94a3b8;
+}
+
+body.companyassets-page .ca-btn-danger {
+  color: #fff;
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+body.companyassets-page .ca-btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+body.companyassets-page .ca-btn-primary {
+  color: #fff;
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+body.companyassets-page .ca-btn-primary:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+/* ==================== DESKTOP FIXES (Min-Width 1024px) ==================== */
+@media (min-width: 1024px) {
+
+  /* 1) Add breathing space inside the card wrapper */
+  /* body.companyassets-page .ca-table-wrapper {
+    padding: 0 14px;
+    /* overflow-x: visible; */
+  /* Ensure shadow isn't clipped if added */
+  /* } */
+
+  /* 2) Row Styling - Move Background to Cells for Rounding */
+
+  /* Reset Row */
+  body.companyassets-page .ca-table tbody tr.ca-table-row {
+    background: transparent !important;
+    border-radius: 12px;
+    overflow: visible;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    /* Keep shadow on row */
+  }
+
+  /* Apply Background & Border to Cells */
+  body.companyassets-page .ca-table tbody tr.ca-table-row td {
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  /* Fix Header Separation line */
+  body.companyassets-page .ca-table thead th {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  /* Header Rounding - First visible child */
+  body.companyassets-page .ca-table thead th:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  /* Header Rounding - Last visible child (Actions) is 2nd to last due to hidden mobile toggle */
+  /* body.companyassets-page .ca-table thead th:nth-last-child(2) {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  } */
+
+  /* Left Side Rounding - ID Column */
+  body.companyassets-page .ca-table tbody tr.ca-table-row td:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  /* Right Side Rounding - Actions (2nd to last) */
+  body.companyassets-page .ca-table tbody tr.ca-table-row td:nth-last-child(2) {
+    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+  }
+
+  /* Hover Effect - Target Cells */
+  body.companyassets-page .ca-table tbody tr.ca-table-row:hover td {
+    background: #f8fafc;
+  }
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+
+  /* 1) Fix Padding: Add left/right spacing */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+
+  /* 2) Toolbar: Row Layout (Not Column) */
+  body.companyassets-page .ca-toolbar-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    height: auto;
+  }
+
+  /* Search: Takes available space */
+  body.companyassets-page .ca-search-wrapper {
+    max-width: none;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Buttons Container: Auto width */
+  body.companyassets-page .ca-action-buttons {
+    width: auto;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  /* Hide Text Labels */
+  body.companyassets-page .ca-btn-text {
+    display: none;
+  }
+
+  /* Icon-Only Buttons (Fixed Size) */
+  body.companyassets-page .ca-filter-btn {
+    flex: 0 0 44px;
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  body.companyassets-page .ca-column-visibility-wrapper {
+    flex: 0 0 auto;
+  }
+
+  body.companyassets-page .ca-column-visibility-btn {
+    flex: 0 0 44px;
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  /* Reset SVG margins */
+  body.companyassets-page .ca-filter-btn svg,
+  body.companyassets-page .ca-column-visibility-btn svg {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  /* Modal Mobile */
+  body.companyassets-page .ca-form-grid {
+    grid-template-columns: 1fr;
+    /* Stack inputs on mobile */
+  }
+
+  body.companyassets-page .ca-modal-dialog {
+    margin: 1rem;
+    max-width: none;
+  }
+}
+
+/* ==================== PROPERTY BOOKINGS STYLE FILTER POPUP ==================== */
+body.companyassets-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  /* JS will set flex */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 11000;
+  padding: 24px;
+}
+
+body.companyassets-page .modal-container-eoi {
+  width: 650px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+body.companyassets-page .modal-header {
+  padding: 18px 22px;
+  font-weight: 700;
+  font-size: 18px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.companyassets-page .modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+body.companyassets-page .modal-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.companyassets-page .modal-close-btn:hover {
+  background: #f1f5f9;
+  color: #ef4444;
+}
+
+body.companyassets-page .modal-body {
+  padding: 18px 22px 12px 22px;
+  overflow-y: auto;
+  background-color: white !important;
+}
+
+body.companyassets-page .modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.companyassets-page .modal-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+body.companyassets-page .form-item label {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+body.companyassets-page .modal-footer {
+  padding: 14px 22px 20px 22px;
+  border-top: 1px solid #eaeaea;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ==================== PAGINATION BAR (Company Assets) ==================== */
+body.companyassets-page .ca-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 16px 0;
+  gap: 20px;
+}
+
+/* Left: Info Text */
+body.companyassets-page .ca-pagination-info {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Center: Pagination Controls */
+body.companyassets-page .ca-pagination-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+}
+
+/* Right: Jump Controls */
+body.companyassets-page .ca-pagination-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Buttons & Page Numbers */
+body.companyassets-page .ca-page-btn,
+body.companyassets-page .ca-page-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  line-height: 1;
+}
+
+body.companyassets-page .ca-page-btn:hover:not(.disabled),
+body.companyassets-page .ca-page-number:hover:not(.active) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+body.companyassets-page .ca-page-number.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+  cursor: default;
+}
+
+body.companyassets-page .ca-page-btn.disabled {
+  pointer-events: none;
+  /* opacity: 0.4; */
+  cursor: not-allowed;
+}
+
+body.companyassets-page .ca-page-dots {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  padding: 0 6px;
+  color: #94a3b8;
+  user-select: none;
+}
+
+/* Jump Form */
+body.companyassets-page .ca-jump-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.companyassets-page .ca-jump-input {
+  /* width: 150px !important;
+  min-width: 150px !important; */
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+body.companyassets-page .ca-jump-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+body.companyassets-page .ca-jump-input::placeholder {
+  color: #94a3b8;
+}
+
+body.companyassets-page .ca-jump-btn {
+
+  background: transparent !important;
+  /* Remove button bg */
+  border: none !important;
+  /* Remove border */
+
+  color: #000 !important;
+  /* Blue like Leads */
+  font-weight: 600;
+
+  padding: 0 6px !important;
+
+  cursor: pointer;
+
+  box-shadow: none !important;
+}
+
+/* body.companyassets-page .ca-jump-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #1e293b;
+} */
+
+body.companyassets-page .ca-jump-btn:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  body.companyassets-page .ca-pagination-bar {
+    flex-wrap: wrap;
+  }
+
+  body.companyassets-page .ca-pagination-center {
+    order: 3;
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  body.companyassets-page .ca-pagination-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  body.companyassets-page .ca-pagination-info,
+  body.companyassets-page .ca-pagination-center,
+  body.companyassets-page .ca-pagination-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  body.companyassets-page .ca-pagination-center {
+    order: 2;
+  }
+
+  body.companyassets-page .ca-pagination-right {
+    order: 3;
+  }
+}
+
+/* Property Bookings UI - form-item style for Edit Modal */
+body.companyassets-page #editAssetModal .form-item {
+  margin-bottom: 1.25rem !important;
+  /* increased space */
+  position: relative !important;
+}
+
+body.companyassets-page #editAssetModal .form-item input,
+body.companyassets-page #editAssetModal .form-item select {
+  display: block !important;
+  background: transparent !important;
+  border: 1px solid #cbd5e1 !important;
+  transition: .3s !important;
+  padding: 0 15px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  min-height: 48px !important;
+}
+
+body.companyassets-page #editAssetModal .form-item label,
+body.companyassets-page #filterModalOverlay .form-item label {
+
+  position: absolute !important;
+  top: -10px !important;
+  left: 12px !important;
+
+  background: #ffffff !important;
+
+  padding: 0 8px !important;
+
+  font-size: 12px !important;
+  font-weight: 600 !important;
+
+  color: #1f2937 !important;
+
+  z-index: 2000 !important;
+
+  opacity: 1 !important;
+
+  pointer-events: none !important;
+
+  line-height: 1.2 !important;
+}
+
+
+/* ==================== REVISED MOBILE FIXES (Applied at bottom to override) ==================== */
+@media (max-width: 768px) {
+
+  /* 1) FORCE Padding: Apply to multiple levels to ensure it sticks */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reset Row margins that might pull content out */
+  body.companyassets-page .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Col padding override */
+  body.companyassets-page .col-lg-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 2) Toolbar: Exact Grid/Flex Layout from Property Bookings Reference */
+  body.companyassets-page .ca-toolbar-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+
+    gap: 0.5rem !important;
+    padding: 0.6rem 0.8rem !important;
+
+    width: 100% !important;
+
+    /* ✅ ADD THIS */
+    /* margin-bottom: 12px !important; */
+  }
+
+  /* Search Wrapper: Takes all available space */
+  body.companyassets-page .ca-search-wrapper {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    /* Allow shrinking */
+  }
+
+  body.companyassets-page .ca-search-input {
+    width: 100% !important;
+  }
+
+  /* Buttons Container: Stick to the right, do not wrap */
+  body.companyassets-page .ca-action-buttons {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    /* Start small */
+    width: auto !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* HIDE Text Labels explicitly */
+  body.companyassets-page .ca-btn-text {
+    display: none !important;
+  }
+
+  /* Force Square Icon-Only Buttons */
+  body.companyassets-page .ca-filter-btn,
+  body.companyassets-page .ca-column-visibility-btn {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* Wrappers */
+  body.companyassets-page .ca-column-visibility-wrapper {
+    flex: 0 0 auto !important;
+  }
+
+  /* Reset SVG alignment */
+  body.companyassets-page .ca-filter-btn svg,
+  body.companyassets-page .ca-column-visibility-btn svg {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Modal Mobile */
+  body.companyassets-page .ca-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.companyassets-page .ca-modal-dialog {
+    margin: 1rem;
+    max-width: none;
+  }
+}
+
+/* ==================== REVISION 3 - STRICT PADDING & OVERFLOW FIX ==================== */
+@media (max-width: 768px) {
+
+  /* 1) FORCE Padding & Width Constraint */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid {
+    padding-left: 0.25rem !important;
+    /* Approx 20px */
+    padding-right: 0.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    /* ✅ Allow dropdown to show */
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  /* Reset Row margins to prevent overflow */
+  body.companyassets-page .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Col padding override */
+  body.companyassets-page .col-lg-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+  }
+
+  /* 2) Toolbar: Exact Grid/Flex Layout */
+  body.companyassets-page .ca-toolbar-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 0.6rem 0.8rem !important;
+    height: auto !important;
+    min-height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Search Wrapper */
+  body.companyassets-page .ca-search-wrapper {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  body.companyassets-page .ca-search-input {
+    width: 100% !important;
+  }
+
+  /* Buttons Container */
+  body.companyassets-page .ca-action-buttons {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* HIDE Labels */
+  body.companyassets-page .ca-btn-text {
+    display: none !important;
+  }
+
+  /* Force Square Icon-Only Buttons */
+  body.companyassets-page .ca-filter-btn,
+  body.companyassets-page .ca-column-visibility-btn {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* 3) Table Wrapper: Strict Width Constraint */
+  body.companyassets-page .ca-table-wrapper {
+    /* width: 100% !important; */
+    max-width: 100% !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 4) Pagination Bar: Stack Vertically if needed, keep contained */
+  body.companyassets-page .ca-pagination-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    /* Stack vertically on mobile */
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+
+  body.companyassets-page .ca-pagination-right {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  body.companyassets-page .ca-pagination-center {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* 5) Wrappers */
+  body.companyassets-page .ca-column-visibility-wrapper {
+    flex: 0 0 auto !important;
+  }
+
+  body.companyassets-page .ca-filter-btn svg,
+  body.companyassets-page .ca-column-visibility-btn svg {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  body.companyassets-page .ca-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.companyassets-page .ca-modal-dialog {
+    margin: 1rem;
+    max-width: none;
+  }
+}
+
+
+
+/* 2) MOBILE ONLY FIXES (<= 768px) - Layout Changes */
+@media (max-width: 768px) {
+
+  /* Toolbar: Exact Grid/Flex Layout */
+  body.companyassets-page .ca-toolbar-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 0.6rem 0.8rem !important;
+    height: auto !important;
+    min-height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Search Wrapper */
+  body.companyassets-page .ca-search-wrapper {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  body.companyassets-page .ca-search-input {
+    width: 100% !important;
+  }
+
+  /* Buttons Container */
+  body.companyassets-page .ca-action-buttons {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* HIDE Labels */
+  body.companyassets-page .ca-btn-text {
+    display: none !important;
+  }
+
+  /* Force Square Icon-Only Buttons */
+  body.companyassets-page .ca-filter-btn,
+  body.companyassets-page .ca-column-visibility-btn {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* Pagination Bar: Stack Vertically on mobile only */
+  body.companyassets-page .ca-pagination-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+
+  body.companyassets-page .ca-pagination-right,
+  body.companyassets-page .ca-pagination-center {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Wrappers */
+  body.companyassets-page .ca-column-visibility-wrapper {
+    flex: 0 0 auto !important;
+  }
+
+  body.companyassets-page .ca-filter-btn svg,
+  body.companyassets-page .ca-column-visibility-btn svg {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  body.companyassets-page .ca-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.companyassets-page .ca-modal-dialog {
+    margin: 1rem;
+    max-width: none;
+  }
+}
+
+/* ==================== REVISION 5 - LEADS DATA STYLE TABLE (Responsive) ==================== */
+
+/* 1) DESKTOP DEFAULTS (Hide Mobile Elements) */
+/* body.companyassets-page .ca-mobile-toggle-head,
+body.companyassets-page .ca-mobile-toggle-cell {
+  display: none;
+} */
+
+body.companyassets-page .ca-expand-row {
+  display: none;
+  /* Hidden by default */
+}
+
+/* 2) MOBILE TABLE STYLES (<= 768px) */
+@media (max-width: 768px) {
+
+  /* HIDE Desktop extra columns */
+
+
+  /* SHOW Mobile Toggle Column */
+  body.companyassets-page .ca-mobile-toggle-head,
+  body.companyassets-page .ca-mobile-toggle-cell {
+    display: table-cell !important;
+    text-align: center;
+    width: 50px;
+    /* Fixed width for toggle */
+    vertical-align: middle;
+  }
+
+  /* Make whole row look clickable */
+  body.companyassets-page .ca-table-row {
+    cursor: pointer;
+  }
+
+  /* Toggle Button Style */
+  body.companyassets-page .ca-row-toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+
+  body.companyassets-page .ca-row-toggle-btn:hover {
+    background-color: #f1f5f9;
+  }
+
+  body.companyassets-page .ca-row-toggle-btn svg {
+    transition: transform 0.3s ease;
+  }
+
+  /* Expanded Row Style */
+  body.companyassets-page .ca-expand-row td {
+    background-color: #f8fafc;
+    padding: 0 !important;
+    border-bottom: 2px solid #e2e8f0;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body.companyassets-page .ca-expand-box {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Detail Grid */
+  body.companyassets-page .ca-expand-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  body.companyassets-page .ca-detail-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  body.companyassets-page .ca-detail-item:last-child {
+    border-bottom: none;
+  }
+
+  /* LEFT SIDE (Label) – keep slightly bold */
+  body.companyassets-page .ca-label {
+    font-size: 14px;
+    font-weight: 500;
+    /* OK for labels */
+    /* color: #475569; */
+  }
+
+  body.companyassets-page .ca-value {
+    font-size: 14px;
+    /* ✅ Leads Data size */
+    font-weight: 500;
+    /* ✅ REMOVE BOLD */
+    /* color: #555555 !important; */
+    /* ✅ Leads Data color */
+    text-align: right;
+  }
+
+  /* Mobile Actions Buttons */
+  body.companyassets-page .ca-expand-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+
+  body.companyassets-page .ca-btn-mobile-edit {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  body.companyassets-page .ca-btn-mobile-delete {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  /* 3) CENTER PAGINATION (Mobile Request) */
+  body.companyassets-page .ca-pagination-bar {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  body.companyassets-page .ca-pagination-info {
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 0.5rem;
+  }
+
+  body.companyassets-page .ca-pagination-center {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Make jump form center */
+  body.companyassets-page .ca-jump-form {
+    justify-content: center !important;
+  }
+}
+
+/* [Removed Obsolete Revision 6 Block] */
+
+/* ==================== REVISION 7 - GRANULAR MOBILE (475px & 320px) ==================== */
+
+/* 1) MOBILE L (<= 480px) - Show only 2 Columns (ID, Name) + Toggle */
+@media (max-width: 480px) {
+
+  /* Hide Columns 2 (EmpID), 3 (Phone), 4 (Project) */
+  body.companyassets-page .ca-col-empid,
+  body.companyassets-page .ca-col-phone,
+  body.companyassets-page .ca-col-project,
+  body.companyassets-page th[data-column="2"],
+  body.companyassets-page th[data-column="3"],
+  body.companyassets-page th[data-column="4"] {
+    display: none !important;
+  }
+
+  /* Show Hidden Detail Items */
+  body.companyassets-page .ca-show-425 {
+    display: flex !important;
+  }
+}
+
+/* ==================== REVISION 8 - CUSTOM POPUP MODAL ==================== */
+body.companyassets-page .ca-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+body.companyassets-page .ca-popup-box {
+  background: white;
+  width: 90%;
+  max-width: 320px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: caPopIn 0.2s ease-out;
+}
+
+@keyframes caPopIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+body.companyassets-page .ca-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+body.companyassets-page .ca-popup-close:hover {
+  color: #0f172a;
+}
+
+
+/* 2) MOBILE S (<= 320px) - Show only 1 Column (Name) + Toggle */
+@media (max-width: 320px) {
+
+  /* Hide Column 0 (ID) */
+  body.companyassets-page .ca-col-id,
+  body.companyassets-page th[data-column="0"] {
+    display: none !important;
+  }
+
+  /* Show Hidden ID in Details */
+  body.companyassets-page .ca-show-320 {
+    display: flex !important;
+  }
+
+  /* Optimize Search Bar for Tiny Screens (Property Bookings Style) */
+  body.companyassets-page .ca-toolbar-container {
+    padding: 0.4rem 0.5rem !important;
+    gap: 0.3rem !important;
+  }
+
+  body.companyassets-page .ca-search-wrapper {
+    /* Allow shrinking */
+    flex: 1 1 auto !important;
+  }
+
+  body.companyassets-page .ca-search-input {
+    font-size: 13px !important;
+    padding-left: 30px !important;
+    /* Tighter padding for icon */
+  }
+
+  body.companyassets-page .ca-search-icon {
+    left: 8px !important;
+    /* Adjust icon position */
+  }
+
+  body.companyassets-page .ca-filter-btn,
+  body.companyassets-page .ca-column-visibility-btn {
+    width: 36px !important;
+    /* Smaller buttons */
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+
+  body.companyassets-page .ca-filter-btn svg,
+  body.companyassets-page .ca-column-visibility-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* ==================== REVISION 9 - COLUMN PERSISTENCE (1024px) ==================== */
+/* [Removed conflicting 1024px query 3] */
+
+/* ==================== FORM ITEM STYLING (MATCHING PROPERTY BOOKINGS) ==================== */
+
+body.companyassets-page #filterModalOverlay .form-item {
+  margin-bottom: 1.25rem !important;
+  position: relative !important;
+}
+
+body.companyassets-page #filterModalOverlay .form-item input,
+body.companyassets-page #filterModalOverlay .form-item select {
+  display: block !important;
+  background: transparent !important;
+  border: 1px solid #cbd5e1 !important;
+  transition: .3s !important;
+  padding: 0 15px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  height: 48px !important;
+  /* Match edit modal */
+}
+
+body.companyassets-page #filterModalOverlay .form-item label {
+  position: absolute !important;
+  top: -11px !important;
+  left: 10px !important;
+  z-index: 50 !important;
+  font-weight: 600 !important;
+  background: #ffffff !important;
+  padding: 0 6px !important;
+  transition: .3s !important;
+  font-size: 11px !important;
+  color: #64748b !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  line-height: normal !important;
+  opacity: 1 !important;
+}
+
+body.companyassets-page #filterModalOverlay .form-item input:focus,
+body.companyassets-page #filterModalOverlay .form-item select:focus {
+  border-color: #1b6c9f !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.companyassets-page #filterModalOverlay .form-item input::placeholder,
+body.companyassets-page #filterModalOverlay .form-item select::placeholder {
+  color: #999 !important;
+  font-weight: normal !important;
+}
+
+/* Modal Footer Actions */
+@media (max-width: 768px) {
+  body.companyassets-page #filterModalOverlay .form-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .form-actions .btn {
+    flex: 1 1 50% !important;
+    width: 48% !important;
+    padding: 12px 8px !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body.companyassets-page #filterModalOverlay .form-actions .btn {
+    padding: 10px 6px !important;
+    font-size: 13px !important;
+  }
+}
+
+
+
+/* ==================== DESKTOP RESTORATION (1025px+) ==================== */
+@media (min-width: 1025px) {
+
+  /* Ensure Company Laptop (Col 7) is VISIBLE by default on desktop */
+  body.companyassets-page .ca-table th[data-column="7"],
+  body.companyassets-page .ca-table td[data-column="7"] {
+    display: table-cell;
+  }
+
+  /* Ensure Extra Columns (8-12) are HIDDEN by default on desktop to match checkpoints */
+  /* Laptop ID (8), Charger (9), Company Mouse (10), SIM (11), Date (12) */
+  body.companyassets-page .ca-table th[data-column="8"],
+  body.companyassets-page .ca-table td[data-column="8"],
+  body.companyassets-page .ca-table th[data-column="9"],
+  body.companyassets-page .ca-table td[data-column="9"],
+  body.companyassets-page .ca-table th[data-column="10"],
+  body.companyassets-page .ca-table td[data-column="10"],
+  body.companyassets-page .ca-table th[data-column="11"],
+  body.companyassets-page .ca-table td[data-column="11"],
+  body.companyassets-page .ca-table th[data-column="12"],
+  body.companyassets-page .ca-table td[data-column="12"] {
+    display: none;
+  }
+
+  /* Allow manual override on Desktop too */
+  body.companyassets-page .ca-table th.ca-force-show,
+  body.companyassets-page .ca-table td.ca-force-show {
+    display: table-cell !important;
+  }
+}
+
+/* ==================== FINAL OVERRIDE: MOBILE PADDING (<=768px) ==================== */
+/* ✅ FIX: Add safe spacing for pagination controls on <=768px */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-pagination-bar {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* prevent stretching touching edges */
+  body.companyassets-page .ca-pagination-center,
+  body.companyassets-page .ca-pagination-right {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* give gap inside pagination controls container */
+  body.companyassets-page .ca-pagination-controls {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+
+  /* ✅ Add breathing space for TABLE card */
+  body.companyassets-page .ca-table-card {
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    padding: 0 12px !important;
+    /* inner gap */
+    box-sizing: border-box !important;
+  }
+
+
+}
+
+
+/* ==================== FIX: CENTER COLUMN VISIBILITY DROPDOWN ==================== */
+/* body.companyassets-page .ca-column-dropdown {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) translateY(-8px) !important;
+}
+
+body.companyassets-page .ca-column-dropdown.show {
+  transform: translateX(-50%) translateY(0) !important;
+} */
+
+/* @media (max-width: 425px) {
+  body.companyassets-page .ca-column-dropdown {
+    width: min(86vw, 280px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+} */
+
+/* @media (max-width: 375px) {
+  body.companyassets-page .ca-column-dropdown {
+    position: fixed !important;
+    top: 110px !important;  /* adjust if needed */
+/* left: 50% !important;
+    right: auto !important;
+
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    min-width: 0 !important;
+
+    transform: translateX(-50%) !important;
+  }
+
+  /* Reduce inner padding ONLY in small mobile */
+/* body.companyassets-page .ca-dropdown-header {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  body.companyassets-page .ca-dropdown-body {
+    padding: 0.25rem !important;
+    max-height: 260px !important;
+  }
+
+  body.companyassets-page .ca-dropdown-item {
+    padding: 0.6rem 0.75rem !important;
+  }
+
+  body.companyassets-page .ca-dropdown-item span {
+    font-size: 0.82rem !important;
+  }
+} */
+
+/* 
+@media (max-width: 320px) {
+  body.companyassets-page .ca-column-dropdown {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+} */
+
+/* ==================== FINAL FIX: COLUMN VISIBILITY DROPDOWN POSITIONING ==================== */
+
+/* Desktop & Tablet default (open below button, right-aligned) */
+/* body.companyassets-page .ca-column-dropdown {
+  left: auto !important;
+  right: 0 !important;
+  transform: translateY(-8px) !important;
+}
+
+body.companyassets-page .ca-column-dropdown.show {
+  transform: translateY(0) !important;
+} */
+
+/* @media (max-width: 425px) {
+  body.companyassets-page .ca-column-dropdown {
+    position: fixed !important;
+    top: 56px !important; */
+
+/* ✅ force safe gaps from phone borders */
+/* left: 12px !important;
+    right: 12px !important; */
+
+/* ✅ width auto based on left/right */
+/* width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important; */
+
+/* ✅ remove centering transform */
+/* transform: none !important;
+
+    z-index: 99999 !important;
+  }
+} */
+
+
+/* Small phones (≤375px): Fix dropdown positioning with fixed positioning */
+@media (max-width: 375px) {
+  body.companyassets-page .ca-column-dropdown {
+    /* position: fixed !important; */
+    top: 70px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    z-index: 10001 !important;
+    overflow: visible !important;
+  }
+
+  body.companyassets-page .ca-column-dropdown.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  body.companyassets-page .ca-dropdown-header {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  body.companyassets-page .ca-dropdown-body {
+    padding: 0.25rem !important;
+    max-height: 260px !important;
+    overflow-y: auto !important;
+  }
+
+  body.companyassets-page .ca-dropdown-item {
+    padding: 0.6rem 0.75rem !important;
+  }
+
+  body.companyassets-page .ca-dropdown-item span {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ===== MOBILE (<=375px) - Ensure expanded rows are visible and not clipped ===== */
+@media (max-width: 375px) {
+
+  /* Ensure table card/container allows vertical growth and visible overflow */
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    overflow-y: visible !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Expanded row should be controllable by JS; do NOT force display here */
+  body.companyassets-page .ca-expand-row {
+    position: relative !important;
+    z-index: 10002 !important;
+    height: auto !important;
+    /* do not set display here so JS inline styles can show/hide the row */
+  }
+
+  body.companyassets-page .ca-expand-row td {
+    position: relative !important;
+    z-index: 10002 !important;
+    height: auto !important;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  /* Ensure the expand box inside the cell can expand and isn't clipped */
+  body.companyassets-page .ca-expand-box {
+    position: relative !important;
+    z-index: 10003 !important;
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Make sure table wrapper doesn't create a new stacking context that clips rows */
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper {
+    -webkit-transform: none !important;
+    transform: none !important;
+  }
+
+}
+
+/* ===== VERY SMALL PHONES (<= 375px and specifically covering ~320px widths) ===== */
+@media (max-width: 375px) {
+
+  /* Make sure parent containers don't clip expanded rows */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper {
+    overflow: visible !important;
+    overflow-y: visible !important;
+    max-height: none !important;
+  }
+
+  /* Ensure the expand-row can grow and isn't collapsed to 0 height when JS sets display */
+  body.companyassets-page .ca-expand-row {
+    position: relative !important;
+    height: auto !important;
+    visibility: visible !important;
+    z-index: 10002 !important;
+  }
+
+  /* Cells must behave like normal table-cells and allow children to expand vertically */
+  body.companyassets-page .ca-expand-row td {
+    position: relative !important;
+    vertical-align: top !important;
+    height: auto !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    padding: 0 !important;
+  }
+
+  /* The inner box must not be positioned absolutely; force it to take up content height */
+  body.companyassets-page .ca-expand-box {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 32px !important;
+    overflow: visible !important;
+    z-index: 10003 !important;
+  }
+
+  /* If any ancestor is creating a stacking context via transform, remove it to avoid clipping */
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside {
+    -webkit-transform: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+}
+
+/* ==================== FINAL PAGINATION FIX @ 1024px ==================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  body.companyassets-page .ca-pagination-bar {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    width: calc(100% - 48px) !important;
+    margin-left: 24px !important;
+    margin-right: 24px !important;
+  }
+
+  /* LEFT */
+  body.companyassets-page .ca-pagination-info {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+  }
+
+  /* CENTER */
+  body.companyassets-page .ca-pagination-center {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+
+  /* RIGHT */
+  body.companyassets-page .ca-pagination-right {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* ==================== EMPLOYEE NAME – MATCH LEADS DATA ==================== */
+body.companyassets-page .ca-employee-name {
+  font-size: 14px !important;
+  /* Same as Leads */
+  font-weight: 600 !important;
+  /* Same as Leads */
+  color: #1f2937 !important;
+  /* Same as Leads */
+  font-family: inherit !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Optional: hover feel like Leads */
+body.companyassets-page .ca-employee-name:hover {
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+/* ==================== FINAL TABLE + TOOLBAR ALIGN FIX (<=768px) ==================== */
+/* ==================== FINAL TABLE + TOOLBAR ALIGN FIX (<=768px) ==================== */
+@media (max-width: 768px) {
+
+  /* 1. Kill Bootstrap side overflow & Force Width */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .ca-table-card {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    /* ✅ Allow dropdown to show */
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  /* Allow popups and dropdowns */
+
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+
+    overflow: visible !important;
+
+  }
+
+  /* 2. Page wrapper padding (main spacing) */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside {
+    padding-left: 0.5rem !important;
+    /* Slightly more safe area */
+    padding-right: 0.5rem !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  /* 3. Toolbar full width + aligned */
+  body.companyassets-page .ca-toolbar-container {
+    width: 100% !important;
+    /* margin: 0 0 1rem 0 !important; */
+    /* padding: 0.75rem !important; */
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    /* Allow wrap if small */
+    gap: 0.5rem !important;
+  }
+
+  /* 4. Table card aligned with toolbar */
+  body.companyassets-page .ca-table-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 12px !important;
+    overflow: visible !important;
+    /* Allow scroll INSIDE card */
+  }
+
+  /* Inner padding for table */
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    /* width: 100% !important; */
+  }
+
+  /* Ensure expand row constraint */
+  body.companyassets-page .ca-expand-row,
+  body.companyassets-page .ca-expand-row td,
+  body.companyassets-page .ca-expand-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* Pagination Bar Mobile */
+  body.companyassets-page .ca-pagination-bar {
+    width: 100% !important;
+    padding: 1rem 0 !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+
+
+  body.companyassets-page .ca-toolbar-container {
+
+    margin-top: 12px !important;
+    /* Push toolbar down */
+    padding-top: 0.75rem !important;
+
+    min-height: 64px !important;
+    /* Keep proper height */
+
+    align-items: center !important;
+  }
+}
+
+
+/* ✅ FINAL 1024px STABLE FIX */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Kill bootstrap overflow */
+  body.companyassets-page,
+  /* body.companyassets-page .container-fluid, */
+  body.companyassets-page .row {
+    width: 100% !important;
+    max-width: 100% !important;
+    /* margin: 0 !important;
+    padding: 0 !important; */
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+  }
+
+  /* Toolbar */
+  body.companyassets-page .ca-toolbar-container {
+    /* width: calc(100% - 48px) !important;
+    margin: 24px !important;
+    padding: 12px 16px !important; */
+
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Table */
+  body.companyassets-page .ca-table-card {
+    /* width: calc(100% - 48px) !important;
+    max-width: calc(100% - 48px) !important; */
+
+    /* margin: 0 24px !important; */
+    padding: 0 !important;
+
+    /* overflow-x: auto !important; */
+    box-sizing: border-box !important;
+  }
+
+  /* Pagination */
+  body.companyassets-page .ca-pagination-bar {
+    width: calc(100% - 48px) !important;
+    margin: 0 24px !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+  }
+
+}
+
+/* ================= FIX: INNER GAP @1024px ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Give safe space inside main column */
+  body.companyassets-page .col-lg-12 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Keep card aligned with toolbar */
+  body.companyassets-page .ca-table-card {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Inner table breathing space */
+  body.companyassets-page .ca-table-wrapper {
+    /* padding: 0 12px !important; */
+    box-sizing: border-box !important;
+  }
+}
+
+/* ================= FIX: DEFAULT HIDE COLUMNS @1024px ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Laptop Brand */
+  body.companyassets-page .ca-table th[data-column="6"],
+  body.companyassets-page .ca-table td[data-column="6"],
+
+  /* Company Laptop */
+  body.companyassets-page .ca-table th[data-column="7"],
+  body.companyassets-page .ca-table td[data-column="7"] {
+    display: none !important;
+  }
+
+  /* Allow manual show via Column Visibility */
+  body.companyassets-page .ca-table th.ca-force-show,
+  body.companyassets-page .ca-table td.ca-force-show {
+    display: table-cell !important;
+  }
+}
+
+/* ================= FINAL 1024px ALIGNMENT FIX (DO NOT EDIT ABOVE) ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Reset Bootstrap conflicts */
+  body.companyassets-page,
+  /* body.companyassets-page .container-fluid, */
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    width: 100% !important;
+    max-width: 100% !important;
+    /* margin: 0 !important;
+    padding: 0 !important; */
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+  }
+
+  /* Toolbar */
+  body.companyassets-page .ca-toolbar-container {
+    /* width: calc(100% - 48px) !important;
+    margin: 24px !important;
+    padding: 12px 16px !important; */
+    box-sizing: border-box !important;
+  }
+
+  /* Table */
+  body.companyassets-page .ca-table-card {
+    /* width: calc(100% - 48px) !important;
+    max-width: calc(100% - 48px) !important;
+    margin: 0 24px !important; */
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Inner table spacing */
+  body.companyassets-page .ca-table-wrapper {
+    /* padding: 0 12px !important; */
+    box-sizing: border-box !important;
+  }
+
+  /* Pagination */
+  body.companyassets-page .ca-pagination-bar {
+    width: calc(100% - 48px) !important;
+    margin: 0 24px !important;
+    padding: 10px 0 !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+  }
+
+}
+
+/* ================= GLOBAL LAYOUT FIX ================= */
+
+/* Main column padding (all screens) */
+body.companyassets-page .col-lg-12 {
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+/* Toolbar, Table, Pagination aligned */
+body.companyassets-page .ca-toolbar-container,
+body.companyassets-page .ca-table-card,
+body.companyassets-page .ca-pagination-bar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ================= 1024px FIX ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  body.companyassets-page .col-lg-12 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+}
+
+/* ===== Tablet Fix: 481px–1024px Dropdown & Padding ===== */
+@media (min-width: 481px) and (max-width: 1024px) {
+
+  /* Reduce last column padding */
+  .unified-table tbody td:last-child,
+  .fold-table tbody tr td:last-child,
+  #myTable tbody td:last-child,
+  #example tbody td:last-child {
+    padding-right: 8px !important;
+  }
+
+  /* Fix Column Visibility Dropdown width */
+  body.companyassets-page .ca-column-dropdown {
+    min-width: 220px !important;
+    max-width: 260px !important;
+    width: auto !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+
+  /* Fix dropdown items spacing */
+  body.companyassets-page .ca-column-dropdown .ca-dropdown-item {
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+  }
+
+  /* Prevent overflow from toolbar */
+  body.companyassets-page .ca-toolbar-container {
+    overflow-x: auto !important;
+  }
+}
+
+/* ================= DESKTOP FIX ================= */
+@media (min-width: 1025px) {
+
+  body.companyassets-page .col-lg-12 {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    box-sizing: border-box !important;
+  }
+
+}
+
+/* ================= FIX: Allow Dropdown Overflow (376px - 1024px) ================= */
+
+@media (max-width: 1024px) {
+
+  body.companyassets-page .ca-toolbar-container,
+  body.companyassets-page .ca-action-buttons,
+  body.companyassets-page .ca-column-visibility-wrapper {
+    overflow: visible !important;
+    position: relative !important;
+  }
+
+  body.companyassets-page .ca-column-dropdown {
+    /* position: absolute !important; */
+    top: calc(100% + 8px) !important;
+    /* right: 0 !important; */
+    z-index: 10000 !important;
+    overflow: visible !important;
+  }
+
+}
+
+/* ================= Mobile Column Dropdown Center ================= */
+
+/* Removed conflicting mobile dropdown rules - now handled in 375px media query */
+
+/* ================= FINAL FIX: FORCE SEARCH BAR DOWN (<=768px) ================= */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-toolbar-container {
+
+    /* margin-top: 32px !important; */
+    /* Strong push down */
+    /* margin-bottom: 16px !important; */
+
+    padding-top: 0.75rem !important;
+    /* padding-bottom: 0.75rem !important; */
+
+    /* min-height: 76px !important; */
+    /* Same as desktop */
+
+    position: relative !important;
+    top: 0 !important;
+
+  }
+
+}
+
+/* ================= FINAL FIX: ADD TOP PAGE SPACING (<=768px) ================= */
+@media (max-width: 768px) {
+
+  /* Push whole content down */
+  body.companyassets-page .companyassets-page-wrapper {
+    padding-top: 28px !important;
+  }
+
+  body.companyassets-page .contentinside {
+    padding-top: 12px !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+
+}
+
+
+/* ================= FINAL MOBILE COLUMN DROPDOWN FIX (<=425px) ================= */
+/* Removed - now handled in 375px media query */
+
+/* ================= REAL FINAL FIX: MOBILE DROPDOWN UNDER BUTTON ================= */
+/* Removed - now handled in 375px media query */
+
+/* ================= FORCE FIX: Column Dropdown Mobile ================= */
+/* Removed - now handled in 375px media query */
+
+/* ================= ABSOLUTE FINAL FIX: MOBILE COLUMN DROPDOWN ================= */
+/* Removed - now handled in 375px media query */
+
+/* ================= MOBILE CLOSE BUTTON (COLUMN DROPDOWN) ================= */
+
+/* Hide by default (Desktop/Tablet) */
+body.companyassets-page .ca-mobile-close {
+  display: none;
+}
+
+/* Show only on small phones (<=425px) */
+@media (max-width: 425px) {
+
+  body.companyassets-page .ca-dropdown-header {
+    position: relative;
+    padding-right: 40px;
+    /* space for X button */
+  }
+
+  body.companyassets-page .ca-mobile-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 50%;
+    right: 12px;
+
+    transform: translateY(-50%);
+
+    width: 26px;
+    height: 26px;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    color: #64748b;
+    cursor: pointer;
+
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  body.companyassets-page .ca-mobile-close:hover {
+    background: #f1f5f9;
+    color: #ef4444;
+  }
+}
+
+/* =====================================================
+   LEADS DATA STYLE - JUMP TO PAGE (Company Assets)
+   ===================================================== */
+
+body.companyassets-page .ca-pagination-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Form wrapper */
+body.companyassets-page .ca-jump-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Input (Page No.) */
+body.companyassets-page .ca-jump-input {
+  width: 90px;
+  height: 36px;
+
+  padding: 6px 10px;
+
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+
+  background-color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Lexend Deca", "Inter", sans-serif;
+
+  color: #495057;
+
+  text-align: center;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+/* Focus */
+body.companyassets-page .ca-jump-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15);
+}
+
+/* Placeholder */
+body.companyassets-page .ca-jump-input::placeholder {
+  color: #adb5bd;
+}
+
+/* Button (Jump) */
+body.companyassets-page .ca-jump-btn {
+  height: 36px;
+
+  padding: 0 14px;
+
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+
+  background-color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Lexend Deca", "Inter", sans-serif;
+
+  color: #495057;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  line-height: 1;
+}
+
+/* Hover */
+/* body.companyassets-page .ca-jump-btn:hover {
+  /* background-color: #f8f9fa;
+  border-color: #adb5bd;
+  color: #1f2937; */
+/* } */
+
+/* Click */
+body.companyassets-page .ca-jump-btn:active {
+  transform: translateY(1px);
+}
+
+/* ================= FINAL MOBILE GAP MATCH (LeADS STYLE) ================= */
+@media (max-width: 768px) {
+
+  /* Main Page Padding (Like Leads) */
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Table Card Spacing */
+  body.companyassets-page .ca-table-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 0 !important;
+    border-radius: 16px !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* Inner Table Wrapper */
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Pagination Container */
+  body.companyassets-page .ca-pagination-bar {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    margin-top: 12px !important;
+  }
+
+  /* Jump + Center Controls */
+  body.companyassets-page .ca-pagination-center,
+  body.companyassets-page .ca-pagination-right {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Remove Bootstrap Overflow */
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* ==================== PAGINATION ALIGNMENT (MATCHING LEADS DATA) ==================== */
+
+/* Pagination Bar Container */
+body.companyassets-page .ca-pagination-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 5px !important;
+  padding: 10px 0 !important;
+  margin-top: 10px !important;
+  background: transparent !important;
+  flex-wrap: wrap !important;
+}
+
+/* Pagination Info Text (Left) */
+body.companyassets-page .ca-pagination-info {
+  font-size: 14px !important;
+  color: #495057 !important;
+  font-weight: 500 !important;
+}
+
+/* Pagination Center Controls (Buttons) */
+body.companyassets-page .ca-pagination-center {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Pagination Buttons (Prev, Next, Numbers) */
+body.companyassets-page .ca-page-btn,
+body.companyassets-page .ca-page-number {
+  border-radius: 6px !important;
+  border: 1px solid #dee2e6 !important;
+  background: #fff !important;
+  padding: 6px 14px !important;
+  transition: all 0.2s ease !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #495057 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: auto !important;
+  height: auto !important;
+  line-height: normal !important;
+}
+
+/* Hover State */
+body.companyassets-page .ca-page-btn:hover:not(.disabled),
+body.companyassets-page .ca-page-number:hover {
+  background: #e9ecef !important;
+  border-color: #adb5bd !important;
+  color: #495057 !important;
+}
+
+/* Active State */
+body.companyassets-page .ca-page-number.active {
+  background: #007bff !important;
+  color: #fff !important;
+  border-color: #007bff !important;
+}
+
+/* Disabled State */
+body.companyassets-page .ca-page-btn.disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background: #fff !important;
+  color: #495057 !important;
+}
+
+/* Pagination Right (Jump Form Container) */
+body.companyassets-page .ca-pagination-right {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Jump Form Styling (Container) - Matches .search in crm_table_style.css */
+body.companyassets-page .ca-jump-form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 0px 5px !important;
+  border-radius: 10px !important;
+  border: none !important;
+}
+
+/* Jump Input - Matches .searchTerm */
+body.companyassets-page .ca-jump-input {
+  width: 70px !important;
+  border: none !important;
+  padding: 3px !important;
+  font-size: 14px !important;
+  color: #000 !important;
+  background-color: transparent !important;
+  outline: none !important;
+  height: 32px !important;
+  /* Fixed height for alignment */
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+body.companyassets-page .ca-jump-input::placeholder {
+  color: #6c757d !important;
+}
+
+body.companyassets-page .ca-jump-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Jump Button - Matches .searchButton + #jumpButton */
+body.companyassets-page .ca-jump-btn {
+  background: transparent !important;
+  text-align: center !important;
+  color: #000 !important;
+  border: none !important;
+  border-left: 1px solid #000 !important;
+  /* The distinct separator */
+  cursor: pointer !important;
+  font-size: 14px !important;
+  padding: 0 10px !important;
+  border-radius: 0 !important;
+  height: 20px !important;
+  /* Shorter to look like a separator inside the container */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 5px !important;
+  transition: opacity 0.2s ease !important;
+}
+
+body.companyassets-page .ca-jump-btn:hover {
+  background: transparent !important;
+  opacity: 0.7 !important;
+}
+
+/* Ensure pagination info text matches leads style if needed, but keeping standard for now */
+
+/* Standardize Pagination Buttons Height */
+body.companyassets-page .ca-page-btn,
+body.companyassets-page .ca-page-number {
+  height: 32px !important;
+  line-height: normal !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ==================== MOBILE RESPONSIVE PAGINATION ==================== */
+@media (max-width: 768px) {
+  body.companyassets-page .ca-pagination-bar {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+
+  body.companyassets-page .ca-pagination-info,
+  body.companyassets-page .ca-pagination-center,
+  body.companyassets-page .ca-pagination-right {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  body.companyassets-page .ca-jump-form {
+    width: auto !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* ================= FINAL MATCH: LEADS DATA PAGINATION ================= */
+body.companyassets-page .ca-pagination-bar {
+
+  /* Glass background like leads */
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+
+/* Jump Form Container */
+body.companyassets-page .ca-jump-form {
+  gap: 6px !important;
+}
+
+
+/* INPUT = Page No */
+body.companyassets-page .ca-jump-input {
+
+  width: 110px !important;
+  height: 38px !important;
+
+  padding: 4px 8px !important;
+
+  font-size: 16px !important;
+  font-family: "Lexend Deca", sans-serif !important;
+  font-weight: 400 !important;
+
+  color: #202020 !important;
+
+  background: #ffffff !important;
+
+  border: 1px solid #d1d5db !important;
+
+  border-radius: 10px !important;
+
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+  text-align: center !important;
+}
+
+
+/* INPUT FOCUS */
+body.companyassets-page .ca-jump-input:focus {
+
+  border-color: #3b82f6 !important;
+
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+  outline: none !important;
+}
+
+
+/* PLACEHOLDER */
+body.companyassets-page .ca-jump-input::placeholder {
+
+  color: #9ca3af !important;
+  font-size: 15px !important;
+}
+
+
+/* BUTTON = Jump */
+body.companyassets-page .ca-jump-btn {
+  height: 38px !important;
+  padding: 4px 14px !important;
+  font-size: 15px !important;
+  font-family: "Lexend Deca", sans-serif !important;
+  font-weight: 500 !important;
+  color: #202020 !important;
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+  cursor: pointer !important;
+}
+
+
+/* BUTTON HOVER */
+body.companyassets-page .ca-jump-btn:hover {
+  /* background: #f8fafc !important;
+  border-color: #94a3b8 !important; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+
+/* BUTTON ACTIVE */
+body.companyassets-page .ca-jump-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ================= FIX PAGINATION UI (MATCH LEADS DATA) ================= */
+
+body.companyassets-page .dt-layout-foot,
+body.companyassets-page .ca-pagination-bar {
+
+  /* White Card Background */
+  background: rgba(255, 255, 255, 0.85) !important;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  padding: 14px 18px !important;
+  margin-top: 16px !important;
+
+  box-sizing: border-box;
+}
+
+/* Jump Input - Match Leads */
+
+body.companyassets-page .ca-jump-input,
+body.companyassets-page #jumpToPage input {
+
+  width: 90px !important;
+  height: 40px !important;
+
+  background: #ffffff !important;
+
+  border: 1px solid #dee2e6 !important;
+  border-radius: 8px !important;
+
+  font-size: 14px !important;
+  font-weight: 500 !important;
+
+  color: #202020 !important;
+
+  text-align: center !important;
+
+  box-shadow: none !important;
+}
+
+/* Jump Button - Match Leads */
+
+body.companyassets-page .ca-jump-btn,
+body.companyassets-page #jumpToPage button {
+
+  height: 40px !important;
+
+  padding: 0 18px !important;
+
+  background: #ffffff !important;
+
+  border: 1px solid #dee2e6 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+
+  color: #202020 !important;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* body.companyassets-page .ca-jump-btn:hover,
+body.companyassets-page #jumpToPage button:hover {
+
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+} */
+
+/* Pagination Info Text */
+
+body.companyassets-page .ca-pagination-info,
+body.companyassets-page #rowInfo {
+
+  font-size: 14px !important;
+
+  color: #64748b !important;
+
+  font-weight: 500 !important;
+
+  font-family: inherit !important;
+}
+
+/* Mobile Pagination Card Fix */
+
+@media (max-width: 768px) {
+
+  body.companyassets-page .dt-layout-foot,
+  body.companyassets-page .ca-pagination-bar {
+
+    padding: 12px !important;
+
+    margin-left: 6px !important;
+    margin-right: 6px !important;
+
+    width: calc(100% - 12px) !important;
+
+  }
+
+  body.companyassets-page .ca-jump-form {
+
+    justify-content: center !important;
+
+    gap: 8px !important;
+
+  }
+}
+
+/* ================== MATCH LEADS PAGINATION EXACTLY ================== */
+
+body.companyassets-page .dt-layout-foot {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 8px 0 !important;
+}
+
+/* Pagination buttons */
+body.companyassets-page .pagination button,
+body.companyassets-page .pagination span {
+  font-family: "Lexend Deca", sans-serif !important;
+  font-size: 14px !important;
+  color: #202020 !important;
+}
+
+/* Jump container (like .search in leads) */
+body.companyassets-page .ca-jump-form {
+  background: transparent !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 4px 6px !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Jump input (like .searchTerm) */
+body.companyassets-page .ca-jump-input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+
+  font-family: "Lexend Deca", sans-serif !important;
+  font-size: 16px !important;
+  color: #202020 !important;
+
+  padding: 4px 8px !important;
+  height: 100% !important;
+  width: 90px !important;
+}
+
+/* Placeholder */
+body.companyassets-page .ca-jump-input::placeholder {
+  color: #9ca3af !important;
+  font-size: 14px !important;
+}
+
+/* Jump button (like .searchButton) */
+body.companyassets-page .ca-jump-btn {
+  background: transparent !important;
+  border: none !important;
+
+  font-family: "Lexend Deca", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+
+  color: #202020 !important;
+
+  padding: 4px 10px !important;
+  height: 100% !important;
+  cursor: pointer !important;
+}
+
+/* Hover */
+body.companyassets-page .ca-jump-btn:hover {
+  color: #000 !important;
+}
+
+/* Remove blue/gray box on mobile */
+@media (max-width: 768px) {
+
+  body.companyassets-page .dt-layout-foot {
+    background: transparent !important;
+    padding: 6px 0 !important;
+  }
+
+  body.companyassets-page .ca-jump-form {
+    background: transparent !important;
+  }
+}
+
+/* Separator between Page No and Jump */
+/* body.companyassets-page .ca-jump-form::after {
+  content: "|";
+  margin: 0 10px;
+  color: #64748b;
+  font-weight: 500;
+} */
+
+/* Match Leads jump layout */
+body.companyassets-page .ca-jump-form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* Match Leads footer container */
+body.companyassets-page .ca-pagination-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 5px !important;
+}
+
+/* FORCE remove pagination background (match Leads) */
+body.companyassets-page .ca-pagination-bar,
+body.companyassets-page .ca-pagination-wrapper,
+body.companyassets-page .dt-layout-foot,
+body.companyassets-page .dt-layout-foot * {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Fix jump container */
+body.companyassets-page .ca-jump-form {
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Add | between Page No and Jump */
+body.companyassets-page .ca-jump-input {
+  margin-right: 12px !important;
+  position: relative !important;
+}
+
+body.companyassets-page .ca-jump-input::after {
+  content: "|" !important;
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Match Leads font & color */
+body.companyassets-page .ca-pagination-bar,
+body.companyassets-page .ca-pagination-bar * {
+  font-family: "Lexend Deca", sans-serif !important;
+  font-size: 14px !important;
+  color: #020202 !important;
+}
+
+/* Match Leads layout */
+body.companyassets-page .ca-pagination-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+}
+
+/* ================= FINAL LEADS-STYLE PAGINATION FIX ================= */
+
+/* Make footer transparent */
+body.companyassets-page .dt-layout-foot {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Jump container = same background as leads */
+body.companyassets-page .ca-jump-form {
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 10px !important;
+
+  padding: 3px 6px !important;
+  height: 44px !important;
+
+  border: none !important;
+}
+
+/* Page No input */
+body.companyassets-page .ca-jump-input {
+  /* width: 150px !important;
+  min-width: 150px !important; */
+  height: 40px;
+  opacity: 1 !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+
+  text-align: center;
+}
+
+/* Remove button look from Jump */
+body.companyassets-page .ca-jump-btn {
+  background: #007bff !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-bottom-right-radius: 6px !important;
+  border-top-right-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  padding: 0 10px !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Hover like leads */
+body.companyassets-page .ca-jump-btn:hover {
+  color: #000 !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+}
+
+/* Add | separator before Jump */
+body.companyassets-page .ca-jump-btn::before {
+  /* content: "|" !important; */
+
+  margin-right: 8px !important;
+  color: #6c757d !important;
+  font-weight: 400 !important;
+}
+
+/* Remove focus outline */
+body.companyassets-page .ca-jump-input:focus,
+body.companyassets-page .ca-jump-btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* FORCE white background for Page No + Jump box */
+body.companyassets-page .ca-jump-form {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+    /* background: #ffffff; */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 6px 12px;
+  gap: 8px;
+}
+
+/* Make Jump look like text link (not button) */
+body.companyassets-page .ca-jump-btn {
+  border: none !important;
+  padding: 0 8px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+}
+
+/* ================= FORCE SHOW OVERRIDE ================= */
+/* This allows the checkbox to work on ALL screen sizes */
+/* body.companyassets-page .ca-table th.ca-force-show,
+body.companyassets-page .ca-table td.ca-force-show {
+  display: table-cell !important;
+}
+
+/* Ensure Tablet (576px - 1024px) shows the correct defaults */
+/* @media (min-width: 768px) and (max-width: 1024px) { */
+/* Hide the toggle arrow column on tablet */
+/* body.companyassets-page .ca-mobile-toggle-head,
+  body.companyassets-page .ca-mobile-toggle-cell {
+    display: none !important;
+  } */
+
+/* Ensure standard columns are visible */
+/* body.companyassets-page .ca-col-id,
+  body.companyassets-page .ca-col-empid,
+  body.companyassets-page .ca-col-phone,
+  body.companyassets-page .ca-col-project {
+    display: table-cell !important;
+  }
+} */
+
+/* ================= ARROW IN NAME COLUMN FIX ================= */
+
+/* Wrapper for Name + Arrow */
+body.companyassets-page .ca-name-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Default Arrow Style */
+body.companyassets-page .mobile-only-arrow {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #475569;
+  display: none;
+  /* Hidden by default on desktop */
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+/* Rotate arrow when expanded */
+body.companyassets-page .ca-table-row.expanded .mobile-only-arrow svg {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+/* ================= MOBILE VIEW (<= 768px) ================= */
+@media (max-width: 768px) {
+
+  /* Show arrow on mobile */
+  body.companyassets-page .mobile-only-arrow {
+    display: flex !important;
+  }
+
+  /* Ensure Name Column is ALWAYS visible on mobile */
+  body.companyassets-page .ca-col-id,
+  body.companyassets-page th[data-column="0"] {
+    display: table-cell !important;
+  }
+
+  body.companyassets-page .ca-employee-name,
+  body.companyassets-page th[data-column="1"] {
+    display: table-cell !important;
+    width: auto;
+  }
+}
+
+/* ================= TINY MOBILE (<= 425px) ================= */
+@media (max-width: 425px) {
+
+  /* On very small screens, Name column takes priority */
+  body.companyassets-page .ca-employee-name {
+    white-space: normal !important;
+    /* Allow name to wrap if needed */
+  }
+
+  /* Force ID column to shrink or hide if needed */
+  body.companyassets-page .ca-col-id {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+/* ================= PAGINATION ALIGNMENT FIX (1024px) ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* 1. Reset the Bar to Flex Row */
+  body.companyassets-page .ca-pagination-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    gap: 0 !important;
+    /* Remove gap so flex-basis handles spacing */
+  }
+
+  /* 2. Left Section: Info Text (Takes 1/3 space, aligns left) */
+  body.companyassets-page .ca-pagination-info {
+    flex: 1 1 0% !important;
+    /* Equal width */
+    text-align: left !important;
+    justify-content: flex-start !important;
+    display: flex !important;
+    white-space: nowrap !important;
+    order: 1 !important;
+  }
+
+  /* 3. Center Section: Prev/Next Buttons (Takes 1/3 space, aligns center) */
+  body.companyassets-page .ca-pagination-center {
+    flex: 1 1 0% !important;
+    /* Equal width */
+    justify-content: center !important;
+    text-align: center !important;
+    display: flex !important;
+    white-space: nowrap !important;
+    order: 2 !important;
+  }
+
+  /* 4. Right Section: Jump Input (Takes 1/3 space, aligns right) */
+  body.companyassets-page .ca-pagination-right {
+    flex: 1 1 0% !important;
+    /* Equal width */
+    justify-content: flex-end !important;
+    text-align: right !important;
+    display: flex !important;
+    white-space: nowrap !important;
+    order: 3 !important;
+  }
+
+  /* Ensure the Jump Form inside the right section doesn't break layout */
+  body.companyassets-page .ca-jump-form {
+    margin-left: auto !important;
+    /* Pushes form to the far right */
+  }
+}
+
+/* ================= 768px ARROW ALIGNMENT FIX ================= */
+
+/* 1. Force the Name Column Wrapper to take full width */
+body.companyassets-page .ca-name-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
+/* 2. Push the Arrow to the absolute End (Right) of the cell */
+body.companyassets-page .mobile-only-arrow {
+  margin-left: auto !important;
+  /* Force push to right */
+  padding-right: 0 !important;
+  /* Remove padding that might create gaps */
+}
+
+/* 3. Ensure the Name Text takes up remaining space but doesn't overflow */
+body.companyassets-page .ca-name-wrapper span {
+  flex-grow: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
+}
+
+/* 4. Specific Fix for 768px Tablet View */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Give the Name column slightly more width weight so the arrow looks good */
+  body.companyassets-page .ca-col-id {
+    width: 60px !important;
+    /* Fixed width for ID to give Name space */
+  }
+
+  body.companyassets-page th[data-column="1"],
+  body.companyassets-page td[data-column="1"] {
+    width: auto !important;
+    min-width: 200px !important;
+    /* Ensure minimum width for name + arrow */
+  }
+}
+
+/* ================= RESET & CLEANUP TOGGLE VISIBILITY ================= */
+
+/* 1. Base Logic: Hide Mobile Toggle on Desktop/Tablet (>768px) */
+@media (min-width: 769px) {
+
+  body.companyassets-page .ca-mobile-toggle-head,
+  body.companyassets-page .ca-mobile-toggle-cell,
+  body.companyassets-page .mobile-only-arrow,
+  body.companyassets-page .ca-row-toggle-btn,
+  body.companyassets-page .ca-expand-row {
+    display: none !important;
+  }
+}
+
+/* 2. Mobile Logic: Show Mobile Toggle on Mobile (<=768px) */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-mobile-toggle-head,
+  body.companyassets-page .ca-mobile-toggle-cell {
+    display: table-cell !important;
+    width: 40px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    padding: 0 8px !important;
+  }
+
+  body.companyassets-page .mobile-only-arrow {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body.companyassets-page .ca-row-toggle-btn {
+    display: inline-flex !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #475569;
+  }
+
+  body.companyassets-page.dark-mode .ca-row-toggle-btn {
+    color: white;   
+  }
+}
+
+/* 3. Ensure Actions Column is Visible on Desktop/Tablet (if needed) */
+@media (min-width: 769px) {
+  body.companyassets-page .ca-actions {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-toolbar-container {
+    overflow: visible !important;
+  }
+
+}
+
+/* Fix dropdown for very small mobile */
+/* Removed - now handled in 375px and 320px media queries */
+
+/* ================= FORCE DROPDOWN VISIBLE ON 320px SCREENS ================= */
+/* @media (max-width: 320px) { */
+
+/* Allow ancestors to not clip dropdowns or expanded rows */
+/* body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .ca-toolbar-container,
+  body.companyassets-page .ca-action-buttons,
+  body.companyassets-page .ca-column-visibility-wrapper {
+    overflow: visible !important;
+    z-index: 1 !important;
+  } */
+
+/* body.companyassets-page .ca-column-dropdown.show,
+  .dropdown-menu.show,
+  .bootstrap-select .dropdown-menu.show,
+  .select2-container--open .select2-dropdown {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  } */
+
+/* Ensure expanded row content also stays on top and is not clipped */
+/* body.companyassets-page .ca-expand-row,
+  body.companyassets-page .ca-expand-row td,
+  body.companyassets-page .ca-expand-box {
+    position: relative !important;
+    z-index: 2147483646 !important;
+    overflow: visible !important; */
+/* REMOVED display: table-row !important to allow JS to toggle it */
+/* } */
+
+/* If any ancestor creates a stacking context via transform, neutralize it to avoid clipping */
+/* body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .companyassets-page-wrapper {
+    -webkit-transform: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+} */
+
+
+/* ==================== FINAL DROPDOWN + EXPAND FIX (DO NOT TOUCH) ==================== */
+
+/* 1. Remove clipping from all parents - Generic mobile fix but good for 320px safety */
+/* @media (max-width: 375px) {
+
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .ca-toolbar-container,
+  body.companyassets-page .ca-action-buttons,
+  body.companyassets-page .ca-column-visibility-wrapper {
+    overflow: visible !important;
+    max-height: none !important;
+    transform: none !important;
+  }
+  } */
+
+/* 2. Force dropdown to escape containers */
+/* body.companyassets-page .ca-column-dropdown {
+  position: fixed !important;
+  top: 75px !important;
+  left: 10px !important;
+  right: 10px !important;
+
+  width: auto !important;
+  max-width: calc(100% - 20px) !important;
+
+  z-index: 999999 !important;
+
+  overflow: visible !important;
+  display: none;
+  } */
+
+/* 3. Show dropdown */
+/* body.companyassets-page .ca-column-dropdown.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+} */
+
+/* 4. Prevent table from covering dropdown */
+/* body.companyassets-page .ca-table-card,
+body.companyassets-page .ca-table-wrapper {
+  position: relative !important;
+  z-index: 1 !important;
+} */
+
+/* 5. Expanded mobile row fix */
+/* body.companyassets-page .ca-expand-row,
+body.companyassets-page .ca-expand-row td,
+body.companyassets-page .ca-expand-box {
+  position: relative !important;
+  z-index: 999998 !important;
+  overflow: visible !important;
+  height: auto !important;
+} */
+
+/* 6. Mobile only safety */
+@media (max-width: 768px) {
+  body.companyassets-page .ca-column-dropdown {
+    top: 70px !important;
+  }
+}
+
+/* ==== FINAL FIX: Allow dropdown on very small phones (320px target) ==== */
+@media (max-width: 320px) {
+
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    overflow: visible !important;
+  }
+
+  body.companyassets-page .ca-column-dropdown {
+    /* position: fixed !important; */
+    top: 70px !important;
+    left: 8px !important;
+    right: 8px !important;
+    z-index: 999999 !important;
+  }
+
+  body.companyassets-page .ca-column-dropdown.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}
+
+/* ================= FINAL FIX FOR 320px EXPAND + DROPDOWN ================= */
+@media (max-width: 340px) {
+
+  /* Disable clipping containers */
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Force table to grow */
+  body.companyassets-page table {
+    height: auto !important;
+  }
+
+  /* Ensure expanded row expands container */
+  body.companyassets-page .ca-expand-row,
+  body.companyassets-page .ca-expand-row td,
+  body.companyassets-page .ca-expand-box {
+    /* REMOVED fixed display !important to allow toggling */
+    /* display: table-row !important;  <-- THIS WAS BREAKING TOGGLE */
+    height: auto !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 999999 !important;
+  }
+
+  /* Ensure it is blocked if visible */
+  body.companyassets-page .ca-expand-row[style*="table-row"],
+  body.companyassets-page .ca-expand-row[style*="block"] {
+    display: table-row !important;
+  }
+
+  /* Force dropdown to float above everything */
+  body.companyassets-page .ca-column-dropdown {
+    /* position: fixed !important; */
+    top: 72px !important;
+    left: 2px !important;
+    /* Maximized width */
+    right: 2px !important;
+    width: auto !important;
+    max-width: none !important;
+    z-index: 2147483647 !important;
+  }
+
+  body.companyassets-page .ca-column-dropdown.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}
+
+/* ===== Fix Expand Layout Only for 320px ===== */
+@media (max-width: 330px) {
+
+  /* Force single column */
+  body.companyassets-page .ca-expand-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    row-gap: 10px !important;
+    width: 100% !important;
+  }
+
+  /* Make expand box full width */
+  body.companyassets-page .ca-expand-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    padding: 8px !important;
+    /* Reduced padding for 320px */
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure cell takes full width */
+  body.companyassets-page .ca-expand-row td {
+    width: 100% !important;
+    display: block !important;
+    /* Force block to fill width if table-cell behaves oddly */
+    padding: 0 !important;
+  }
+
+  /* Prevent content squeezing */
+  body.companyassets-page .ca-expand-grid>div {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  /* Fix text breaking */
+  body.companyassets-page .ca-expand-box,
+  body.companyassets-page .ca-expand-grid,
+  body.companyassets-page .ca-expand-grid * {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+  }
+
+  /* Improve label/value alignment */
+  body.companyassets-page .ca-expand-grid>div:nth-child(odd) {
+    font-weight: 600 !important;
+  }
+
+  body.companyassets-page .ca-expand-grid>div:nth-child(even) {
+    margin-bottom: 6px !important;
+  }
+}
+
+/* ===========================================================
+   FINAL SAFE OVERRIDE — COLUMN VISIBILITY (ALL DEVICES)
+   Do NOT edit above rules
+   =========================================================== */
+
+/* Reset all previous conflicting rules */
+body.companyassets-page .ca-column-dropdown {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: auto !important;
+  right: 0 !important;
+
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+
+  max-height: 320px !important;
+  overflow-y: auto !important;
+
+  transform: none !important;
+  margin: 0 !important;
+
+  z-index: 99999 !important;
+
+  background: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+
+  display: none;
+}
+
+/* Show when active */
+body.companyassets-page .ca-column-dropdown.show {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+/* Ensure wrapper allows overflow */
+body.companyassets-page .ca-column-visibility-wrapper {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+
+/* ---------------- MOBILE (<=768px) ---------------- */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-column-dropdown {
+    /* right: 0 !important;
+    left: auto !important;
+    width: 240px !important; */
+    min-width: 240px !important;
+    max-width: 240px !important;
+  }
+
+}
+
+
+/* ---------------- SMALL MOBILE (<=375px) ---------------- */
+@media (max-width: 375px) {
+
+  body.companyassets-page .ca-column-dropdown {
+    right: 8px !important;
+    left: 8px !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+
+/* ---------------- VERY SMALL (<=320px) ---------------- */
+@media (max-width: 320px) {
+
+  body.companyassets-page .ca-column-dropdown {
+    right: 6px !important;
+    left: 6px !important;
+  }
+}
+
+/* ===================================================
+   FINAL COLUMN VISIBILITY STABLE FIX (DO NOT MOVE)
+   =================================================== */
+
+/* 1. Remove outer scrollbar */
+body.companyassets-page .ca-column-dropdown {
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+/* 2. Only inner body scrolls */
+body.companyassets-page .ca-dropdown-body {
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+}
+
+/* 3. Prevent double scrollbar */
+body.companyassets-page .ca-column-dropdown::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* 4. Desktop / Tablet positioning */
+@media (min-width: 426px) {
+  body.companyassets-page .ca-column-dropdown {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    left: auto !important;
+
+    width: 260px !important;
+    max-width: 260px !important;
+  }
+}
+
+/* 5. Mobile full-width safe dropdown */
+@media (max-width: 425px) {
+  body.companyassets-page .ca-column-dropdown {
+    /* position: fixed !important; */
+
+    top: 75px !important;
+    left: 10px !important;
+    right: 10px !important;
+
+    width: auto !important;
+    max-width: calc(100% - 20px) !important;
+
+    margin: 0 auto !important;
+
+    z-index: 2147483647 !important;
+  }
+}
+
+/* 6. Ensure wrapper never clips */
+body.companyassets-page .ca-column-visibility-wrapper {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* ================= FINAL MOBILE + DESKTOP COLUMN DROPDOWN FIX ================= */
+/* DO NOT MOVE BELOW THIS */
+
+body.companyassets-page .ca-column-dropdown {
+  box-sizing: border-box !important;
+}
+
+/* Desktop / Tablet */
+@media (min-width: 426px) {
+
+  body.companyassets-page .ca-column-dropdown {
+    position: absolute !important;
+
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    left: auto !important;
+
+    width: 260px !important;
+    max-width: 260px !important;
+
+    overflow: hidden !important;
+  }
+
+}
+
+/* Mobile (ALL phones) */
+@media (max-width: 425px) {
+
+  body.companyassets-page .ca-column-dropdown {
+
+    /* position: fixed !important; */
+
+    top: 75px !important;
+
+    left: 10px !important;
+    right: 10px !important;
+
+    width: auto !important;
+    max-width: calc(100% - 20px) !important;
+
+    margin: 0 auto !important;
+
+    overflow: hidden !important;
+
+    z-index: 2147483647 !important;
+  }
+
+}
+
+/* Only inner list scrolls */
+body.companyassets-page .ca-dropdown-body {
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+}
+
+/* Prevent outer scroll */
+body.companyassets-page .ca-column-dropdown {
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+/* =====================================================
+   FINAL HARD OVERRIDE: COLUMN DROPDOWN MOBILE FIX
+   DO NOT MOVE ABOVE
+   ===================================================== */
+
+/* Mobile & Small Tablets */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-column-dropdown {
+
+    /* Take out of layout */
+    /* position: fixed !important; */
+
+    /* Always stay inside screen */
+    left: 8px !important;
+    right: 8px !important;
+
+    /* Remove all fixed widths */
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 16px) !important;
+
+    /* Proper top spacing */
+    top: 72px !important;
+
+    /* Safety */
+    box-sizing: border-box !important;
+    margin: 0 !important;
+
+    /* Layer */
+    z-index: 2147483647 !important;
+
+    /* Prevent outer scroll */
+    overflow: hidden !important;
+  }
+}
+
+/* Only inner list scrolls */
+body.companyassets-page .ca-dropdown-body {
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+}
+
+/* =====================================================
+   FINAL MOBILE FIX: EDIT + FILTER MODAL (<=425px)
+   ===================================================== */
+
+@media (max-width: 425px) {
+
+  /* Make modal fit screen */
+  body.companyassets-page .ca-modal-dialog {
+    max-width: 100% !important;
+    width: calc(100% - 16px) !important;
+    margin: 8px auto !important;
+    height: auto !important;
+  }
+
+  /* Reduce body padding */
+  body.companyassets-page .ca-modal-body {
+    padding: 12px !important;
+    max-height: 80vh !important;
+  }
+
+  /* Convert form to single column */
+  body.companyassets-page .ca-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Reduce input height */
+  body.companyassets-page #filterModalOverlay .form-item input,
+  body.companyassets-page #filterModalOverlay .form-item select {
+    height: 42px !important;
+    font-size: 13px !important;
+    padding: 0 12px !important;
+  }
+
+  /* Smaller labels */
+  body.companyassets-page #filterModalOverlay .form-item label {
+    font-size: 10px !important;
+    top: -9px !important;
+  }
+
+  /* Footer buttons stack nicely */
+  body.companyassets-page #filterModalOverlay .form-actions {
+    /* flex-wrap: wrap !important; */
+    gap: 8px !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .form-actions .btn {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    font-size: 13px !important;
+    padding: 10px 6px !important;
+  }
+}
+
+/* ================= MOBILE MODAL FULL FIX (<=425px) ================= */
+@media (max-width: 425px) {
+
+  /* Force filter + edit modal to fit screen */
+  body.companyassets-page #filterModalOverlay,
+  body.companyassets-page #editAssetsModal {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Modal inner container */
+  body.companyassets-page #filterModalOverlay .modal-content,
+  body.companyassets-page #editAssetsModal .modal-content,
+  body.companyassets-page #filterModalOverlay .modal-body,
+  body.companyassets-page #editAssetsModal .modal-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 12px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Prevent any child overflow */
+  body.companyassets-page #filterModalOverlay *,
+  body.companyassets-page #editAssetsModal * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reduce input height on small screens */
+  body.companyassets-page #filterModalOverlay input,
+  body.companyassets-page #filterModalOverlay select,
+  body.companyassets-page #editAssetsModal input,
+  body.companyassets-page #editAssetsModal select {
+    height: 42px !important;
+    font-size: 13px !important;
+  }
+
+  /* Stack footer buttons */
+  body.companyassets-page #filterModalOverlay .form-actions,
+  body.companyassets-page #editAssetsModal .form-actions {
+    /* flex-direction: column !important; */
+    gap: 8px !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .form-actions .btn,
+  body.companyassets-page #editAssetsModal .form-actions .btn {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+/* ================= MOBILE MODAL FORCE FIX (<=475px) ================= */
+@media (max-width: 475px) {
+
+  /* Force modal overlay to fit screen */
+  body.companyassets-page #filterModalOverlay,
+  body.companyassets-page #editAssetModal {
+    /* position: fixed !important; */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    max-height: 100vh !important;
+    overflow: hidden !important;
+
+    z-index: 999999 !important;
+  }
+
+  /* Make form scrollable */
+  body.companyassets-page #filterModalOverlay .modal-content,
+  body.companyassets-page #editAssetModal .modal-content {
+    height: 100% !important;
+    max-height: 100% !important;
+
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    padding: 15px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Prevent horizontal overflow */
+  body.companyassets-page #filterModalOverlay *,
+  body.companyassets-page #editAssetModal * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Slightly reduce input height */
+  body.companyassets-page #filterModalOverlay input,
+  body.companyassets-page #filterModalOverlay select {
+    height: 44px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ================= FINAL FILTER MODAL FIX (MOBILE <= 475px) ================= */
+@media (max-width: 475px) {
+
+  /* 1. Overlay - NO display:flex !important here (Let JS handle it) */
+  body.companyassets-page #filterModalOverlay {
+    align-items: center !important;
+    /* Center vertically */
+    padding: 10px !important;
+    z-index: 999999 !important;
+  }
+
+  /* 2. The Card Container (Using the correct class from PHP) */
+  body.companyassets-page #filterModalOverlay .modal-container-eoi {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    /* Important: Restrict height so internal scroll works */
+    max-height: 85vh !important;
+    height: auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    background: #fff;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    /* Prevent double scrollbars */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  /* 3. Header - Fixed at top */
+  body.companyassets-page #filterModalOverlay .modal-header {
+    flex-shrink: 0 !important;
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #eaeaea !important;
+  }
+
+  /* 4. Body - Scrollable Area */
+  body.companyassets-page #filterModalOverlay .modal-body {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    /* Enable scroll here */
+    padding: 16px !important;
+    -webkit-overflow-scrolling: touch !important;
+    /* Smooth scroll on iOS */
+  }
+
+  /* 5. Adjust Form Items spacing */
+  body.companyassets-page #filterModalOverlay .form-item {
+    margin-bottom: 1rem !important;
+  }
+
+  /* 6. Footer Actions - Stack buttons properly at bottom of scroll */
+  body.companyassets-page #filterModalOverlay .modal-footer,
+  body.companyassets-page #filterModalOverlay .form-actions {
+    display: flex !important;
+    /* flex-direction: column !important; */
+    gap: 10px !important;
+    /* padding-top: 20px !important; */
+    padding-bottom: 10px !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .modal-footer .btn {
+    /* width: 100% !important; */
+    margin: 0 !important;
+    /* padding: 12px !important; */
+    height: auto !important;
+
+    padding: 0.6rem 1.4rem;
+    font-size: 15px;
+    /* min-width: 130px; */
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Enable horizontal scroll on all devices */
+/* FORCE horizontal scroll on tablet & mobile */
+.ca-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+
+.ca-table {
+  min-width: 1100px;
+}
+
+/* Let table grow when columns are added */
+.ca-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+/* Prevent container cutting table */
+@media (max-width: 1024px) {
+
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    max-width: 100% !important;
+    overflow-x: visible !important;
+  }
+
+}
+
+/* .ca-table-wrapper::after {
+  content: "← Scroll →";
+  position: sticky;
+  right: 10px;
+  font-size: 11px;
+  color: #888;
+  display: block;
+  text-align: right;
+  padding: 2px 8px;
+} */
+
+
+/* ===================================================
+   FIX: Force Table Expansion at 768px
+   =================================================== */
+
+@media (max-width: 768px) {
+
+  /* Allow wrapper to scroll horizontally */
+  body.companyassets-page .ca-table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Force table to expand */
+  body.companyassets-page .ca-table {
+    width: max-content !important;
+    min-width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  body.companyassets-page .ca-table-card table {
+    width: max-content !important;
+    min-width: 100% !important;
+  }
+
+}
+
+/* ===== FIX COLUMN VISIBILITY @768px ===== */
+@media (max-width: 768px) {
+
+  /* Let table grow when columns added */
+  body.companyassets-page .ca-table-card table {
+    width: max-content !important;
+    min-width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Enable horizontal scroll */
+  body.companyassets-page .ca-table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Prevent outer clipping */
+  body.companyassets-page .ca-table-card {
+    overflow-x: auto !important;
+  }
+
+}
+
+
+/* ================================
+   HIDE EDIT / DELETE ON TABLET ONLY
+   (768px and below, but above mobile)
+================================ */
+
+@media (max-width: 768px) and (min-width: 426px) {
+
+  /* Hide desktop action icons column */
+  .companyassets-page .ca-actions {
+    display: none !important;
+  }
+
+  /* Hide header "ACTIONS" also */
+  .companyassets-page th:last-child {
+    display: none !important;
+  }
+}
+
+/* ================================
+   FORCE MOBILE COLUMN HIDING
+   (425px and below)
+================================ */
+@media (max-width: 425px) {
+
+  /* Hide all desktop columns */
+  .companyassets-page .ca-desktop-col {
+    display: none !important;
+  }
+
+  /* Hide Employee ID */
+  .companyassets-page th[data-column="2"],
+  .companyassets-page td[data-column="2"] {
+    display: none !important;
+  }
+
+  /* Hide Phone */
+  .companyassets-page th[data-column="3"],
+  .companyassets-page td[data-column="3"] {
+    display: none !important;
+  }
+
+  /* Hide Project */
+  .companyassets-page th[data-column="4"],
+  .companyassets-page td[data-column="4"] {
+    display: none !important;
+  }
+
+  /* Keep table inside screen */
+  .companyassets-page .ca-table-wrapper {
+    overflow-x: auto !important;
+  }
+
+  .companyassets-page table {
+    width: 100% !important;
+    table-layout: auto !important;
+  }
+
+  .companyassets-page td,
+  .companyassets-page th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+
+/* ================================
+   FIX COLUMN VISIBILITY ON MOBILE/TABLET
+   ================================ */
+
+@media (max-width: 768px) {
+
+  /* Force table to shrink */
+  body.companyassets-page .ca-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    overflow-x: auto !important;
+  }
+
+  /* Allow hidden columns to collapse */
+  body.companyassets-page th,
+  body.companyassets-page td {
+    white-space: normal !important;
+    max-width: none !important;
+  }
+
+  /* Remove forced width from unified styles */
+  body.companyassets-page table {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+
+/* Extra fix for phones */
+@media (max-width: 425px) {
+
+  body.companyassets-page .ca-table {
+    font-size: 13px;
+  }
+}
+
+/* ===============================
+   FORCE COLUMN VISIBILITY FIX
+   =============================== */
+
+@media (max-width: 1024px) {
+
+  /* Allow horizontal scroll */
+  .ca-table-wrapper {
+    overflow-x: auto !important;
+  }
+
+  /* JS must control display */
+  .ca-table th,
+  .ca-table td {
+    display: table-cell !important;
+  }
+
+  /* Respect JS hide */
+  .ca-table th[style*="display: none"],
+  .ca-table td[style*="display: none"] {
+    display: none !important;
+  }
+}
+
+
+/* Hide desktop actions on mobile */
+@media (max-width: 425px) {
+  .companyassets-page .ca-actions {
+    display: none !important;
+  }
+
+  .companyassets-page th[data-column="13"] {
+    display: none !important;
+  }
+
+}
+
+
+/* ================= FORCE ID TO NEVER WRAP ================= */
+body.companyassets-page .ca-col-id,
+body.companyassets-page th[data-column="0"],
+body.companyassets-page td[data-column="0"] {
+
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+
+  min-width: 50px !important;
+  text-align: center !important;
+}
+
+/* Hide desktop ACTIONS icons on all phones <= 475px */
+@media (max-width: 475px) {
+
+  body.companyassets-page .ca-actions,
+  body.companyassets-page .ca-action-icon,
+  body.companyassets-page td[data-column="13"],
+  body.companyassets-page th[data-column="13"] {
+    display: none !important;
+  }
+}
+
+/* ==== 1. Prevent horizontal overflow on very small phones ==== */
+@media (max-width: 360px) {
+
+  body.companyassets-page,
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==== 2. Make table layout fixed & wrap text on tiny screens ==== */
+@media (max-width: 360px) {
+  body.companyassets-page .ca-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+  }
+
+  body.companyassets-page .ca-table th,
+  body.companyassets-page .ca-table td {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Remove global table min-width that was causing stretching */
+  body.companyassets-page table {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* ==== 3. Constrain expanded / detail view width ==== */
+@media (max-width: 360px) {
+
+  body.companyassets-page .ca-expand-row,
+  body.companyassets-page .ca-expand-row td,
+  body.companyassets-page .ca-expand-box,
+  body.companyassets-page .ca-expand-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+}
+
+/* ==== 4. Compact padding for cards/rows/details at 320px ==== */
+@media (max-width: 360px) {
+
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table tbody tr.ca-table-row td,
+  body.companyassets-page .ca-expand-box,
+  body.companyassets-page .ca-detail-item {
+    padding: 8px !important;
+  }
+}
+
+/* ==== 5. Force wrapping for long values (IDs, phones, links) ==== */
+@media (max-width: 360px) {
+
+  body.companyassets-page .ca-table td span,
+  body.companyassets-page .ca-expand-box span,
+  body.companyassets-page .ca-expand-box a {
+    word-break: break-all !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+
+/* === FINAL 320px HARD CONTAINER LOCK === */
+@media (max-width: 360px) {
+
+  /* 1. Root containers must never exceed viewport */
+  html,
+  body,
+  body.companyassets-page,
+  body.companyassets-page .companyassets-page-wrapper,
+  body.companyassets-page .contentinside,
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12,
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow-x: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Kill previous mobile rule that re‑enables horizontal scroll */
+  .ca-table-wrapper {
+    overflow-x: auto !important;
+  }
+
+  /* 3. Prevent any child from forcing width > 100% */
+  body.companyassets-page * {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  table,
+  tbody,
+  tr,
+  td,
+  th {
+    max-width: 100% !important;
+  }
+
+  /* 4. Force table itself to stay inside container */
+  body.companyassets-page .ca-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+    overflow: hidden !important;
+  }
+
+  body.companyassets-page .ca-table th,
+  body.companyassets-page .ca-table td {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* 5. Fix Bootstrap/grid gutters that often cause 1–2px overflow */
+  body.companyassets-page .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  body.companyassets-page [class^="col-"],
+  body.companyassets-page [class*=" col-"] {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==========================================================================
+   DARK MODE OVERRIDES (Company Assets Specific)
+   ========================================================================== */
+
+body.dark-mode.companyassets-page .ca-table-card {
+  background: transparent;
+}
+
+/* Inputs & Buttons */
+body.dark-mode.companyassets-page .ca-search-input,
+body.dark-mode.companyassets-page .ca-filter-btn,
+body.dark-mode.companyassets-page .ca-form-control,
+body.dark-mode.companyassets-page .ca-rows-dropdown select {
+  background: rgba(44, 44, 46, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode.companyassets-page .ca-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode.companyassets-page .ca-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+/* Modals */
+body.dark-mode.companyassets-page .ca-modal-content {
+  background: rgba(30, 30, 35, 1);
+  /* Opaque for readability */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode.companyassets-page .ca-modal-header,
+body.dark-mode.companyassets-page .ca-modal-footer {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 35, 1);
+}
+
+body.dark-mode.companyassets-page .ca-modal-title,
+body.dark-mode.companyassets-page .ca-form-group label {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode.companyassets-page .ca-section-title {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Dropdowns */
+body.dark-mode.companyassets-page .ca-column-dropdown {
+  background: rgba(30, 30, 30, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+body.dark-mode.companyassets-page .ca-dropdown-header {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body.dark-mode.companyassets-page .ca-dropdown-item {
+  color: #ffffff;
+}
+
+body.dark-mode.companyassets-page .ca-dropdown-item span {
+  color: #ffffff;
+}
+
+body.dark-mode.companyassets-page .ca-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Table Specifics */
+body.dark-mode.companyassets-page .ca-table thead {
+  background: rgba(30, 30, 35, 0.95);
+  /* Semi-transparent header */
+}
+
+body.dark-mode.companyassets-page .ca-table thead th {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode.companyassets-page .ca-table tbody tr.ca-table-row {
+  background: transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode.companyassets-page .ca-table tbody tr.ca-table-row:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-mode.companyassets-page .ca-table tbody tr.ca-table-row td {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode.companyassets-page .ca-table tbody tr.ca-table-row td:first-child {
+  color: #ffffff !important;
+}
+
+body.dark-mode.companyassets-page .ca-column-visibility-btn{
+    background-color: rgba(44, 44, 46, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode.companyassets-page .modal-container-eoi,
+body.dark-mode.companyassets-page .modal-content,
+body.dark-mode.companyassets-page .ca-popup-box{
+  background: rgba(30, 30, 30, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+body.dark-mode.companyassets-page .modal-footer{
+  background: transparent !important;
+}
+
+body.dark-mode.companyassets-page #filterModalOverlay .form-item label,
+body.dark-mode.companyassets-page #editAssetModal .form-item label{
+  background: transparent !important;
+  backdrop-filter: blur(20px) !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode.companyassets-page #filterModalOverlay .form-item input,
+body.dark-mode.companyassets-page #editAssetModal .form-item input,
+body.dark-mode.companyassets-page #editAssetModal .form-item select,
+body.dark-mode.companyassets-page .btn-close,
+body.dark-mode.companyassets-page .modal-close-btn,
+body.dark-mode.companyassets-page .ca-pagination-info{
+  color: #ffffff !important;
+}
+/* ==================== NOTIFICATION & PROFILE DROPDOWN FIX ==================== */
+/* CRITICAL: Force dropdowns to appear above ALL page content with maximum specificity */
+
+/* Base styles - ensure dropdowns are properly configured */
+body.companyassets-page #notif-content_box,
+body.companyassets-page #profile-content_box,
+body.companyassets-page .notif-content,
+body.companyassets-page .profile-content {
+  z-index: 99999 !important;
+  position: fixed !important;
+}
+
+/* FORCE visibility when JavaScript sets display: block */
+body.companyassets-page #notif-content_box[style*="display: block"],
+body.companyassets-page #profile-content_box[style*="display: block"],
+body.companyassets-page .notif-content[style*="display: block"],
+body.companyassets-page .profile-content[style*="display: block"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Dark mode support for dropdowns */
+body.dark-mode.companyassets-page .notif-content,
+body.dark-mode.companyassets-page .profile-content,
+body.dark-mode.companyassets-page #notif-content_box,
+body.dark-mode.companyassets-page #profile-content_box {
+  background: rgba(30, 30, 35, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode.companyassets-page .ca-jump-form {
+  background: transparent !important;
+}
+
+/* ============================================
+   FIX: Pagination breaking (1024px–1440px)
+   ============================================ */
+@media (min-width: 1024px) and (max-width: 1440px) {
+
+  .companyassets-page .ca-pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: nowrap; /* 🔑 Prevent wrapping */
+  }
+
+  /* Left: Showing X entries */
+  .companyassets-page .ca-pagination-info {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Center: Previous / Pages / Next */
+  .companyassets-page .ca-pagination-center {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  /* Right: Page No + Jump */
+  .companyassets-page .ca-pagination-right {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Prevent buttons breaking */
+  .companyassets-page .ca-page-btn,
+  .companyassets-page .ca-page-number {
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================
+   FIX: Keep Pagination Always in Order
+   (Prevent JS/CSS Column Resize Effects)
+   ========================================== */
+
+.companyassets-page .ca-pagination-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  box-sizing: border-box !important;
+
+  gap: 12px;
+  flex-wrap: nowrap !important;
+}
+
+/* Left Info */
+.companyassets-page .ca-pagination-info {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Center Pages */
+.companyassets-page .ca-pagination-center {
+  flex: 1 1 auto !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 6px;
+  white-space: nowrap !important;
+
+  min-width: 0 !important;
+}
+
+/* Right Jump */
+.companyassets-page .ca-pagination-right {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Prevent shrink on buttons */
+.companyassets-page .ca-page-btn,
+.companyassets-page .ca-page-number,
+.companyassets-page .ca-jump-input,
+.companyassets-page .ca-jump-btn {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* ================= FINAL SAFE PAGINATION ALIGNMENT ================= */
+/* Does NOT affect other pages */
+
+body.companyassets-page .ca-pagination-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+}
+
+/* Left: "Showing X to Y" */
+body.companyassets-page .ca-pagination-info {
+  flex: 0 0 auto !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+/* Center: Page buttons */
+body.companyassets-page .ca-pagination-center {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+}
+
+/* Right: Jump form */
+body.companyassets-page .ca-pagination-right {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+/* ================== FINAL PAGINATION ORDER LOCK ================== */
+
+body.companyassets-page .ca-pagination-bar {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Prevent flex re-ordering */
+body.companyassets-page .ca-pagination-info,
+body.companyassets-page .ca-pagination-center,
+body.companyassets-page .ca-pagination-right {
+  order: 0 !important;
+}
+
+/* Fix center drifting */
+body.companyassets-page .ca-pagination-center {
+  margin: 0 auto !important;
+}
+
+/* =====================================================
+   MOBILE PAGINATION FIX (≤768px)
+   Keep Info + Controls Together in Center
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-pagination-bar {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
+
+  /* Info text */
+  body.companyassets-page .ca-pagination-info {
+    order: 1 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* Page buttons */
+  body.companyassets-page .ca-pagination-center {
+    order: 2 !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* Jump form */
+  body.companyassets-page .ca-pagination-right {
+    order: 3 !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
+
+/* =====================================
+   FIX: Page No input cursor alignment
+   Only for Company Assets page
+   ===================================== */
+
+body.companyassets-page .ca-jump-input {
+  text-align: left !important;      /* Cursor starts from left */
+  /* padding-left: 12px !important;  Small spacing for comfort */
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 90px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  text-align: left;
+  appearance: none;
+
+}
+
+/* =================================================
+   FORCE REMOVE HEADER RADIUS ON MOBILE (<=475px)
+   Override unified_tables.css safely
+   ================================================= */
+
+@media (max-width: 475px) {
+
+  body.companyassets-page table#example thead th:last-child,
+  body.companyassets-page table#example thead th:first-child,
+  body.companyassets-page table#example thead th {
+    border-radius: 0 !important;
+  }
+
+}
+
+/* =================================================
+   FIX: Proper Right Side Row Rounding (Desktop Only)
+   Handles Actions + Mobile Toggle Column
+   ================================================= */
+
+@media (min-width: 1024px) {
+
+  /* If Actions is last visible */
+  body.companyassets-page 
+  .ca-table tbody tr.ca-table-row td:last-child,
+
+  /* If Toggle column exists */
+  body.companyassets-page 
+  .ca-table tbody tr.ca-table-row td:nth-last-child(2) {
+
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+  }
+  
+  .ca-actions{
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+  }
+
+}
+
+/* ============================================
+   FIX: Proper Right Side Radius (Not Clipped)
+   Apply to ROW instead of TD
+   ============================================ */
+
+@media (min-width: 1024px) {
+
+  body.companyassets-page 
+  .ca-table tbody tr.ca-table-row {
+
+    border-radius: 12px !important;
+    overflow: visible !important; /* stop clipping */
+  }
+
+}
+
+
+/* 🔥 Force small Apply Filters button */
+body.companyassets-page #filterModalOverlay .filter-submit {
+  padding: 4px 10px !important;
+  font-size: 16px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  border-radius: 6px !important;
+  /* line-height: 1 !important; */
+}
+
+/* Make Apply same as other buttons on mobile */
+@media (max-width: 768px) {
+  body.companyassets-page #filterModalOverlay .filter-submit {
+    padding: 12px 8px !important;
+    font-size: 14px !important;
+    height: auto !important;
+    min-height: unset !important;
+    border-radius: 10px !important;
+    line-height: normal !important;
+  }
+}
+
+
+/* ============================================
+   FIX FILTER MODAL BUTTON RESPONSIVENESS
+   ============================================ */
+
+/* Tablet + Mobile (<=768px) */
+@media (max-width: 768px) {
+
+  body.companyassets-page #filterModalOverlay .modal-footer {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .modal-footer .btn {
+    width: auto !important;        /* ❌ Remove 100% width */
+    min-width: auto !important;   /* ❌ Remove forced min width */
+    padding: 6px 12px !important; /* ✅ Small buttons */
+    font-size: 13px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;     /* ❌ Stop stretching */
+  }
+}
+
+
+/* Extra small mobile (<=425px) */
+@media (max-width: 425px) {
+
+  body.companyassets-page #filterModalOverlay .modal-footer {
+    gap: 6px !important;
+  }
+
+  body.companyassets-page #filterModalOverlay .modal-footer .btn {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    height: 30px !important;
+  }
+}
+
+
+/* Super small phones (<=375px) */
+@media (max-width: 375px) {
+
+  body.companyassets-page #filterModalOverlay .modal-footer .btn {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    height: 28px !important;
+  }
+}
+
+/* ===============================
+   FIX Column Dropdown (≤768px)
+=============================== */
+@media (max-width: 768px) {
+
+  /* Parent must be reference */
+  .ca-column-visibility-wrapper {
+    position: relative !important;
+  }
+
+  /* Dropdown positioning */
+  .companyassets-page .ca-column-dropdown {
+    position: absolute !important;
+
+    /* Open BELOW button */
+    top: 110% !important;
+    right: 0 !important;
+    left: auto !important;
+
+    /* Proper size (like Users page) */
+    width: 220px !important;
+    max-width: 220px !important;
+
+    max-height: 320px !important;
+    overflow-y: auto !important;
+
+    /* Visual fix */
+    border-radius: 12px !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15) !important;
+
+    z-index: 9999 !important;
+  }
+}
+
+
+/* ==========================================
+   FORCE COLUMN DROPDOWN TO STICK TO BUTTON
+   MOBILE & TABLET (<=768px)
+========================================== */
+
+@media (max-width: 768px) {
+
+  /* Parent reference */
+  .ca-column-visibility-wrapper {
+    position: relative !important;
+  }
+
+  /* Kill fullscreen mobile dropdown */
+  body.companyassets-page .ca-column-dropdown {
+    position: absolute !important;   /* ❌ remove fixed */
+    inset: auto !important;          /* ❌ reset left/right/top/bottom */
+
+    top: 110% !important;            /* below button */
+    right: 0 !important;
+    left: auto !important;
+
+    width: 240px !important;         /* fixed size */
+    min-width: 240px !important;
+    max-width: 240px !important;
+
+    max-height: 320px !important;
+    overflow-y: auto !important;
+
+    padding: 8px !important;
+
+    border-radius: 12px !important;
+    background: #fff !important;
+
+    z-index: 10000 !important;
+  }
+
+  /* Prevent stretch from show class */
+  body.companyassets-page .ca-column-dropdown.show {
+    width: 240px !important;
+    max-width: 240px !important;
+  }
+
+  /* Body scroll fix */
+  body.companyassets-page .ca-dropdown-body {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ================= MOBILE DROPDOWN SCREEN FIX ================= */
+@media (max-width: 427px) {
+
+  body.companyassets-page .ca-column-dropdown {
+
+    position: fixed !important;
+
+    top: 75px !important;
+
+    left: 10px !important;
+    right: 10px !important;
+
+    width: auto !important;
+    max-width: calc(100% - 20px) !important;
+
+    margin: 0 auto !important;
+
+    z-index: 2147483647 !important;
+
+    overflow: hidden !important;
+  }
+
+  body.companyassets-page .ca-column-visibility-wrapper {
+    overflow: visible !important;
+  }
+}
+
+/* ================= FINAL FIX: COLUMN DROPDOWN MOBILE POSITION ================= */
+@media (max-width: 427px) {
+
+  body.companyassets-page .ca-column-dropdown {
+
+    /* Force detach from button */
+    position: fixed !important;
+
+    /* Always below header/toolbar */
+    top: 85px !important;
+
+    /* Full width safe */
+    left: 8px !important;
+    right: 8px !important;
+
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+
+    margin: 0 !important;
+
+    /* Stay above everything */
+    z-index: 2147483647 !important;
+
+    /* Prevent outer scroll */
+    overflow: hidden !important;
+
+  }
+
+}
+
+/* ==================================================
+   FIX: DROPDOWN BELOW TOOLBAR ON SMALL MOBILE (<=425px)
+   ================================================== */
+
+@media (max-width: 427px) {
+
+  /* Detach from button */
+  body.companyassets-page .ca-column-dropdown {
+
+    position: fixed !important;   /* break parent relation */
+
+    /* Override calc(100%) rule */
+    top: 90px !important;
+
+    left: 8px !important;
+    right: 8px !important;
+
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+
+    margin: 0 !important;
+
+    z-index: 9999999 !important;
+
+    transform: none !important;
+  }
+
+}
+
+/* =====================================================
+   FINAL FIX: Column Dropdown Below Button (<=425px)
+   Match Users Page Behavior
+===================================================== */
+
+@media (max-width: 427px) {
+
+  /* Reference parent */
+  body.companyassets-page .ca-column-visibility-wrapper {
+    position: relative !important;
+  }
+
+  /* Force dropdown below button */
+  body.companyassets-page .ca-column-dropdown {
+
+    position: absolute !important;
+
+    /* Remove all previous top rules */
+    top: 100% !important;
+
+    margin-top: 6px !important; /* same as Users */
+
+    left: 0 !important;
+    right: auto !important;
+
+    width: 240px !important;
+    max-width: 240px !important;
+
+    transform: none !important;
+
+    z-index: 100000 !important;
+  }
+
+}
+
+.jump-divider {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0 4px;
+}
+
+/* ==================== 1024px LAYOUT NORMALIZATION ==================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  body.companyassets-page .container-fluid,
+  body.companyassets-page .row,
+  body.companyassets-page .col-lg-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Keep toolbar perfectly aligned */
+  body.companyassets-page .ca-toolbar-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Keep pagination aligned with toolbar */
+  body.companyassets-page .ca-pagination-bar {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+.ca-table-wrapper {
+   overflow-x: auto;
+   scrollbar-width: thin;
+}
+
+/* ================= OVERFLOW KILLER (FINAL FIX) ================= */
+@media (max-width: 768px) {
+
+  body.companyassets-page .ca-table-card,
+  body.companyassets-page .ca-table-wrapper {
+      width: 100% !important;
+      max-width: 100% !important;
+
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+
+      overflow-x: auto !important;
+  }
+
+  body.companyassets-page table {
+      width: max-content !important;
+      min-width: 100% !important;
+  }
+}
+
+/* ====================== HARD WIDTH CONTAINMENT FIX ====================== */
+
+body.companyassets-page .ca-table-card {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;   /* CRITICAL */
+}
+
+body.companyassets-page .ca-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: auto !important;
+    overflow-y: hidden;
+
+    display: block;     /* CRITICAL */
+    position: relative; /* Prevent layout expansion */
+}
+
+/* THIS is the missing lock */
+body.companyassets-page .ca-table-wrapper table {
+    width: max-content !important;
+    min-width: 100% !important;
+}
+
+/* Prevent Bootstrap from injecting phantom width */
+body.companyassets-page .row,
+body.companyassets-page .container-fluid,
+body.companyassets-page .col-lg-12 {
+    /* max-width: 100% !important; */
+    overflow-x: visible !important;
+}
+
+/* ================= MOBILE COLUMN SCROLL FIX ================= */
+
+@media (max-width: 425px) {
+
+  body.companyassets-page .ca-table-card {
+      overflow: hidden;
+  }
+
+  body.companyassets-page .ca-table-wrapper {
+      overflow-x: auto !important;
+      overflow-y: hidden;
+
+      width: 100%;
+      max-width: 100%;
+
+      display: block;
+      position: relative;
+  }
+
+  /* THIS enables natural expansion */
+  body.companyassets-page .ca-table {
+      width: max-content !important;
+      min-width: 100% !important;
+  }
+
+  /* Prevent column squeezing */
+  body.companyassets-page .ca-table th,
+  body.companyassets-page .ca-table td {
+      white-space: nowrap;
+  }
+}
+
+/* ================= FORCE SHOW WHEN USER ENABLES COLUMN ================= */
+
+.ca-force-show {
+    display: table-cell !important;
+}
+
+/* =========================================
+   FIX: Prevent Modal Header Clipping
+   (Filter + Edit Modal)
+   ========================================= */
+
+body.companyassets-page .modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    background: #ffffff;   /* IMPORTANT */
+}
+
+/* Dark mode support */
+body.dark-mode.companyassets-page .modal-header {
+    background: rgba(30, 30, 30, 0.95);
+}
+
+/* ==================== FINAL COLUMN STABILITY OVERRIDE ==================== */
+/* JS becomes the ONLY source of truth for column visibility */
+
+body.companyassets-page .ca-table th,
+body.companyassets-page .ca-table td {
+  display: table-cell;   /* Reset everything */
+}
+
+/* Only hide when JS explicitly hides */
+body.companyassets-page .ca-table th.ca-col-hidden,
+body.companyassets-page .ca-table td.ca-col-hidden {
+  display: none !important;
+}
+
+/* Prevent old responsive rules from killing columns */
+body.companyassets-page .ca-col-id,
+body.companyassets-page .ca-col-empid,
+body.companyassets-page .ca-col-phone,
+body.companyassets-page .ca-col-project,
+body.companyassets-page .ca-desktop-col {
+  display: table-cell !important;
+}
+
+/* Keep mobile toggle behaviour */
+@media (max-width: 768px) {
+  body.companyassets-page .ca-mobile-toggle-head,
+  body.companyassets-page .ca-mobile-toggle-cell {
+    display: table-cell !important;
+  }
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+    margin-top: 10px !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+    margin-top: 10px !important;
+}
+
+/* ================= TABLET FIX (768px) ================= */
+
+/* Hide ACTIONS column on tablet */
+@media (max-width: 1023px) {
+
+  body.companyassets-page th[data-column="13"],
+  body.companyassets-page td[data-column="13"] {
+    display: none !important;
+  }
+}
+
+/* Keep arrow column visible */
+@media (max-width: 1023px) {
+
+  body.companyassets-page th[data-column="14"],
+  body.companyassets-page td[data-column="14"] {
+    display: table-cell !important;
+  }
+}
+
+/* ================= HEADER VISIBILITY FIX ================= */
+
+/* Headers must follow JS visibility */
+body.companyassets-page .ca-table th.ca-col-hidden {
+    display: none !important;
+}
+
+/* When JS enables column */
+/* body.companyassets-page .ca-table th:not(.ca-col-hidden) {
+    display: table-cell !important;
+} */
+
+/* ================= FINAL COLUMN CONTROL FIX ================= */
+
+/* JS hidden columns ALWAYS win */
+body.companyassets-page th.ca-col-hidden,
+body.companyassets-page td.ca-col-hidden {
+    display: none !important;
+}
+
+/* ---------------- ACTIONS COLUMN FIX ---------------- */
+
+/* Hide Actions on Tablet + Mobile */
+@media (max-width: 1023px) {
+
+    body.companyassets-page th[data-column="13"],
+    body.companyassets-page td[data-column="13"] {
+        display: none !important;
+    }
+}
+
+/* ---------------- ARROW COLUMN FIX ---------------- */
+
+/* Arrow visible on Tablet + Mobile */
+@media (max-width: 1023px) {
+
+    body.companyassets-page th[data-column="14"],
+    body.companyassets-page td[data-column="14"] {
+        display: table-cell !important;
+    }
+}
+
+/* Arrow hidden on Desktop */
+@media (min-width: 1023px) {
+
+    body.companyassets-page th[data-column="14"],
+    body.companyassets-page td[data-column="14"] {
+        display: none !important;
+    }
+}
+
+/* ================= COLUMN VISIBILITY SYSTEM ================= */
+
+body.companyassets-page .ca-table .ca-col-hidden {
+    display: none !important;
+}
+
+/* ================= COLUMN VISIBILITY MASTER FIX ================= */
+
+/* JS hidden columns ALWAYS win */
+body.companyassets-page .ca-col-hidden {
+    display: none !important;
+}
+
+/* 🚀 Neutralize mobile CSS hiding for key columns */
+@media (max-width: 768px) {
+
+    body.companyassets-page th[data-column="2"],
+    body.companyassets-page td[data-column="2"],
+
+    body.companyassets-page th[data-column="3"],
+    body.companyassets-page td[data-column="3"],
+
+    body.companyassets-page th[data-column="4"],
+    body.companyassets-page td[data-column="4"] {
+        display: table-cell !important;
+    }
+}
+
+/* =========================================
+   Floating Clear Filters Button
+   (Company Assets Page Only)
+   ========================================= */
+
+body.companyassets-page .ca-clear-filters-floating {
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    display: none; /* Hidden by default */
+
+    background: linear-gradient(135deg, rgb(220, 53, 69), rgb(200, 35, 51));
+    color: white;
+
+    border: none;
+    border-radius: 50px;
+
+    padding: 12px 22px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.35);
+
+    z-index: 9999;
+
+    transition: all 0.3s ease;
+
+    gap: 8px;
+}
+
+/* Hover effect (Desktop only) */
+@media (min-width: 769px) {
+    body.companyassets-page .ca-clear-filters-floating:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(220, 53, 69, 0.45);
+    }
+}
+
+/* Mobile spacing */
+@media (max-width: 768px) {
+    body.companyassets-page .ca-clear-filters-floating {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+}
+/* 
+element.style {
+  background-color: white !important;
+} */
+
+
+body.companyassets-page .ca-table-wrapper {
+    width: 100%;
+    overflow-x: auto;      /*✅ Only wrapper scrolls*/
+    overflow-y: hidden;
+}
+
+
+
+/* Reduce padding on small screens */
+@media (max-width: 768px) {
+
+    body.companyassets-page .ca-table th,
+    body.companyassets-page .ca-table td {
+
+        padding: 8px 6px !important;    /* ✅ Stops width explosion */
+        font-size: 12px !important;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 425px) {
+
+    body.companyassets-page .ca-table th,
+    body.companyassets-page .ca-table td {
+
+        padding: 6px 4px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* =========================================
+   BOOTSTRAP GRID WIDTH FIX (CRITICAL)
+   ========================================= */
+
+body.companyassets-page .container-fluid {
+    display: block !important;     /* ✅ RESTORE BOOTSTRAP */
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body.companyassets-page .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+body.companyassets-page .col-lg-12 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+}
+
+/* ================= FINAL SCROLL RESTORE FIX ================= */
+
+/* Let wrapper handle scroll */
+body.companyassets-page .ca-table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+/* Allow table to grow naturally */
+body.companyassets-page .ca-table,
+body.companyassets-page .ca-table-wrapper table {
+
+    width: max-content !important;   /* ⭐ CRITICAL */
+    min-width: 100% !important;
+    max-width: none !important;      /* ⭐ CRITICAL */
+}
+
+/* Prevent column squeezing */
+body.companyassets-page .ca-table th,
+body.companyassets-page .ca-table td {
+
+    white-space: nowrap !important;  /* ⭐ CRITICAL */
+}
+
+body.companyassets-page.dark-mode .modal-body {
+    background: rgba(30, 30, 30, 0.95) !important;
+}
+
+body.dark-mode .btn-close {
+    filter: invert(1);
+}
+
+
+/* SweetAlert Dark Mode */
+
+body.dark-mode .swal2-popup {
+    background: rgba(30, 30, 30, 0.95) !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .swal2-title {
+    color: #f9fafb !important;
+}
+
+body.dark-mode .swal2-html-container {
+    color: #cbd5f5 !important;
+}
+
+/* Buttons */
+
+body.dark-mode .swal2-confirm {
+    background: #ef4444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+    background: #334155 !important;
+}
+
+/* =========================================
+   RESPONSIVE SCROLL CONTAINMENT (≤1024px)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+    body.companyassets-page .ca-table-wrapper {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body.companyassets-page .ca-table,
+    body.companyassets-page .ca-table-wrapper table {
+        width: max-content !important;
+        min-width: 100% !important;
+        max-width: none !important;
+    }
+}
+
+/* ===== DATE PICKER DARK MODE FIX ===== */
+
+body.companyassets-page.dark-mode input[type="date"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Fix calendar icon visibility */
+body.companyassets-page.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0) !important;
+}
+
+/* ===== FINAL DATE PICKER FIX ===== */
+
+body.companyassets-page.dark-mode input[type="date"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    color-scheme: light !important;   /* ⭐ CRITICAL FIX */
+}
+
+/* Calendar icon */
+body.companyassets-page.dark-mode 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0) !important;
+}
+
+/* ===== FORCE DATE PICKER LIGHT UI (ALL DARK MODES) ===== */
+
+.companyassets-page input[type="date"] {
+    color-scheme: light !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Calendar icon visibility */
+.companyassets-page input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* =========================================
+   CA FILTER MODAL - CUSTOM SEARCH DROPDOWN
+   Scoped: .ca-custom-dropdown-*
+   Does NOT affect table, toolbar, edit modal,
+   column-visibility dropdown, or any buttons.
+   ========================================= */
+
+/* Wrapper: positions the list absolutely below input */
+body.companyassets-page .ca-custom-dropdown-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* The searchable input — inherits all .form-control styles */
+/* No override needed; just ensure wrapper doesn't shift layout */
+body.companyassets-page .ca-custom-dropdown-wrapper .ca-custom-dropdown-input {
+    width: 100%;
+    /* No extra styles — form-control handles appearance */
+}
+
+/* Dropdown list container */
+body.companyassets-page .ca-custom-dropdown-list {
+    display: none;                        /* Hidden by default */
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 99999;                       /* Above modal content, below SweetAlert */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    max-height: 220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Prevent modal resize */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Show state — toggled by JS */
+body.companyassets-page .ca-custom-dropdown-list.ca-dd-open {
+    display: block;
+}
+
+/* Scrollbar styling — matches existing modal scrollbars */
+body.companyassets-page .ca-custom-dropdown-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+body.companyassets-page .ca-custom-dropdown-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+body.companyassets-page .ca-custom-dropdown-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Individual dropdown option row */
+body.companyassets-page .ca-custom-dropdown-item {
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #334155;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.companyassets-page .ca-custom-dropdown-item:hover {
+    background: #3b82f6;
+    color: #ffffff;
+}
+
+/* Highlighted / active item (keyboard or first item on open) */
+body.companyassets-page .ca-custom-dropdown-item.ca-dd-highlighted {
+    background: #3b82f6;
+    color: #ffffff;
+}
+
+/* "No results" message row */
+body.companyassets-page .ca-custom-dropdown-no-results {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* Dark mode support */
+body.companyassets-page.dark-mode .ca-custom-dropdown-list {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-color: #334155;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.companyassets-page.dark-mode .ca-custom-dropdown-item {
+    color: #e2e8f0;
+}
+
+body.companyassets-page.dark-mode .ca-custom-dropdown-item:hover,
+body.companyassets-page.dark-mode .ca-custom-dropdown-item.ca-dd-highlighted {
+    background: #3b82f6;
+    color: #ffffff;
+}
+
+body.companyassets-page.dark-mode .ca-custom-dropdown-no-results {
+    color: #64748b;
+}
+
+/* Mobile: ensure list stays within modal on small screens */
+@media (max-width: 576px) {
+    body.companyassets-page .ca-custom-dropdown-list {
+        max-height: 160px;
+    }
+}
+
+.ca-selection-chips {
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:6px;
+}
+
+.ca-chip {
+    background:#eef2ff;
+    color:#3730a3;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+body.companyassets-page.dark-mode .ca-chip {
+    background: rgba(238, 242, 255, 0.2) !important;
+    color: #c7d2fe !important;
+}
+
+.ca-chip span {
+    cursor:pointer;
+    margin-left:6px;
+    font-weight:bold;
+}

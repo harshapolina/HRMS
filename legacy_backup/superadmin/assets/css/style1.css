@@ -1,0 +1,157 @@
+.form-item {
+    position: relative
+}
+
+.form-item input,
+.form-item select {
+    display: block;
+    background: 0 0;
+    border: 1px solid #000;
+    transition: .3s;
+    padding: 0 15px;
+    border-radius: 5px !important
+}
+
+.form-item label {
+    position: absolute;
+    cursor: text;
+    z-index: 2;
+    left: 10px;
+    font-weight: 600;
+    background: #fff;
+    padding: 0 10px;
+    transition: .3s;
+    font-size: 11px;
+    top: -8px;
+    color: #1b6c9f
+}
+
+form label {
+    font-size: 13px;
+    font-weight: 500
+}
+
+.form-item input:focus,
+.form-item select:focus {
+    border-color: #1b6c9f
+}
+
+.form-label {
+    margin-bottom: 0 !important;
+    font-weight: 600;
+    font-size: 14px
+}
+
+.form-control,
+.form-control-lg {
+    border-radius: 0 !important
+}
+
+.bttm-btn,
+.modal-content {
+    border-radius: 20px !important
+}
+
+.modal {
+    overflow: auto
+}
+
+.modal-content {
+    overflow: hidden
+}
+
+.modal-header {
+    background: white;
+}
+
+.row>* {
+    padding: 0px !important
+}
+
+.form-control {
+    font-size: 14px;
+    font-weight: 500
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0 #1b6c9f !important
+}
+
+.bttm-btn {
+    font-weight: 500 !important;
+    padding: 5px 8px !important;
+    font-size: 13px !important
+}
+
+.Ubsubmitbtn,
+.btnwraps {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px
+}
+
+.btncheckboxs input,
+.btnwraps .btn {
+    margin-left: 20px
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 !important
+}
+
+.btn-primary {
+    background-color: #1b6c9f !important;
+    border-color: #1b6c9f !important
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: transparent !important;
+    opacity: 1
+}
+
+.form-check-label {
+    font-size: 14px !important;
+    font-weight: 500;
+    margin-left: 5px
+}
+
+.modal-header {
+    padding: 5px 1rem
+}
+
+.modal-footer {
+    border-top: 1px solid #fff !important
+}
+
+form input[type=file],
+form select {
+    color: grey !important
+}
+
+form select option {
+    color: #000 !important;
+    font-weight: 500
+}
+
+.amountbtn {
+    width: 50%;
+    text-align: center;
+    border-radius: 5px
+}
+
+@media (min-width:576px) {
+    .hrloginedit {
+        max-width: 575px !important
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .btncheckboxs input {
+        margin-left: 10px
+    }
+}
+
+.modal {
+    padding-right: 0px !important;
+}

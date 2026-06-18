@@ -1,0 +1,14 @@
+# Standard URL Routing
+RewriteEngine On
+
+# Tell the server exactly where this folder is located
+RewriteBase /incentiveapp_integration/userlogin1/hrlogin/
+
+# 1. Map cleaner URLs (like /users) to their .php files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)/?$ $1.php [L]
+
+# 2. Set index1.html as the primary page
+DirectoryIndex index1.html index.php
+

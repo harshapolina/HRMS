@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Super Admin Login</title>
+    <link rel="shortcut icon" type="nobglogo.png" href="../../assets/images/nobglogo.png" alt="text">
+     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.css"> -->
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../assets/css/logincss.css">
+    <link href="../assets/css/style1.css" rel="stylesheet" type="text/css">
+    <style>
+        body.background-image {
+            background-image: url('../../assets/images/background-image_crm_login.png');
+            background-size: cover; /* Make the background image cover the entire area */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent the background image from repeating */
+            background-attachment: fixed; /* Optional: Fix the background image relative to the viewport */
+            height: 100vh; /* Ensure the body takes up the full height of the viewport */
+            margin: 0; /* Remove default margin */
+        }
+    </style>
+</head>
+<body class="background-image">
+    <div class="login-container" style="border-radius: 30px;box-shadow: 0px 6px 6px 0px #00000045;">
+        <div class="login-form">
+            <div class="login-form-inner">
+                <!--<div class="logo">-->
+                <!--<img src="../assets/images/nobglogo.png" alt="logo" width="20%"></div>-->
+                <!--<h1>SuperAdmin</h1>-->
+
+                <a href="#" class="rounded-button google-login-button">
+                        <img src="../../assets/images/nobglogo.png" alt="logo" width="10%">
+                    <span style="margin-left: 3%;">Sign in with Search Homes</span>
+                </a>
+                <p class="body-text" style="text-align:center">See your growth and get consulting support!</p>
+
+                <div class="sign-in-seperator">
+                    <span>or Sign in with Email</span>
+                </div>
+                <form action="../authenticate.php" method="post">
+
+                    <div class="login-form-group">
+                        <label for="email">Admin<span class="required-star"></span></label>
+                        <input type="text" name="code" placeholder="this is for admin only" id="code">
+                    </div>
+                    <div class="login-form-group">
+                        <label for="email">Email <span class="required-star">*</span></label>
+                        <input type="text" name="useremail" placeholder="email@website.com" id="username" required>
+                    </div>
+                    <div class="login-form-group">
+                        <label for="pwd">Password <span class="required-star">*</span></label>
+                        <input autocomplete="off" type="password" name="password" placeholder="Your Password" id="password" required>
+                    </div>
+
+                    <div class="login-form-group single-row">
+                        <div class="custom-check">
+                            <input autocomplete="off" type="checkbox" checked id="remember"><label
+                                for="remember">Remember me</label>
+                        </div>
+                        <div class="custom-check">
+                            <input autocomplete="off" type="checkbox" onclick="myFunction()"><label for="show">Show Password</label>
+                        </div>
+
+                        <!-- <a href="#" class="link forgot-link">Forgot Password ?</a> -->
+                    </div>
+
+                    <input type="submit" class="rounded-button login-cta" value="Login">
+
+                    <!-- <div class="register-div">Not registered yet? <a href="#" class="link create-account" -link>Create
+                            an account ?</a></div> -->
+
+                </form>
+            </div>
+
+        </div>
+        <div class="onboarding" style="border-radius: 0 30px 30px 0;">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide color-1">
+                        <div class="slide-image">
+                            <img src="../../assets/images/login_image.png"
+                                alt="" />
+                        </div>
+                        <div class="slide-content">
+                            <h2>Turn your dreams into reality with Search Homes India</h2>
+                            <p>Consistent quality and eperience across all platform and happy sales</p>
+                        </div>
+                    </div>
+                    <!--<div class="swiper-slide color-1">-->
+                    <!--    <div class="slide-image">-->
+                    <!--        <img src="dataimage/celebrating.png"-->
+                    <!--            alt="" />-->
+                    <!--    </div>-->
+                    <!--    <div class="slide-content">-->
+                    <!--        <h2>Turn your dreams into reality with Search Homes India</h2>-->
+                    <!--        <p>Consistent quality and eperience across all platform and happy sales</p>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+
+                    <!--<div class="swiper-slide color-1">-->
+                    <!--    <div class="slide-image">-->
+                    <!--        <img src="dataimage/celebrating.png"-->
+                    <!--            alt="" />-->
+                    <!--    </div>-->
+                    <!--    <div class="slide-content">-->
+                    <!--        <h2>Turn your dreams into reality with Search Homes India</h2>-->
+                    <!--        <p>Consistent quality and eperience across all platform and happy sales</p>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.0/js/swiper.min.js"></script> -->
+    <script src="../assets/js/login.js"></script>
+    <script>
+        var swiper = new Swiper(".swiper-container", {
+            pagination: ".swiper-pagination",
+            paginationClickable: true,
+            parallax: true,
+            speed: 600,
+            autoplay: 3500,
+            loop: true,
+            grabCursor: true
+        });
+    </script>
+    <script>
+        function myFunction() {
+          var x = document.getElementById("password");
+          if (x.type === "password") {
+            x.type = "text";
+          } else {
+            x.type = "password";
+          }
+        }
+        </script>
+</body>
+
+</html>

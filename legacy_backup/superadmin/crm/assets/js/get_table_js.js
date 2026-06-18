@@ -1,0 +1,86 @@
+// <!-- active row script start -->
+document.addEventListener('DOMContentLoaded', function () {
+    const table = document.getElementById('myTable');
+    const rows = table.querySelectorAll('tbody tr');
+    function clearActiveRows() {
+        rows.forEach(row => {
+            row.classList.remove('active-row');
+        });
+    }
+    rows.forEach(row => {
+        row.addEventListener('click', function () {
+            clearActiveRows(); 
+            this.classList.add('active-row'); 
+        });
+    });
+});
+// <!-- active row script end -->
+// <!-- search bar script for table start-->
+document.addEventListener('DOMContentLoaded', function () {
+const searchTerms = document.querySelectorAll('.searchTerm');  // Select all search inputs
+const rows = document.querySelectorAll('#myTable tbody tr');
+const tableBody = document.querySelector('#myTable tbody');
+
+function showNoDataRow() {
+    if (!document.getElementById('noDataRow')) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.id = 'noDataRow';
+        const noDataCell = document.createElement('td');
+        noDataCell.colSpan = document.querySelectorAll('#myTable thead th').length;
+        noDataCell.innerText = 'Data not found';
+        noDataRow.appendChild(noDataCell);
+        tableBody.appendChild(noDataRow);
+    }
+}
+
+function removeNoDataRow() {
+    const noDataRow = document.getElementById('noDataRow');
+    if (noDataRow) {
+        noDataRow.remove();
+    }
+}
+
+function filterRows() {
+    let found = false;
+
+    rows.forEach(row => {
+        let rowText = row.innerText.toLowerCase();
+        let showRow = true;
+
+        // Loop through all search inputs and apply each filter
+        searchTerms.forEach(input => {
+            const searchTerm = input.value.toLowerCase();
+            if (searchTerm && !rowText.includes(searchTerm)) {
+                showRow = false;
+            }
+        });
+
+        if (showRow) {
+            row.style.display = '';
+            found = true;
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    if (!found) {
+        showNoDataRow();
+    } else {
+        removeNoDataRow();
+    }
+}
+
+function debounce(func, delay) {
+    let debounceTimeout;
+    return function () {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(func, delay);
+    };
+}
+const debouncedFilterRows = debounce(filterRows, 300);
+// Add event listeners to all search inputs
+searchTerms.forEach(input => {
+    input.addEventListener('input', debouncedFilterRows);
+});
+});
+// <!-- search bar script for table end-->

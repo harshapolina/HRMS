@@ -1,0 +1,45 @@
+<?php
+require_once 'config.php';
+
+class Migrator extends Config {
+    public function migrate() {
+        try {
+            // 1. Create assets table
+            $sqlAssets = "CREATE TABLE IF NOT EXISTS assets (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                asset_name VARCHAR(255) NOT NULL,
+                asset_type VARCHAR(100) NOT NULL,
+                serial_number VARCHAR(100) UNIQUE,
+                status ENUM('Available', 'Assigned', 'Faulty', 'Lost') DEFAULT 'Available',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB;";
+            
+            $this->conn->exec($sqlAssets);
+            echo "Assets table created or already exists.\n";
+            
+            // 2. Create asset_assignments table
+            $sqlAssignments = "CREATE TABLE IF NOT EXISTS asset_assignments (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                asset_id INT NOT NULL,
+                employee_id INT NOT NULL,
+                assigned_date DATE NOT NULL,
+                returned_date DATE DEFAULT NULL,
+                notes TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (asset_id) REFERENCES assets(id) ON DELETE CASCADE,
+                FOREIGN KEY (employee_id) REFERENCES accounts(id) ON DELETE CASCADE
+            ) ENGINE=InnoDB;";
+            
+            $this->conn->exec($sqlAssignments);
+            echo "Asset assignments table created or already exists.\n";
+            
+            echo "Migration completed successfully!\n";
+        } catch (PDOException $e) {
+            echo "Migration failed: " . $e->getMessage() . "\n";
+        }
+    }
+}
+
+$migrator = new Migrator();
+$migrator->migrate();
+?>

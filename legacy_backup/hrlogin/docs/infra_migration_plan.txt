@@ -1,0 +1,106 @@
+HR Punch Infrastructure Upgrade Plan
+=====================================
+
+Objective
+---------
+Reliably support 10,000 employees punching in within a 2-minute window.
+
+Current state (after code optimizations)
+----------------------------------------
+- AJAX punch (no full-page redirect)
+- hr_settings cached per request + APCu when available
+- session_write_close() on punch path
+- Deferred OpenStreetMap geocoding
+- Optional client stagger (capacity_config.php: PUNCH_STAGGER_MAX_SECONDS)
+- Admin diagnostics: capacity_diagnostics.php
+
+Shared hosting alone is still insufficient for 10k/2min (~170 req/s).
+
+Phase 1 — Measure (before spending on infra)
+--------------------------------------------
+1. Deploy code changes to staging.
+2. Run capacity_diagnostics.php as HR admin; record:
+   - max_connections, max_used_connections
+   - PHP max_execution_time, memory_limit
+   - UNIQUE(user_id, punch_date) on attendance_logs
+3. Run loadtests/run_smoke_load.ps1 with 50 then 200 concurrent requests.
+4. Install k6 and run loadtests/punch_load_test.js up to 500 VUs.
+5. Document the VU count where fail rate exceeds 5% or p95 exceeds 5s.
+
+Phase 2 — VPS migration (minimum for 10k/2min)
+----------------------------------------------
+Target: single VPS 4 vCPU / 8 GB RAM (adjust from load test results).
+
+Stack:
+  - Ubuntu 22.04+
+  - Nginx (reverse proxy, gzip, rate limit optional)
+  - PHP 8.2 FPM
+  - MySQL 8 (same server initially, or managed RDS)
+  - Redis 7 for PHP sessions
+
+PHP-FPM starting point (tune after load test):
+  pm = dynamic
+  pm.max_children = 80
+  pm.start_servers = 10
+  pm.min_spare_servers = 10
+  pm.max_spare_servers = 20
+  pm.max_requests = 500
+
+MySQL starting point:
+  max_connections = 200
+  innodb_buffer_pool_size = 2G (on 8GB RAM box)
+  Ensure indexes:
+    UNIQUE(user_id, punch_date) on attendance_logs
+    INDEX(punch_date) on attendance_logs for reports
+
+Redis sessions (php.ini or pool snippet):
+  session.save_handler = redis
+  session.save_path = "tcp://127.0.0.1:6379?auth=YOUR_REDIS_PASSWORD"
+
+Enable APCu on VPS for hr_settings_cache.php cross-request cache.
+
+Phase 3 — Horizontal scale (if single VPS is not enough)
+----------------------------------------------------------
+1. Second app server behind load balancer (same code, shared Redis sessions + MySQL).
+2. MySQL read replica for attendance_report.php / dashboard.php (reads only).
+3. Keep writes on primary attendance_logs.
+
+Phase 4 — Optional hardening
+----------------------------
+- ProxySQL or MariaDB MaxScale for connection pooling if workers > max_connections.
+- Queue punch writes (Redis list + worker) only if DB still bottlenecks after Phase 2.
+- CDN for static assets (Bootstrap, geolocation.js).
+- Firebase: verify Blaze plan quotas for 10k live trackers.
+
+Phase 5 — Operational checklist for go-live
+-------------------------------------------
+[ ] Staging load test passed at target VU count
+[ ] capacity_diagnostics.php shows index present
+[ ] PUNCH_STAGGER_MAX_SECONDS reviewed (120 default; set 0 if infra handles burst)
+[ ] NTP/time sync on all app servers (Asia/Kolkata late/present logic)
+[ ] Monitor MySQL Threads_connected and PHP-FPM queue during pilot
+[ ] Rollback plan: revert to previous punch_action.php + employee_portal.php
+
+Cost order of magnitude (indicative)
+------------------------------------
+- VPS 4vCPU/8GB: ~$40–80/month
+- Managed MySQL add-on: ~$15–50/month
+- Redis (self-hosted on VPS): included
+- Load balancer (cloud): ~$10–20/month when scaling to 2+ nodes
+
+Decision matrix
+---------------
+| If load test shows...              | Action                          |
+|------------------------------------|---------------------------------|
+| Fails at <100 concurrent           | Stay on shared; use stagger     |
+| OK at 500 VU on optimized VPS      | Single VPS likely sufficient    |
+| Fails at 500 VU on VPS             | Add second app node + tuning    |
+| DB connections maxed               | Pooling or reduce pm.max_children |
+
+Files reference
+---------------
+- capacity_diagnostics.php — host + DB checks
+- capacity_config.php — stagger toggle
+- hr_settings_cache.php — settings cache
+- migrations/ensure_attendance_logs_index.sql — index DDL
+- loadtests/ — k6 and PowerShell smoke tests
