@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/env_loader.php';
 /**
  * wa_auto_send.php
  * ------------------------------------------------------------------
@@ -19,8 +20,8 @@ if (!function_exists('triggerAutoWhatsApp')) {
 
     // ── Esha API constants ────────────────────────────────────────
     define('WA_ESHA_BASE',   'https://omegaappbuilder.com');   // ← new domain (no agent. prefix)
-    define('WA_ESHA_KEY', 'whsec_008283d646aba0038a769475bb7b67a17676d42ee4111002b87d31f7fed18d98');
-    define('WA_TENANT_ID',   'tenant_omega_ba8790e7364b');     // kept for reference
+    define('WA_ESHA_KEY',    getenv('ESHA_KEY') ?: 'whsec_008283d646aba0038a769475bb7b67a17676d42ee4111002b87d31f7fed18d98');
+    define('WA_TENANT_ID',   getenv('ESHA_TENANT_ID') ?: 'tenant_omega_ba8790e7364b');     // kept for reference
     define('WA_LOG_FILE',    __DIR__ . '/wa_auto.log');
 
     /**

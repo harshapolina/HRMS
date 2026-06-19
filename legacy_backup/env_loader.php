@@ -36,3 +36,5 @@ if (!function_exists('loadEnv')) {
 
 // Automatically load .env from the root folder containing this loader script
 loadEnv(__DIR__);
+loadEnv(dirname(__DIR__));
+

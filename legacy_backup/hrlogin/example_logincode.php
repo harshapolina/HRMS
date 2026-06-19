@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/env_loader.php';
 session_name('HRSESSID');
 session_start();
 date_default_timezone_set('Asia/Kolkata');
@@ -92,14 +93,14 @@ while($row_l = $res_loc->fetch_assoc()) {
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyBg7-DeKj7PQ3h6Q1Nf3YBLxDEWN3J5_8U",
-            authDomain: "hrms-live-tracking.firebaseapp.com",
-            databaseURL: "https://hrms-live-tracking-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "hrms-live-tracking",
-            storageBucket: "hrms-live-tracking.firebasestorage.app",
-            messagingSenderId: "578036127062",
-            appId: "1:578036127062:web:bfff8efff0c627d4f072f7",
-            measurementId: "G-RX2SWP5RKK"
+            apiKey: "<?php echo getenv('FIREBASE_API_KEY') ?: 'AIzaSyBg7-DeKj7PQ3h6Q1Nf3YBLxDEWN3J5_8U'; ?>",
+            authDomain: "<?php echo getenv('FIREBASE_AUTH_DOMAIN') ?: 'hrms-live-tracking.firebaseapp.com'; ?>",
+            databaseURL: "<?php echo getenv('FIREBASE_DATABASE_URL') ?: 'https://hrms-live-tracking-default-rtdb.asia-southeast1.firebasedatabase.app'; ?>",
+            projectId: "<?php echo getenv('FIREBASE_PROJECT_ID') ?: 'hrms-live-tracking'; ?>",
+            storageBucket: "<?php echo getenv('FIREBASE_STORAGE_BUCKET') ?: 'hrms-live-tracking.firebasestorage.app'; ?>",
+            messagingSenderId: "<?php echo getenv('FIREBASE_MESSAGING_SENDER_ID') ?: '578036127062'; ?>",
+            appId: "<?php echo getenv('FIREBASE_APP_ID') ?: '1:578036127062:web:bfff8efff0c627d4f072f7'; ?>",
+            measurementId: "<?php echo getenv('FIREBASE_MEASUREMENT_ID') ?: 'G-RX2SWP5RKK'; ?>"
         };
         if (typeof firebase !== 'undefined' && !firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);

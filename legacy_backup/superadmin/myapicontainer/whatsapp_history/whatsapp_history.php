@@ -31,10 +31,11 @@ date_default_timezone_set('Asia/Kolkata');
 
 // ── Config ────────────────────────────────────────────────────────────────────
 define('ESHA_BASE',        'https://omegaappbuilder.com');   // ← new domain (no agent. prefix)
-define('ESHA_KEY',         'whsec_008283d646aba0038a769475bb7b67a17676d42ee4111002b87d31f7fed18d98');
-define('ESHA_ADMIN_TOKEN', 'spool_admin_523f6e1341451f1bc876fa3b'); // Bearer token for /api/messages/send
-define('TENANT_ID',        'tenant_omega_ba8790e7364b');     // kept for reference
-define('STORE_SECRET',     'wa-store-2026');
+define('ESHA_KEY',         getenv('ESHA_KEY') ?: 'whsec_008283d646aba0038a769475bb7b67a17676d42ee4111002b87d31f7fed18d98');
+define('ESHA_ADMIN_TOKEN', getenv('ESHA_ADMIN_TOKEN') ?: 'spool_admin_523f6e1341451f1bc876fa3b'); // Bearer token for /api/messages/send
+define('TENANT_ID',        getenv('ESHA_TENANT_ID') ?: 'tenant_omega_ba8790e7364b');     // kept for reference
+define('STORE_SECRET',     getenv('ESHA_STORE_SECRET') ?: 'wa-store-2026');
+
 
 // ── DB (CRM database via userlogin6/config.php) ───────────────────────────────
 require_once dirname(__DIR__, 3) . '/userlogin6/config.php';
