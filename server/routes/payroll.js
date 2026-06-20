@@ -215,7 +215,10 @@ router.post('/process', protect, adminOnly, async (req, res) => {
           deductions: rec.payslipData.deductions.total,
           netSalary: rec.netSalary,
           payslipData: rec.payslipData,
-          status: 'Processed'
+          status: 'Processed',
+          employeeName: rec.username,
+          employeeId: rec.employee_id,
+          userType: rec.user_type
         },
         { upsert: true, new: true }
       );

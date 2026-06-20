@@ -1,6 +1,8 @@
 import express from 'express';
 import OfferLetter from '../models/OfferLetter.js';
 import { protect, adminOnly } from '../middleware/auth.js';
+import sendEmail from '../config/mailer.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
@@ -62,14 +64,18 @@ const getDefaultHtmlTemplate = (data) => {
     
     <p>Please return a signed copy of this offer letter within 3 days as acceptance of the terms outlined above.</p>
     
-    <div style="margin-top: 40px; display: flex; justify-content: space-between;">
-      <div class="hr-sig-slot">
-        <p>_______________________</p>
-        <p><strong>HR Manager</strong><br>Search Homes India Pvt Ltd</p>
+    <div style="margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div class="hr-sig-slot" style="min-width: 200px; text-align: center; display: inline-block;">
+        <div class="hr-sig-img" style="min-height: 45px; font-family: 'Dancing Script', cursive; font-size: 28px; color: #1e3a8a; line-height: 45px; text-align: center;"></div>
+        <div style="border-top: 1px solid #333; margin-top: 5px; padding-top: 5px;">
+          <strong>HR Manager</strong><br>Search Homes India Pvt Ltd
+        </div>
       </div>
-      <div class="candidate-sig-slot" style="text-align: right;">
-        <p>_______________________</p>
-        <p><strong>Candidate Signature</strong><br>Date:</p>
+      <div class="candidate-sig-slot" style="min-width: 200px; text-align: center; display: inline-block;">
+        <div class="candidate-sig-img" style="min-height: 45px; font-family: 'Dancing Script', cursive; font-size: 28px; color: #1e3a8a; line-height: 45px; text-align: center;"></div>
+        <div style="border-top: 1px solid #333; margin-top: 5px; padding-top: 5px;">
+          <strong>Candidate Signature</strong><br>Date:
+        </div>
       </div>
     </div>
   </div>
@@ -165,18 +171,31 @@ router.delete('/:id', protect, adminOnly, async (req, res) => {
   }
 });
 
-// Admin: Send offer letter (Simulated)
+// Admin: Send offer letter (Actual Email)
 router.post('/:id/send', protect, adminOnly, async (req, res) => {
   try {
     const offer = await OfferLetter.findById(req.params.id);
     if (!offer) return res.status(404).json({ message: 'Offer letter not found.' });
+
+    // Send the actual email
+    const info = await sendEmail({
+      to: offer.email,
+      subject: `Employment Offer Letter - Search Homes India Pvt Ltd`,
+      html: offer.customHtml
+    });
 
     offer.status = 'Sent';
     offer.emailedAt = new Date();
     offer.emailedBy = req.user.username;
     await offer.save();
 
-    res.json({ message: `Offer letter successfully sent to ${offer.email} (Simulated).`, data: offer });
+    let msg = `Offer letter successfully sent to ${offer.email}.`;
+    if (!process.env.SMTP_USER) {
+      const previewUrl = nodemailer.getTestMessageUrl(info);
+      msg += ` (Dev Mode Ethereal: ${previewUrl})`;
+    }
+
+    res.json({ message: msg, data: offer });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

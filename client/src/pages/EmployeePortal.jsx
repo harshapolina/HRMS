@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Clock, Calendar, CheckCircle, AlertCircle, FileText, Send, User, ChevronRight, Moon, Sun } from 'lucide-react';
+import io from 'socket.io-client';
 
 const EmployeePortal = () => {
   const [activeTab, setActiveTab] = useState('attendance');
@@ -26,6 +27,36 @@ const EmployeePortal = () => {
   const [payslips, setPayslips] = useState([]);
   const [selectedPayslip, setSelectedPayslip] = useState(null);
 
+  const fetchTodayLogRef = useRef(null);
+  const fetchPunchLogsRef = useRef(null);
+  const fetchLeaveDataRef = useRef(null);
+
+  useEffect(() => {
+    fetchTodayLogRef.current = fetchTodayLog;
+    fetchPunchLogsRef.current = fetchPunchLogs;
+    fetchLeaveDataRef.current = fetchLeaveData;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('leave_update', () => {
+      console.log('Real-time leave update received. Reloading leave balances...');
+      if (fetchLeaveDataRef.current) {
+        fetchLeaveDataRef.current();
+      }
+    });
+
+    socket.on('attendance_update', () => {
+      console.log('Real-time attendance update received. Reloading attendance...');
+      if (fetchTodayLogRef.current) fetchTodayLogRef.current();
+      if (fetchPunchLogsRef.current) fetchPunchLogsRef.current();
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     // Clock tick
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -33,6 +64,7 @@ const EmployeePortal = () => {
   }, []);
 
   useEffect(() => {
+    acquireLocation();
     fetchTodayLog();
     fetchPunchLogs();
     fetchLeaveData();
@@ -40,34 +72,65 @@ const EmployeePortal = () => {
     fetchPayslips();
   }, []);
 
-  // Live Tracking effect: periodically post location to backend if punched in and not out
+  // Live Tracking effect: watch location in real-time if punched in and not out
   useEffect(() => {
-    let intervalId;
+    let watchId;
     if (todayLog.punchIn && !todayLog.punchOut) {
       setTrackingActive(true);
-      // Start tracking coordinates every 2 minutes
-      intervalId = setInterval(() => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              const { latitude, longitude } = position.coords;
-              try {
-                await axios.post('/api/attendance/location', { latitude, longitude });
-                console.log('Live location tracked:', latitude, longitude);
-              } catch (err) {
-                console.error('Error tracking live coordinates:', err);
+      
+      if (navigator.geolocation) {
+        let lastCoords = null;
+
+        // Haversine formula to calculate distance in meters
+        const getDistance = (lat1, lon1, lat2, lon2) => {
+          const R = 6371e3; // Earth's radius in meters
+          const phi1 = (lat1 * Math.PI) / 180;
+          const phi2 = (lat2 * Math.PI) / 180;
+          const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
+          const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
+
+          const a =
+            Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+          return R * c; // distance in meters
+        };
+
+        watchId = navigator.geolocation.watchPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            
+            // If we have previous coordinates, check if user moved at least 10 meters
+            if (lastCoords) {
+              const distance = getDistance(lastCoords.latitude, lastCoords.longitude, latitude, longitude);
+              if (distance < 10) {
+                console.log(`User is stationary (moved ${distance.toFixed(1)}m). Skipping update.`);
+                return;
               }
-            },
-            (error) => console.error('Geolocation error:', error),
-            { enableHighAccuracy: true }
-          );
-        }
-      }, 120000); // 2 minutes
+            }
+
+            try {
+              await axios.post('/api/attendance/location', { latitude, longitude });
+              console.log('Real-time location updated (moved):', latitude, longitude);
+              lastCoords = { latitude, longitude };
+            } catch (err) {
+              console.error('Error sending real-time coordinates:', err);
+            }
+          },
+          (error) => console.error('Geolocation watch error:', error),
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      }
     } else {
       setTrackingActive(false);
     }
+
     return () => {
-      if (intervalId) clearInterval(intervalId);
+      if (watchId && navigator.geolocation) {
+        navigator.geolocation.clearWatch(watchId);
+      }
     };
   }, [todayLog]);
 
@@ -139,23 +202,67 @@ const EmployeePortal = () => {
 
   const handlePunchIn = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post('/api/attendance/punch-in', coords || {});
-      fetchTodayLog();
-      fetchPunchLogs();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Punch in failed');
+    const performPunchIn = async (punchCoords) => {
+      try {
+        await axios.post('/api/attendance/punch-in', punchCoords || {});
+        fetchTodayLog();
+        fetchPunchLogs();
+      } catch (err) {
+        alert(err.response?.data?.message || 'Punch in failed');
+      }
+    };
+
+    if (!coords && navigator.geolocation) {
+      setLocationText('Acquiring location...');
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          const newCoords = { latitude, longitude };
+          setCoords(newCoords);
+          setLocationText(`GPS: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
+          await performPunchIn(newCoords);
+        },
+        async (error) => {
+          setLocationText('Permission denied or GPS offline');
+          await performPunchIn({});
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      await performPunchIn(coords);
     }
   };
 
   const handlePunchOut = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post('/api/attendance/punch-out', coords || {});
-      fetchTodayLog();
-      fetchPunchLogs();
-    } catch (err) {
-      alert(err.response?.data?.message || 'Punch out failed');
+    const performPunchOut = async (punchCoords) => {
+      try {
+        await axios.post('/api/attendance/punch-out', punchCoords || {});
+        fetchTodayLog();
+        fetchPunchLogs();
+      } catch (err) {
+        alert(err.response?.data?.message || 'Punch out failed');
+      }
+    };
+
+    if (!coords && navigator.geolocation) {
+      setLocationText('Acquiring location...');
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          const newCoords = { latitude, longitude };
+          setCoords(newCoords);
+          setLocationText(`GPS: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
+          await performPunchOut(newCoords);
+        },
+        async (error) => {
+          setLocationText('Permission denied or GPS offline');
+          await performPunchOut({});
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      await performPunchOut(coords);
     }
   };
 

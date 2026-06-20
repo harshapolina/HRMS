@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Edit3, Trash2, Plus, Filter, LayoutGrid, ChevronLeft, ChevronRight, X, AlertCircle } from 'lucide-react';
+import io from 'socket.io-client';
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -17,6 +18,26 @@ const Employees = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [assignees, setAssignees] = useState([]); // manager dropdowns
   const [currentId, setCurrentId] = useState(null);
+
+  const fetchEmployeesRef = useRef(null);
+
+  useEffect(() => {
+    fetchEmployeesRef.current = fetchEmployees;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('user_update', () => {
+      console.log('Real-time user update received. Reloading employees...');
+      if (fetchEmployeesRef.current) {
+        fetchEmployeesRef.current();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   // Filters state
   const [showFilters, setShowFilters] = useState(false);

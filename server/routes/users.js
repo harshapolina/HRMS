@@ -1,5 +1,7 @@
 import express from 'express';
 import User from '../models/User.js';
+import Attendance from '../models/Attendance.js';
+import Payroll from '../models/Payroll.js';
 
 const router = express.Router();
 
@@ -75,6 +77,16 @@ router.get('/assignees', async (req, res) => {
   }
 });
 
+// Get all active users (for lead reassignment)
+router.get('/all-active', async (req, res) => {
+  try {
+    const users = await User.find({ is_active: true }, 'username tablename user_type');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Get single employee details
 router.get('/:id', async (req, res) => {
   try {
@@ -106,6 +118,13 @@ router.post('/', async (req, res) => {
     });
 
     const savedUser = await user.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('user_update', savedUser);
+    }
+
     res.status(201).json(savedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -135,6 +154,13 @@ router.put('/:id', async (req, res) => {
     Object.assign(user, req.body);
     user.flag_user_login = new Date();
     const updatedUser = await user.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('user_update', updatedUser);
+    }
+
     res.json(updatedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -147,7 +173,16 @@ router.delete('/:id', async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: 'Employee not found' });
 
-    // Cascade delete logs associated with this user could be added here if desired.
+    // Cascade delete logs associated with this user
+    await Attendance.deleteMany({ user: req.params.id });
+    await Payroll.deleteMany({ user: req.params.id });
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('user_update', { deletedId: req.params.id });
+    }
+
     res.json({ message: 'Employee and dependencies deleted successfully.' });
   } catch (err) {
     res.status(500).json({ message: err.message });

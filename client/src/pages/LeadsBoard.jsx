@@ -21,6 +21,7 @@ const LeadsBoard = () => {
   const [loading, setLoading] = useState(false);
   const [chatLoading, setChatLoading] = useState(false);
   const [autoReply, setAutoReply] = useState(true);
+  const [activeUsers, setActiveUsers] = useState([]);
 
   // Ingestion Modal
   const [showIngestModal, setShowIngestModal] = useState(false);
@@ -35,38 +36,71 @@ const LeadsBoard = () => {
 
   const socketRef = useRef();
   const chatEndRef = useRef();
+  const chatContainerRef = useRef();
 
   // Load user data to pass roles/tablename
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  const fetchLeadsRef = useRef(null);
+  const selectedLeadRef = useRef(null);
+
+  useEffect(() => {
+    fetchLeadsRef.current = fetchLeads;
+    selectedLeadRef.current = selectedLead;
+  });
 
   useEffect(() => {
     fetchLeads();
   }, [page, limit, search, statusFilter, projectFilter]);
 
+  useEffect(() => {
+    fetchActiveUsers();
+  }, []);
+
+  const fetchActiveUsers = async () => {
+    try {
+      const res = await axios.get('/api/users/all-active');
+      setActiveUsers(res.data);
+    } catch (err) {
+      console.error('Error fetching active users', err);
+    }
+  };
+
   // Configure Socket.io
   useEffect(() => {
-    socketRef.current = io('http://localhost:5000');
+    const socket = io();
+    socketRef.current = socket;
 
-    socketRef.current.on('whatsapp_message', (data) => {
+    socket.on('whatsapp_message', (data) => {
       // If the message belongs to the currently selected lead chat, append it live
-      if (selectedLead && data.lead_id === selectedLead._id) {
+      if (selectedLeadRef.current && data.lead_id === selectedLeadRef.current._id) {
         setChatMessages((prev) => [...prev, data.message]);
       }
       // Refresh the lead list to update unread badges
-      fetchLeads();
+      if (fetchLeadsRef.current) fetchLeadsRef.current();
+    });
+
+    socket.on('lead_update', (data) => {
+      console.log('Real-time lead update received. Reloading leads...');
+      if (fetchLeadsRef.current) fetchLeadsRef.current();
+      if (selectedLeadRef.current && data && data._id === selectedLeadRef.current._id) {
+        setSelectedLead(data);
+      }
     });
 
     return () => {
-      socketRef.current.disconnect();
+      socket.disconnect();
     };
-  }, [selectedLead]);
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   };
 
   const fetchLeads = async () => {
@@ -169,6 +203,24 @@ const LeadsBoard = () => {
     } catch (err) {
       alert('Status update failed: ' + (err.response?.data?.message || err.message));
     }
+  };
+
+  const handleUpdateAssignee = async (leadId, newAssignee) => {
+    try {
+      await axios.put(`/api/leads/${leadId}/assignee`, { assign_to_user: newAssignee });
+      fetchLeads();
+      if (selectedLead && selectedLead._id === leadId) {
+        setSelectedLead({ ...selectedLead, assign_to_user: newAssignee });
+      }
+    } catch (err) {
+      alert('Assignee update failed: ' + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const getAssigneeName = (tablename) => {
+    if (!tablename || tablename === 'unassigned') return 'Unassigned';
+    const found = activeUsers.find(u => u.tablename === tablename);
+    return found ? found.username : tablename.replace('USR_', '').replace(/_/g, ' ');
   };
 
   const handleToggleAutoReply = async () => {
@@ -312,6 +364,7 @@ const LeadsBoard = () => {
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-500 text-xs font-semibold">
                       <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> {lead.number}</span>
                       <span className="flex items-center gap-1 text-indigo-600"><Layers className="w-3.5 h-3.5" /> {lead.project || 'General'}</span>
+                      <span className="flex items-center gap-1 text-slate-500"><User className="w-3.5 h-3.5 text-slate-400" /> {getAssigneeName(lead.assign_to_user)}</span>
                     </div>
                   </div>
 
@@ -374,6 +427,26 @@ const LeadsBoard = () => {
           {/* Details Scroll */}
           <div className="flex-1 overflow-y-auto p-4 space-y-6">
             
+            {/* Assignee Selection */}
+            <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <User className="w-4 h-4 text-brand-500" /> Lead Assignee
+              </span>
+              <select
+                value={selectedLead.assign_to_user || 'unassigned'}
+                disabled={!['superuseradmin', 'hradmin', 'manager', 'business head'].includes(user.user_type)}
+                onChange={(e) => handleUpdateAssignee(selectedLead._id, e.target.value)}
+                className="px-2 py-1 bg-white border border-slate-200 rounded-lg text-xs font-bold focus:outline-none focus:border-brand-500 disabled:opacity-75 disabled:bg-slate-100 text-slate-800"
+              >
+                <option value="unassigned">Unassigned</option>
+                {activeUsers.map((u) => (
+                  <option key={u._id} value={u.tablename}>
+                    {u.username} ({u.user_type})
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Auto reply switch */}
             <div className="p-3 bg-brand-50/20 border border-brand-500/10 rounded-xl flex items-center justify-between">
               <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
@@ -387,7 +460,7 @@ const LeadsBoard = () => {
             {/* Chat Messages */}
             <div className="space-y-4">
               <h5 className="text-slate-400 text-xxs uppercase font-semibold tracking-wider">WhatsApp Transcript</h5>
-              <div className="border border-slate-100 rounded-xl p-3 bg-slate-50/50 h-64 overflow-y-auto space-y-2 flex flex-col">
+              <div ref={chatContainerRef} className="border border-slate-100 rounded-xl p-3 bg-slate-50/50 h-64 overflow-y-auto space-y-2 flex flex-col">
                 {chatLoading ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-brand-500 mx-auto my-auto"></div>
                 ) : chatMessages.length === 0 ? (

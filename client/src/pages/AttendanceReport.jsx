@@ -1,17 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Search, Filter, Eye, RefreshCw, ChevronLeft, ChevronRight, AlertCircle, Loader2 } from 'lucide-react';
+import io from 'socket.io-client';
 
 const AttendanceReport = () => {
+  const getTodayStr = () => {
+    const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' };
+    const formatter = new Intl.DateTimeFormat('en-CA', options); // YYYY-MM-DD
+    return formatter.format(new Date());
+  };
+
+  const todayDate = getTodayStr();
+
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({ total: 0, present: 0, absent: 0, late: 0, leave: 0 });
-  const [filters, setFilters] = useState({ search: '', status: '', from: '', to: '' });
+  const [filters, setFilters] = useState({ search: '', status: '', from: todayDate, to: todayDate });
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
   // Modal for coordinates history
   const [selectedLog, setSelectedLog] = useState(null);
+
+  const fetchLogsRef = useRef(null);
+
+  useEffect(() => {
+    fetchLogsRef.current = fetchLogs;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('attendance_update', () => {
+      console.log('Real-time attendance update received. Reloading logs...');
+      if (fetchLogsRef.current) {
+        fetchLogsRef.current();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     fetchLogs();

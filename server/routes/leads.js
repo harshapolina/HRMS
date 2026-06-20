@@ -152,6 +152,12 @@ router.post('/ingest', async (req, res) => {
       }
     }
 
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('lead_update', lead);
+    }
+
     res.json({
       status: 'success',
       lead_id: lead._id,
@@ -172,6 +178,13 @@ router.put('/:id/status', async (req, res) => {
 
     lead.status = status;
     await lead.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('lead_update', lead);
+    }
+
     res.json(lead);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -187,6 +200,35 @@ router.post('/:id/remarks', async (req, res) => {
 
     lead.remarks.push({ text, created_by });
     await lead.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('lead_update', lead);
+    }
+
+    res.json(lead);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Update Assignee
+router.put('/:id/assignee', async (req, res) => {
+  try {
+    const { assign_to_user } = req.body;
+    const lead = await Lead.findById(req.params.id);
+    if (!lead) return res.status(404).json({ message: 'Lead not found' });
+
+    lead.assign_to_user = assign_to_user;
+    await lead.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('lead_update', lead);
+    }
+
     res.json(lead);
   } catch (err) {
     res.status(500).json({ message: err.message });

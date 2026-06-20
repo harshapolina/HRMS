@@ -133,6 +133,13 @@ router.post('/punch-in', protect, async (req, res) => {
     }
 
     await attendance.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('attendance_update', attendance);
+    }
+
     res.json({ message: 'Punched in successfully', data: attendance });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -168,6 +175,13 @@ router.post('/punch-out', protect, async (req, res) => {
     }
 
     await attendance.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('attendance_update', attendance);
+    }
+
     res.json({ message: 'Punched out successfully', data: attendance });
   } catch (err) {
     res.status(500).json({ message: err.message });

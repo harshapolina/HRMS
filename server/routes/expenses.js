@@ -34,6 +34,12 @@ router.post('/', async (req, res) => {
       created_by
     });
 
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('expense_update', expense);
+    }
+
     res.status(201).json(expense);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -45,6 +51,13 @@ router.delete('/:id', async (req, res) => {
   try {
     const expense = await Expense.findByIdAndDelete(req.params.id);
     if (!expense) return res.status(404).json({ message: 'Expense ledger not found.' });
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('expense_update', { deletedId: req.params.id });
+    }
+
     res.json({ message: 'Expense item deleted successfully.' });
   } catch (err) {
     res.status(500).json({ message: err.message });

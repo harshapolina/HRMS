@@ -38,9 +38,11 @@ const PayslipsPage = () => {
 
   const filteredRecords = records.filter(rec => {
     const term = search.toLowerCase();
+    const username = rec.user?.username || rec.employeeName || '';
+    const empId = rec.user?.employee_id || rec.employeeId || '';
     return (
-      (rec.user?.username || '').toLowerCase().includes(term) ||
-      (rec.user?.employee_id || '').toLowerCase().includes(term)
+      username.toLowerCase().includes(term) ||
+      empId.toLowerCase().includes(term)
     );
   });
 
@@ -109,10 +111,10 @@ const PayslipsPage = () => {
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300 font-medium">
                 {filteredRecords.map((rec) => (
                   <tr key={rec._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                    <td className="px-6 py-4 font-mono font-bold text-slate-500 dark:text-slate-400">{rec.user?.employee_id || '-'}</td>
+                    <td className="px-6 py-4 font-mono font-bold text-slate-500 dark:text-slate-400">{rec.user?.employee_id || rec.employeeId || '-'}</td>
                     <td className="px-6 py-4">
-                      <span className="font-extrabold text-slate-800 dark:text-white block capitalize">{rec.user?.username}</span>
-                      <span className="block text-[10px] text-slate-400 dark:text-slate-500 capitalize">{rec.user?.user_type}</span>
+                      <span className="font-extrabold text-slate-800 dark:text-white block capitalize">{rec.user?.username || rec.employeeName || 'Deleted Employee'}</span>
+                      <span className="block text-[10px] text-slate-400 dark:text-slate-500 capitalize">{rec.user?.user_type || rec.userType || ''}</span>
                     </td>
                     <td className="px-6 py-4 font-bold">₹{rec.baseSalary.toLocaleString()}</td>
                     <td className="px-6 py-4">{rec.presentDays} days</td>
@@ -162,8 +164,8 @@ const PayslipsPage = () => {
 
               <div className="grid grid-cols-2 gap-4 border-b border-slate-200 dark:border-slate-700 pb-4 font-semibold text-[11px]">
                 <div>
-                  <p className="text-slate-400 dark:text-slate-500">Employee Name: <span className="text-slate-800 dark:text-white font-bold ml-1 capitalize">{viewingPayslip.user?.username}</span></p>
-                  <p className="text-slate-400 dark:text-slate-500 mt-1">Employee ID: <span className="text-slate-800 dark:text-white font-bold ml-1">{viewingPayslip.user?.employee_id || '-'}</span></p>
+                  <p className="text-slate-400 dark:text-slate-500">Employee Name: <span className="text-slate-800 dark:text-white font-bold ml-1 capitalize">{viewingPayslip.user?.username || viewingPayslip.employeeName || 'Deleted Employee'}</span></p>
+                  <p className="text-slate-400 dark:text-slate-500 mt-1">Employee ID: <span className="text-slate-800 dark:text-white font-bold ml-1">{viewingPayslip.user?.employee_id || viewingPayslip.employeeId || '-'}</span></p>
                 </div>
                 <div>
                   <p className="text-slate-400 dark:text-slate-500">Basic Payout CTC: <span className="text-slate-800 dark:text-white font-bold ml-1">₹{viewingPayslip.baseSalary.toLocaleString()}</span></p>

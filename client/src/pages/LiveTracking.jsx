@@ -42,7 +42,7 @@ const LiveTracking = () => {
     fetchLiveLocations();
 
     // Setup Socket
-    const socket = io('http://localhost:5000');
+    const socket = io();
     socketRef.current = socket;
 
     socket.on('live_location_update', (data) => {

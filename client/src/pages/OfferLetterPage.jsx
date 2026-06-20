@@ -22,7 +22,7 @@ const OfferLetterPage = () => {
   const [codeMode, setCodeMode] = useState(false);
   const [showSignatureModal, setShowSignatureModal] = useState(false);
   const [savedRange, setSavedRange] = useState(null);
-  const [sigForm, setSigForm] = useState({ name: 'Shivali V Rai', font: 'Dancing Script', slot: 'cursor' });
+  const [sigForm, setSigForm] = useState({ name: 'Shivali V Rai', font: 'Dancing Script', slot: 'hr' });
   const editorRef = useRef(null);
 
   const handleOpenSignatureModal = () => {
@@ -112,14 +112,18 @@ const OfferLetterPage = () => {
       
       <p>Please return a signed copy of this offer letter within 3 days as acceptance of the terms outlined above.</p>
       
-      <div style="margin-top: 40px; display: flex; justify-content: space-between;">
-        <div class="hr-sig-slot">
-          <p>_______________________</p>
-          <p><strong>HR Manager</strong><br>Search Homes India Pvt Ltd</p>
+      <div style="margin-top: 50px; display: flex; justify-content: space-between; align-items: flex-end;">
+        <div class="hr-sig-slot" style="min-width: 200px; text-align: center; display: inline-block;">
+          <div class="hr-sig-img" style="min-height: 45px; font-family: 'Dancing Script', cursive; font-size: 28px; color: #1e3a8a; line-height: 45px; text-align: center;"></div>
+          <div style="border-top: 1px solid #333; margin-top: 5px; padding-top: 5px;">
+            <strong>HR Manager</strong><br>Search Homes India Pvt Ltd
+          </div>
         </div>
-        <div class="candidate-sig-slot" style="text-align: right;">
-          <p>_______________________</p>
-          <p><strong>Candidate Signature</strong><br>Date:</p>
+        <div class="candidate-sig-slot" style="min-width: 200px; text-align: center; display: inline-block;">
+          <div class="candidate-sig-img" style="min-height: 45px; font-family: 'Dancing Script', cursive; font-size: 28px; color: #1e3a8a; line-height: 45px; text-align: center;"></div>
+          <div style="border-top: 1px solid #333; margin-top: 5px; padding-top: 5px;">
+            <strong>Candidate Signature</strong><br>Date:
+          </div>
         </div>
       </div>
     </div>
@@ -199,21 +203,19 @@ const OfferLetterPage = () => {
     if (sigForm.slot === 'hr') {
       let hrContainer = null;
       if (editorRef.current) {
-        hrContainer = editorRef.current.querySelector('.hr-sig-slot');
+        hrContainer = editorRef.current.querySelector('.hr-sig-img');
         if (!hrContainer) {
-          // Fallback: search DOM for elements containing HR Manager and Search Homes
-          const elements = Array.from(editorRef.current.querySelectorAll('div, td, p'));
-          hrContainer = elements.find(el => 
-            el.textContent.includes('HR Manager') && 
-            el.textContent.includes('Search Homes') && 
-            el.children.length > 0 &&
-            el.tagName !== 'BODY'
-          );
+          hrContainer = editorRef.current.querySelector('.hr-sig-slot');
         }
       }
 
       if (hrContainer) {
-        hrContainer.innerHTML = `<p>${sigHtml}</p><p><strong>HR Manager</strong><br>Search Homes India Pvt Ltd</p>`;
+        if (hrContainer.classList.contains('hr-sig-img')) {
+          hrContainer.innerHTML = sigHtml;
+        } else {
+          // Backward compatibility for old drafts
+          hrContainer.innerHTML = `<p>${sigHtml}</p><p><strong>HR Manager</strong><br>Search Homes India Pvt Ltd</p>`;
+        }
         if (editorRef.current) {
           setEditingHtml(editorRef.current.innerHTML);
         }
@@ -223,20 +225,19 @@ const OfferLetterPage = () => {
     } else if (sigForm.slot === 'candidate') {
       let candContainer = null;
       if (editorRef.current) {
-        candContainer = editorRef.current.querySelector('.candidate-sig-slot');
+        candContainer = editorRef.current.querySelector('.candidate-sig-img');
         if (!candContainer) {
-          // Fallback: search DOM for elements containing Candidate Signature
-          const elements = Array.from(editorRef.current.querySelectorAll('div, td, p'));
-          candContainer = elements.find(el => 
-            el.textContent.includes('Candidate Signature') && 
-            el.children.length > 0 &&
-            el.tagName !== 'BODY'
-          );
+          candContainer = editorRef.current.querySelector('.candidate-sig-slot');
         }
       }
 
       if (candContainer) {
-        candContainer.innerHTML = `<p>${sigHtml}</p><p><strong>Candidate Signature</strong><br>Date:</p>`;
+        if (candContainer.classList.contains('candidate-sig-img')) {
+          candContainer.innerHTML = sigHtml;
+        } else {
+          // Backward compatibility for old drafts
+          candContainer.innerHTML = `<p>${sigHtml}</p><p><strong>Candidate Signature</strong><br>Date:</p>`;
+        }
         if (editorRef.current) {
           setEditingHtml(editorRef.current.innerHTML);
         }
@@ -512,7 +513,10 @@ const OfferLetterPage = () => {
             <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800 mt-4 justify-between items-center shrink-0">
               <div className="flex gap-2">
                 <button
-                  onClick={handleOpenSignatureModal}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    handleOpenSignatureModal();
+                  }}
                   className="px-3.5 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-brand-600 dark:text-brand-400 rounded-xl text-xs font-bold transition-colors flex items-center gap-1"
                 >
                   <PenTool className="w-3.5 h-3.5" /> Add Signature

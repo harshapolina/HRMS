@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { Plus, Trash2, Wallet, PlusCircle, X, Search } from 'lucide-react';
+import io from 'socket.io-client';
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState([]);
@@ -19,6 +20,26 @@ const Expenses = () => {
   });
 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  const fetchExpensesRef = useRef(null);
+
+  useEffect(() => {
+    fetchExpensesRef.current = fetchExpenses;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('expense_update', () => {
+      console.log('Real-time expense update received. Reloading expenses...');
+      if (fetchExpensesRef.current) {
+        fetchExpensesRef.current();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     fetchExpenses();

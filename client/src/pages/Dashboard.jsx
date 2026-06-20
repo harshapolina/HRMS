@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Cell } from 'recharts';
 import { Users, UserX, Wallet, CheckSquare, Sparkles } from 'lucide-react';
+import io from 'socket.io-client';
 
 const Dashboard = () => {
   const [summary, setSummary] = useState({
@@ -20,24 +21,49 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const userRes = await axios.get('/api/users?limit=1');
-        if (userRes.data.summary) {
-          setSummary(userRes.data.summary);
-        }
+  const fetchDashboardDataRef = useRef(null);
 
-        const leadRes = await axios.get('/api/leads?limit=1');
-        if (leadRes.data.stats) {
-          setLeadStats(leadRes.data.stats);
-        }
-      } catch (err) {
-        console.error('Error fetching dashboard stats', err);
-      } finally {
-        setLoading(false);
-      }
+  useEffect(() => {
+    fetchDashboardDataRef.current = fetchDashboardData;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    
+    socket.on('user_update', () => {
+      console.log('Real-time user update received on Dashboard. Reloading...');
+      if (fetchDashboardDataRef.current) fetchDashboardDataRef.current();
+    });
+
+    socket.on('lead_update', () => {
+      console.log('Real-time lead update received on Dashboard. Reloading...');
+      if (fetchDashboardDataRef.current) fetchDashboardDataRef.current();
+    });
+
+    return () => {
+      socket.disconnect();
     };
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const userRes = await axios.get('/api/users?limit=1');
+      if (userRes.data.summary) {
+        setSummary(userRes.data.summary);
+      }
+
+      const leadRes = await axios.get('/api/leads?limit=1');
+      if (leadRes.data.stats) {
+        setLeadStats(leadRes.data.stats);
+      }
+    } catch (err) {
+      console.error('Error fetching dashboard stats', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchDashboardData();
   }, []);
 

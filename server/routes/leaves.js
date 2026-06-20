@@ -154,6 +154,13 @@ router.post('/', protect, async (req, res) => {
     });
 
     await newRequest.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('leave_update', newRequest);
+    }
+
     res.status(201).json(newRequest);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -180,6 +187,12 @@ router.put('/:id/status', protect, adminOnly, async (req, res) => {
     request.status = status;
     request.adminRemarks = adminRemarks || '';
     await request.save();
+
+    // Emit socket update
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('leave_update', request);
+    }
 
     res.json({ message: `Leave request has been ${status.toLowerCase()} successfully.`, data: request });
   } catch (err) {

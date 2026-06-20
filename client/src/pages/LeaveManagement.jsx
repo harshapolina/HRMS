@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Search, Filter, Check, X, RefreshCw } from 'lucide-react';
+import io from 'socket.io-client';
 
 const LeaveManagement = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
@@ -8,6 +9,26 @@ const LeaveManagement = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [actionRemarks, setActionRemarks] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const fetchLeaveRequestsRef = useRef(null);
+
+  useEffect(() => {
+    fetchLeaveRequestsRef.current = fetchLeaveRequests;
+  });
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('leave_update', () => {
+      console.log('Real-time leave update received. Reloading leave requests...');
+      if (fetchLeaveRequestsRef.current) {
+        fetchLeaveRequestsRef.current();
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     fetchLeaveRequests();
