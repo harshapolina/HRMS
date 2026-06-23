@@ -90,45 +90,46 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="space-y-6 relative text-slate-800 dark:text-slate-200">
+    <div className="page-shell relative text-ink">
       
       {/* Title */}
-      <div className="flex flex-col md:flex-row justify-between align-start md:align-center gap-4">
+      <div className="page-header">
         <div>
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-            <Settings className="w-6 h-6 text-brand-500" /> HR Control Panel
-          </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
-            Configure system parameters, attendance guidelines, leave categories, SMTP configurations, and payroll.
-          </p>
+          <p className="page-eyebrow mb-1">Administration</p>
+          <h1 className="page-title">HR Control Panel</h1>
+          <p className="page-subtitle">Configure attendance, leave policies, SMTP, and payroll deduction rules.</p>
         </div>
-        <span className="self-start px-3 py-1 bg-brand-50 dark:bg-brand-950/45 border border-brand-100 dark:border-brand-900 text-brand-600 dark:text-brand-400 font-bold text-xs rounded-full shadow-sm">
-          Admin Control
-        </span>
+        <div className="page-header-actions">
+          <span className="badge-pill">Admin Control</span>
+        </div>
       </div>
 
-      <div className="border-b border-slate-200 dark:border-slate-850 flex flex-wrap gap-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-        <button 
+      <div className="tab-bar mb-2">
+        <button
+          id="settings-tab-attendance"
           onClick={() => setActiveTab('attendance')}
-          className={`pb-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === 'attendance' ? 'border-brand-500 text-brand-600 dark:text-brand-450 font-bold' : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200'}`}
+          className={`tab-bar-item flex items-center gap-2 ${activeTab === 'attendance' ? 'tab-bar-item-active' : 'tab-bar-item-inactive'}`}
         >
           <Clock className="w-4 h-4" /> Attendance Rules
         </button>
-        <button 
+        <button
+          id="settings-tab-leaves"
           onClick={() => setActiveTab('leaves')}
-          className={`pb-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === 'leaves' ? 'border-brand-500 text-brand-600 dark:text-brand-450 font-bold' : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200'}`}
+          className={`tab-bar-item flex items-center gap-2 ${activeTab === 'leaves' ? 'tab-bar-item-active' : 'tab-bar-item-inactive'}`}
         >
           <Calendar className="w-4 h-4" /> Leave Policies
         </button>
-        <button 
+        <button
+          id="settings-tab-smtp"
           onClick={() => setActiveTab('smtp')}
-          className={`pb-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === 'smtp' ? 'border-brand-500 text-brand-600 dark:text-brand-450 font-bold' : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200'}`}
+          className={`tab-bar-item flex items-center gap-2 ${activeTab === 'smtp' ? 'tab-bar-item-active' : 'tab-bar-item-inactive'}`}
         >
           <Mail className="w-4 h-4" /> Email & SMTP
         </button>
-        <button 
+        <button
+          id="settings-tab-payroll"
           onClick={() => setActiveTab('payroll')}
-          className={`pb-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === 'payroll' ? 'border-brand-500 text-brand-600 dark:text-brand-450 font-bold' : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200'}`}
+          className={`tab-bar-item flex items-center gap-2 ${activeTab === 'payroll' ? 'tab-bar-item-active' : 'tab-bar-item-inactive'}`}
         >
           <CreditCard className="w-4 h-4" /> Payroll Rules
         </button>
@@ -138,41 +139,43 @@ const SettingsPage = () => {
         
         {/* Success Notice */}
         {success && (
-          <div className="rounded-xl border border-emerald-150 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 p-4 text-xs font-semibold text-emerald-800 dark:text-emerald-450 flex items-center gap-2 animate-fade-in shadow-sm">
-            <ShieldCheck className="h-4.5 w-4.5 text-emerald-600 dark:text-emerald-400" />
+          <div className="alert-success text-xs font-semibold">
+            <ShieldCheck className="h-4.5 w-4.5 text-emerald-600" />
             <span>HR configurations updated and saved successfully!</span>
           </div>
         )}
 
         {/* Attendance Rules Config */}
         {activeTab === 'attendance' && (
-          <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm space-y-6">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-brand-500" /> Office Timings & Shifts
+          <div className="bg-canvas border border-hairline-soft p-6 rounded-lg shadow-sm space-y-6">
+            <h3 className="text-sm font-semibold text-ink border-b border-hairline-soft pb-2 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-accent" /> Office Timings & Shifts
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Office Start Time</label>
-                <input 
-                  type="time" 
+                <label className="label-xs" htmlFor="settings-start-time">Office Start Time</label>
+                <input
+                  id="settings-start-time"
+                  type="time"
                   value={attendanceRules.office_start_time}
                   onChange={e => setAttendanceRules({ ...attendanceRules, office_start_time: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Office End Time</label>
-                <input 
-                  type="time" 
+                <label className="label-xs" htmlFor="settings-end-time">Office End Time</label>
+                <input
+                  id="settings-end-time"
+                  type="time"
                   value={attendanceRules.office_end_time}
                   onChange={e => setAttendanceRules({ ...attendanceRules, office_end_time: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Late Attendance Grace Period (Minutes)</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Late Attendance Grace Period (Minutes)</label>
                 <div className="relative">
                   <input 
                     type="number" 
@@ -180,14 +183,14 @@ const SettingsPage = () => {
                     max="120"
                     value={attendanceRules.grace_period_minutes}
                     onChange={e => setAttendanceRules({ ...attendanceRules, grace_period_minutes: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     required
                   />
-                  <span className="absolute right-3 top-2 text-xxs font-bold text-slate-400">mins</span>
+                  <span className="absolute right-3 top-2 text-xxs font-semibold text-muted">mins</span>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Unpaid Break Allowance (Minutes)</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Unpaid Break Allowance (Minutes)</label>
                 <div className="relative">
                   <input 
                     type="number" 
@@ -195,10 +198,10 @@ const SettingsPage = () => {
                     max="180"
                     value={attendanceRules.break_time_minutes}
                     onChange={e => setAttendanceRules({ ...attendanceRules, break_time_minutes: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     required
                   />
-                  <span className="absolute right-3 top-2 text-xxs font-bold text-slate-400">mins</span>
+                  <span className="absolute right-3 top-2 text-xxs font-semibold text-muted">mins</span>
                 </div>
               </div>
             </div>
@@ -208,36 +211,36 @@ const SettingsPage = () => {
         {/* Leave Policies Config */}
         {activeTab === 'leaves' && (
           <div className="space-y-6">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm space-y-6">
-              <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2 flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-brand-500" /> Active Leave Types
+            <div className="bg-canvas border border-hairline-soft p-6 rounded-lg shadow-sm space-y-6">
+              <h3 className="text-sm font-semibold text-ink border-b border-hairline-soft pb-2 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-accent" /> Active Leave Types
               </h3>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+                    <tr className="border-b border-hairline-soft text-muted font-semibold uppercase tracking-wider">
                       <th className="py-2.5">Leave Name</th>
                       <th className="py-2.5">Type</th>
                       <th className="py-2.5">Annual Allowance</th>
                       <th className="py-2.5 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+                  <tbody className="divide-y divide-hairline-soft text-sm">
                     {leaveTypes.map((type) => (
-                      <tr key={type.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
-                        <td className="py-3 font-semibold text-slate-800 dark:text-slate-200">{type.name}</td>
+                      <tr key={type.id} className="hover:bg-surface-soft/50">
+                        <td className="py-3 font-semibold text-ink">{type.name}</td>
                         <td className="py-3">
-                          <span className={`px-2 py-0.5 rounded-full text-xxs font-bold ${type.isPaid ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400' : 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-450'}`}>
+                          <span className={type.isPaid ? 'badge-success' : 'badge-error'}>
                             {type.isPaid ? 'Paid' : 'Unpaid'}
                           </span>
                         </td>
-                        <td className="py-3 font-bold text-slate-600 dark:text-slate-400">{type.limit} days/year</td>
+                        <td className="py-3 font-semibold text-body">{type.limit} days/year</td>
                         <td className="py-3 text-right">
                           <button 
                             type="button" 
                             onClick={() => deleteLeaveType(type.id)}
-                            className="text-rose-600 hover:text-rose-700 dark:text-rose-400 p-1"
+                            className="btn-icon-danger w-8 h-8"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -246,7 +249,7 @@ const SettingsPage = () => {
                     ))}
                     {leaveTypes.length === 0 && (
                       <tr>
-                        <td colSpan="4" className="text-center py-6 text-slate-400">No leave categories defined.</td>
+                        <td colSpan="4" className="text-center py-6 text-muted">No leave categories defined.</td>
                       </tr>
                     )}
                   </tbody>
@@ -254,45 +257,47 @@ const SettingsPage = () => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm space-y-4">
-              <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wide">Add New Category</h4>
+            <div className="bg-canvas border border-hairline-soft p-6 rounded-lg shadow-sm space-y-4">
+              <h4 className="text-xs font-semibold text-ink uppercase tracking-wide">Add New Category</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Leave Name</label>
-                  <input 
-                    type="text" 
+                  <label className="label-xs" htmlFor="settings-new-leave-name">Leave Name</label>
+                  <input
+                    id="settings-new-leave-name"
+                    type="text"
                     placeholder="e.g. Maternity Leave"
                     value={newLeaveName}
                     onChange={e => setNewLeaveName(e.target.value)}
-                    className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Annual Limit (Days)</label>
+                  <label className="block text-[10px] font-semibold uppercase text-muted mb-1">Annual Limit (Days)</label>
                   <input 
                     type="number" 
                     placeholder="e.g. 15"
                     value={newLeaveLimit}
                     onChange={e => setNewLeaveLimit(e.target.value)}
-                    className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-1.5 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                   />
                 </div>
                 <div className="flex gap-3">
                   <div className="flex-1">
-                    <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Type</label>
+                    <label className="block text-[10px] font-semibold uppercase text-muted mb-1">Type</label>
                     <select 
                       value={newLeaveIsPaid ? 'paid' : 'unpaid'}
                       onChange={e => setNewLeaveIsPaid(e.target.value === 'paid')}
-                      className="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+                      className="w-full px-3 py-1.5 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     >
                       <option value="paid">Paid</option>
                       <option value="unpaid">Unpaid</option>
                     </select>
                   </div>
-                  <button 
+                  <button
+                    id="settings-add-leave-btn"
                     type="button"
                     onClick={addLeaveType}
-                    className="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xs h-9"
+                    className="btn-primary flex items-center justify-center h-9"
                   >
                     <Plus className="w-4.5 h-4.5 mr-1" /> Add
                   </button>
@@ -304,54 +309,58 @@ const SettingsPage = () => {
 
         {/* SMTP Email Config */}
         {activeTab === 'smtp' && (
-          <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm space-y-6">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-brand-500" /> Outgoing SMTP Server Configuration
+          <div className="bg-canvas border border-hairline-soft p-6 rounded-lg shadow-sm space-y-6">
+            <h3 className="text-sm font-semibold text-ink border-b border-hairline-soft pb-2 flex items-center gap-2">
+              <Mail className="w-4 h-4 text-accent" /> Outgoing SMTP Server Configuration
             </h3>
-            <p className="text-xxs text-slate-450 dark:text-slate-450 italic">
+            <p className="text-xxs text-muted-soft italic">
               These settings are used to connect to your SMTP mail service for sending official offer letters and digital payslips.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">SMTP Hostname</label>
-                <input 
-                  type="text" 
+                <label className="label-xs" htmlFor="settings-smtp-host">SMTP Hostname</label>
+                <input
+                  id="settings-smtp-host"
+                  type="text"
                   value={smtpSettings.smtp_host}
                   onChange={e => setSmtpSettings({ ...smtpSettings, smtp_host: e.target.value })}
                   placeholder="e.g. smtp.gmail.com"
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">SMTP Port</label>
-                <input 
-                  type="text" 
+                <label className="label-xs" htmlFor="settings-smtp-port">SMTP Port</label>
+                <input
+                  id="settings-smtp-port"
+                  type="text"
                   value={smtpSettings.smtp_port}
                   onChange={e => setSmtpSettings({ ...smtpSettings, smtp_port: e.target.value })}
                   placeholder="e.g. 587 or 465"
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">SMTP User / Address</label>
-                <input 
-                  type="email" 
+                <label className="label-xs" htmlFor="settings-smtp-user">SMTP User / Address</label>
+                <input
+                  id="settings-smtp-user"
+                  type="email"
                   value={smtpSettings.smtp_user}
                   onChange={e => setSmtpSettings({ ...smtpSettings, smtp_user: e.target.value })}
                   placeholder="hr@company.com"
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">SMTP Password</label>
-                <input 
-                  type="password" 
+                <label className="label-xs" htmlFor="settings-smtp-pass">SMTP Password</label>
+                <input
+                  id="settings-smtp-pass"
+                  type="password"
                   value={smtpSettings.smtp_pass}
                   onChange={e => setSmtpSettings({ ...smtpSettings, smtp_pass: e.target.value })}
                   placeholder="••••••••••••••"
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                  className="input-field"
                 />
               </div>
             </div>
@@ -360,13 +369,13 @@ const SettingsPage = () => {
 
         {/* Payroll & Deductions Config */}
         {activeTab === 'payroll' && (
-          <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm space-y-6">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-slate-50 dark:border-slate-800 pb-2 flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-brand-500" /> Payroll Deductions & Policy Settings
+          <div className="bg-canvas border border-hairline-soft p-6 rounded-lg shadow-sm space-y-6">
+            <h3 className="text-sm font-semibold text-ink border-b border-hairline-soft pb-2 flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-accent" /> Payroll Deductions & Policy Settings
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Provident Fund (PF) Rate - Employee / Employer</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Provident Fund (PF) Rate - Employee / Employer</label>
                 <div className="relative">
                   <input 
                     type="number" 
@@ -375,44 +384,44 @@ const SettingsPage = () => {
                     max="30"
                     value={payrollRules.pf_rate_employer}
                     onChange={e => setPayrollRules({ ...payrollRules, pf_rate_employer: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     required
                   />
-                  <span className="absolute right-3 top-2 text-xxs font-bold text-slate-400">%</span>
+                  <span className="absolute right-3 top-2 text-xxs font-semibold text-muted">%</span>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Professional Tax Limit Threshold</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Professional Tax Limit Threshold</label>
                 <div className="relative">
                   <input 
                     type="number" 
                     value={payrollRules.professional_tax_limit}
                     onChange={e => setPayrollRules({ ...payrollRules, professional_tax_limit: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     required
                   />
-                  <span className="absolute right-3 top-2 text-xxs font-bold text-slate-400">₹</span>
+                  <span className="absolute right-3 top-2 text-xxs font-semibold text-muted">₹</span>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Professional Tax Monthly Amount</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Professional Tax Monthly Amount</label>
                 <div className="relative">
                   <input 
                     type="number" 
                     value={payrollRules.professional_tax_amount}
                     onChange={e => setPayrollRules({ ...payrollRules, professional_tax_amount: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                     required
                   />
-                  <span className="absolute right-3 top-2 text-xxs font-bold text-slate-400">₹</span>
+                  <span className="absolute right-3 top-2 text-xxs font-semibold text-muted">₹</span>
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Weekend (Saturday) Attendance Rule</label>
+                <label className="block text-xs font-semibold uppercase text-muted mb-1">Weekend (Saturday) Attendance Rule</label>
                 <select 
                   value={payrollRules.saturday_rule}
                   onChange={e => setPayrollRules({ ...payrollRules, saturday_rule: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+                  className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
                 >
                   <option value="always_paid">Always Paid (Sunday & Saturday fully paid)</option>
                   <option value="half_day">Saturday counts as Half-Day pay</option>
@@ -421,12 +430,12 @@ const SettingsPage = () => {
                 </select>
               </div>
               <div className="md:col-span-2 pt-2">
-                <label className="flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
+                <label className="flex items-center gap-3 text-xs font-semibold text-body cursor-pointer">
                   <input 
                     type="checkbox"
                     checked={payrollRules.sunday_is_paid}
                     onChange={e => setPayrollRules({ ...payrollRules, sunday_is_paid: e.target.checked })}
-                    className="rounded border-slate-350 text-brand-500 h-4.5 w-4.5 bg-transparent dark:bg-slate-800"
+                    className="rounded border-hairline text-accent h-4.5 w-4.5 bg-transparent"
                   />
                   Sunday Attendance is a Paid Day by default (Standard India Payroll policy)
                 </label>
@@ -437,9 +446,10 @@ const SettingsPage = () => {
 
         {/* Submit Actions */}
         <div className="flex justify-end pt-4">
-          <button 
+          <button
+            id="settings-save-btn"
             type="submit"
-            className="flex items-center gap-2 rounded-xl bg-brand-500 hover:bg-brand-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-500/10 transition-all cursor-pointer"
+            className="btn-primary flex items-center gap-2"
           >
             <Save className="h-4.5 w-4.5" />
             <span>Save Settings</span>

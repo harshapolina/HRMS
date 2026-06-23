@@ -224,63 +224,71 @@ const Employees = () => {
   };
 
   return (
-    <div className="space-y-6 relative text-slate-800 dark:text-slate-250">
-      {/* Counters Wrap */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-xl p-4 text-emerald-800 dark:text-emerald-400">
-          <span className="text-xs font-semibold uppercase tracking-wider block">Active Users</span>
-          <span className="text-2xl font-bold mt-1 block">{summary.activeCount}</span>
-        </div>
-        <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-slate-700 dark:text-slate-400">
-          <span className="text-xs font-semibold uppercase tracking-wider block">Inactive Users</span>
-          <span className="text-2xl font-bold mt-1 block">{summary.inactiveCount}</span>
-        </div>
-        <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-4 text-indigo-800 dark:text-indigo-400">
-          <span className="text-xs font-semibold uppercase tracking-wider block">Assigned Users</span>
-          <span className="text-2xl font-bold mt-1 block">{summary.assignedCount}</span>
-        </div>
-        <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50 rounded-xl p-4 text-amber-800 dark:text-amber-400">
-          <span className="text-xs font-semibold uppercase tracking-wider block">Monthly Salaries</span>
-          <span className="text-2xl font-bold mt-1 block">₹{summary.totalSalary.toLocaleString()}</span>
+    <div className="page-shell relative text-ink">
+      <div className="page-header">
+        <div>
+          <p className="page-eyebrow mb-1">Workforce Directory</p>
+          <h1 className="page-title">Employee Registry</h1>
+          <p className="page-subtitle">Manage employee profiles, CTC parameters, role assignments, and project details.</p>
         </div>
       </div>
 
-      {/* Control Bar */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl flex flex-wrap gap-4 items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+      <div className="stat-grid lg:grid-cols-4">
+        <div className="stat-card">
+          <span className="stat-card-label">Active Users</span>
+          <span className="stat-card-value">{summary.activeCount}</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-card-label">Inactive Users</span>
+          <span className="stat-card-value">{summary.inactiveCount}</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-card-label">Assigned Users</span>
+          <span className="stat-card-value">{summary.assignedCount}</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-card-label">Monthly Salaries</span>
+          <span className="stat-card-value">₹{summary.totalSalary.toLocaleString()}</span>
+        </div>
+      </div>
+
+      <div className="toolbar">
+        <div className="toolbar-left">
           <input
+            id="employee-search-input"
             type="text"
             placeholder="Search employees..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm w-full sm:w-64 bg-transparent dark:text-white"
+            className="input-field text-sm sm:max-w-xs"
           />
           <button
+            id="employee-filter-toggle-btn"
             onClick={() => setShowFilters(!showFilters)}
-            className={`p-2 border rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all ${showFilters ? 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400' : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'}`}
+            className={`filter-btn ${showFilters ? 'filter-btn-active' : ''}`}
           >
             <Filter className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto justify-end relative">
+        <div className="toolbar-right relative">
           <button
+            id="employee-column-toggle-btn"
             onClick={() => setShowColDropdown(!showColDropdown)}
-            className="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-xl flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm"
+            className="btn-secondary btn-sm"
           >
             <LayoutGrid className="w-4 h-4" /> Columns
           </button>
 
-          {/* Columns Selector Dropdown */}
           {showColDropdown && (
-            <div className="absolute right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-4 z-30 w-48 space-y-2">
+            <div className="absolute right-0 top-full mt-2 card p-4 z-30 w-48 space-y-2">
               {Object.keys(visibleCols).map((col) => (
-                <label key={col} className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400 cursor-pointer select-none capitalize">
+                <label key={col} className="flex items-center gap-2 text-xs font-semibold text-body cursor-pointer select-none capitalize">
                   <input
                     type="checkbox"
                     checked={visibleCols[col]}
                     onChange={() => setVisibleCols({ ...visibleCols, [col]: !visibleCols[col] })}
-                    className="rounded text-brand-500 focus:ring-brand-500 dark:bg-slate-800"
+                    className="rounded text-ink focus:ring-ink"
                   />
                   {col}
                 </label>
@@ -288,24 +296,21 @@ const Employees = () => {
             </div>
           )}
 
-          <button
-            onClick={handleCreateNew}
-            className="px-4 py-2 bg-brand-500 text-white rounded-xl flex items-center gap-2 hover:bg-brand-600 font-bold transition-all text-sm"
-          >
+          <button id="employee-add-btn" onClick={handleCreateNew} className="btn-primary btn-sm">
             <Plus className="w-4 h-4" /> Add Employee
           </button>
         </div>
       </div>
 
-      {/* Advanced Filters Panel */}
       {showFilters && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="filter-panel grid-cols-1 md:grid-cols-3">
           <div>
-            <label className="block text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Role Type</label>
+            <label className="block text-muted text-xs font-semibold uppercase mb-1">Role Type</label>
             <select
+              id="filter-role-select"
               value={filterRole}
               onChange={(e) => setFilterRole(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+              className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
             >
               <option value="">All Roles</option>
               <option value="promoter">Promoter</option>
@@ -318,11 +323,12 @@ const Employees = () => {
             </select>
           </div>
           <div>
-            <label className="block text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Status</label>
+            <label className="block text-muted text-xs font-semibold uppercase mb-1">Status</label>
             <select
+              id="filter-status-select"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+              className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
             >
               <option value="">All Status</option>
               <option value="1">Active</option>
@@ -330,86 +336,80 @@ const Employees = () => {
             </select>
           </div>
           <div>
-            <label className="block text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Project Name</label>
+            <label className="block text-muted text-xs font-semibold uppercase mb-1">Project Name</label>
             <input
+              id="filter-project-input"
               type="text"
               placeholder="Filter by project..."
               value={filterProject}
               onChange={(e) => setFilterProject(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+              className="w-full px-3 py-2 border border-hairline rounded-lg focus:outline-none focus:border-ink text-sm bg-transparent"
             />
           </div>
         </div>
       )}
 
-      {/* Employees Table */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+      <div className="table-container">
         <div className="overflow-x-auto w-full">
-          <table className="w-full border-collapse text-left">
+          <table className="table-shell">
             <thead>
-              <tr className="bg-slate-50/75 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-wider">
-                {visibleCols.id && <th className="px-6 py-4">ID</th>}
-                {visibleCols.status && <th className="px-6 py-4">Status</th>}
-                {visibleCols.name && <th className="px-6 py-4">Name</th>}
-                {visibleCols.email && <th className="px-6 py-4">Email</th>}
-                {visibleCols.contact && <th className="px-6 py-4">Contact</th>}
-                {visibleCols.salary && <th className="px-6 py-4">CTC</th>}
-                {visibleCols.doj && <th className="px-6 py-4">DOJ</th>}
-                {visibleCols.role && <th className="px-6 py-4">Role</th>}
-                {visibleCols.project && <th className="px-6 py-4">Project</th>}
-                {visibleCols.assignee && <th className="px-6 py-4">Assignee</th>}
-                {visibleCols.action && <th className="px-6 py-4 text-right">Action</th>}
+              <tr>
+                {visibleCols.id && <th>ID</th>}
+                {visibleCols.status && <th>Status</th>}
+                {visibleCols.name && <th>Name</th>}
+                {visibleCols.email && <th>Email</th>}
+                {visibleCols.contact && <th>Contact</th>}
+                {visibleCols.salary && <th>CTC</th>}
+                {visibleCols.doj && <th>DOJ</th>}
+                {visibleCols.role && <th>Role</th>}
+                {visibleCols.project && <th>Project</th>}
+                {visibleCols.assignee && <th>Assignee</th>}
+                {visibleCols.action && <th className="text-right">Action</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-sm text-slate-700 dark:text-slate-300">
+            <tbody>
               {loading ? (
                 <tr>
                   <td colSpan="11" className="text-center py-10">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-brand-500 mx-auto"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-ink mx-auto"></div>
                   </td>
                 </tr>
               ) : employees.length === 0 ? (
                 <tr>
-                  <td colSpan="11" className="text-center py-10 text-slate-400 dark:text-slate-500">
+                  <td colSpan="11" className="text-center py-10 text-muted">
                     No employees matching the filters.
                   </td>
                 </tr>
               ) : (
                 employees.map((emp) => (
-                  <tr key={emp._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
-                    {visibleCols.id && <td className="px-6 py-4 font-semibold text-slate-500 dark:text-slate-400">{emp.employee_id || '-'}</td>}
+                  <tr key={emp._id}>
+                    {visibleCols.id && <td className="font-semibold text-muted">{emp.employee_id || '-'}</td>}
                     {visibleCols.status && (
-                      <td className="px-6 py-4">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${emp.is_active ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
+                      <td>
+                        <span className={emp.is_active ? 'badge-success' : 'badge-neutral'}>
                           {emp.is_active ? 'Active' : 'Inactive'}
                         </span>
                       </td>
                     )}
-                    {visibleCols.name && <td className="px-6 py-4 font-bold text-slate-800 dark:text-white capitalize">{emp.username}</td>}
-                    {visibleCols.email && <td className="px-6 py-4">{emp.useremail}</td>}
-                    {visibleCols.contact && <td className="px-6 py-4 font-medium">{emp.phonenumber || '-'}</td>}
-                    {visibleCols.salary && <td className="px-6 py-4 font-bold">₹{(emp.salary || 0).toLocaleString()}</td>}
-                    {visibleCols.doj && <td className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400">{emp.doj ? emp.doj.split('T')[0] : '-'}</td>}
-                    {visibleCols.role && <td className="px-6 py-4 capitalize font-semibold text-brand-600 dark:text-brand-400 text-xs">{emp.user_type}</td>}
-                    {visibleCols.project && <td className="px-6 py-4 text-xs font-bold text-indigo-600 dark:text-indigo-400">{emp.project_name || '-'}</td>}
+                    {visibleCols.name && <td className="font-semibold text-ink capitalize">{emp.username}</td>}
+                    {visibleCols.email && <td>{emp.useremail}</td>}
+                    {visibleCols.contact && <td className="font-medium">{emp.phonenumber || '-'}</td>}
+                    {visibleCols.salary && <td className="font-semibold">₹{(emp.salary || 0).toLocaleString()}</td>}
+                    {visibleCols.doj && <td className="text-xs font-semibold text-muted">{emp.doj ? emp.doj.split('T')[0] : '-'}</td>}
+                    {visibleCols.role && <td className="capitalize font-semibold text-ink text-xs">{emp.user_type}</td>}
+                    {visibleCols.project && <td className="text-xs font-semibold text-body">{emp.project_name || '-'}</td>}
                     {visibleCols.assignee && (
-                      <td className="px-6 py-4 text-xs max-w-[120px] truncate">
+                      <td className="text-xs max-w-[120px] truncate">
                         {emp.assign_user && emp.assign_user.length > 0 ? emp.assign_user.join(', ') : 'None'}
                       </td>
                     )}
                     {visibleCols.action && (
-                      <td className="px-6 py-4 text-right">
+                      <td className="text-right">
                         <div className="flex gap-2 justify-end">
-                          <button
-                            onClick={() => handleEdit(emp)}
-                            className="p-1.5 hover:bg-brand-50 dark:hover:bg-brand-950/30 text-brand-600 dark:text-brand-400 rounded-lg transition-all"
-                          >
+                          <button onClick={() => handleEdit(emp)} className="btn-icon w-8 h-8">
                             <Edit3 className="w-4 h-4" />
                           </button>
-                          <button
-                            onClick={() => handleDelete(emp._id)}
-                            className="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-400 rounded-lg transition-all"
-                          >
+                          <button onClick={() => handleDelete(emp._id)} className="btn-icon-danger w-8 h-8">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -422,14 +422,13 @@ const Employees = () => {
           </table>
         </div>
 
-        {/* Paginator */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-4 items-center justify-between bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+        <div className="paginator">
+          <div className="flex items-center gap-2 text-sm text-muted">
             <span>Show</span>
             <select
               value={limit}
               onChange={(e) => { setLimit(parseInt(e.target.value)); setPage(1); }}
-              className="border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 bg-white dark:bg-slate-900 focus:outline-none focus:border-brand-500 text-slate-700 dark:text-white"
+              className="border border-hairline rounded-lg px-2 py-1 bg-canvas focus:outline-none focus:border-ink text-body"
             >
               <option value="10">10</option>
               <option value="25">25</option>
@@ -443,17 +442,17 @@ const Employees = () => {
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 disabled:opacity-50 text-slate-500 dark:text-slate-400"
+              className="p-2 border border-hairline rounded-lg hover:bg-canvas disabled:opacity-50 text-muted"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-4 py-1 text-sm font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 rounded-lg border border-brand-100 dark:border-brand-900/55">
+            <span className="px-4 py-1 text-sm font-semibold text-ink bg-surface-soft rounded-lg border border-hairline">
               Page {page} of {totalPages}
             </span>
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 disabled:opacity-50 text-slate-500 dark:text-slate-400"
+              className="p-2 border border-hairline rounded-lg hover:bg-canvas disabled:opacity-50 text-muted"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -461,119 +460,129 @@ const Employees = () => {
         </div>
       </div>
 
-      {/* Add / Edit Form Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-6 z-50 animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
-            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900 z-10">
-              <h3 className="text-slate-800 dark:text-white font-bold text-lg">{isEditing ? 'Edit Employee Record' : 'Add New Employee'}</h3>
-              <button onClick={() => setShowModal(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-805 rounded-lg text-slate-500 dark:text-slate-400">
+        <div className="modal-overlay">
+          <div className="modal-panel max-w-4xl w-full">
+            <div className="modal-header mb-0 pb-4 sticky top-0 bg-canvas z-10">
+              <h3 className="text-ink font-semibold text-lg">{isEditing ? 'Edit Employee Record' : 'Add New Employee'}</h3>
+              <button onClick={() => setShowModal(false)} className="p-1.5 hover:bg-surface-soft rounded-lg text-muted">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-6 flex-1 text-slate-600 dark:text-slate-400">
+            <form onSubmit={handleSubmit} className="p-6 space-y-6 flex-1 text-body">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Employee Name *</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-username">Employee Name *</label>
                   <input
+                    id="form-employee-username"
                     type="text"
                     required
                     value={form.username}
                     onChange={(e) => setForm({ ...form, username: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Work Email *</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-email">Work Email *</label>
                   <input
+                    id="form-employee-email"
                     type="email"
                     required
                     value={form.useremail}
                     onChange={(e) => setForm({ ...form, useremail: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Phone Number</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-phone">Phone Number</label>
                   <input
+                    id="form-employee-phone"
                     type="text"
                     value={form.phonenumber}
                     onChange={(e) => setForm({ ...form, phonenumber: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Password {isEditing && '(Leave blank to keep)'}</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-password">Password {isEditing && '(Leave blank to keep)'}</label>
                   <input
+                    id="form-employee-password"
                     type="password"
                     required={!isEditing}
                     value={form.epassword}
                     onChange={(e) => setForm({ ...form, epassword: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Monthly CTC</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-salary">Monthly CTC</label>
                   <input
+                    id="form-employee-salary"
                     type="number"
                     value={form.salary}
                     onChange={(e) => setForm({ ...form, salary: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Unique ID (e.g. table name)</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-tablename">Unique ID (e.g. table name)</label>
                   <input
+                    id="form-employee-tablename"
                     type="text"
                     placeholder="Auto-generated if blank"
                     value={form.tablename}
                     onChange={(e) => setForm({ ...form, tablename: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Employee ID</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-id">Employee ID</label>
                   <input
+                    id="form-employee-id"
                     type="text"
                     value={form.employee_id}
                     onChange={(e) => setForm({ ...form, employee_id: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Date of Joining</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-doj">Date of Joining</label>
                   <input
+                    id="form-employee-doj"
                     type="date"
                     value={form.doj}
                     onChange={(e) => setForm({ ...form, doj: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:text-slate-400"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Date of Birth</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-dob">Date of Birth</label>
                   <input
+                    id="form-employee-dob"
                     type="date"
                     value={form.dob}
                     onChange={(e) => setForm({ ...form, dob: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:text-slate-400"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Project Name</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-project-name">Project Name</label>
                   <input
+                    id="form-employee-project-name"
                     type="text"
                     value={form.project_name}
                     onChange={(e) => setForm({ ...form, project_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Project Type</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-project-type">Project Type</label>
                   <select
+                    id="form-employee-project-type"
                     value={form.project_type}
                     onChange={(e) => setForm({ ...form, project_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+                    className="select-field"
                   >
                     <option value="">Select Project Type</option>
                     <option value="mandate">Mandate</option>
@@ -581,11 +590,12 @@ const Employees = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Role Type</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-role">Role Type</label>
                   <select
+                    id="form-employee-role"
                     value={form.user_type}
                     onChange={(e) => setForm({ ...form, user_type: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+                    className="select-field"
                   >
                     <option value="user">User</option>
                     <option value="promoter">Promoter</option>
@@ -597,20 +607,22 @@ const Employees = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">City</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-city">City</label>
                   <input
+                    id="form-employee-city"
                     type="text"
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase mb-1">Status</label>
+                  <label className="block text-body text-xs font-semibold uppercase mb-1" htmlFor="form-employee-status">Status</label>
                   <select
+                    id="form-employee-status"
                     value={form.is_active ? '1' : '0'}
                     onChange={(e) => setForm({ ...form, is_active: e.target.value === '1' })}
-                    className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-sm bg-transparent dark:text-white dark:bg-slate-900"
+                    className="select-field"
                   >
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
@@ -619,17 +631,18 @@ const Employees = () => {
               </div>
 
               {/* Incentive Slab Amounts */}
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
-                <h4 className="text-slate-800 dark:text-white font-bold text-sm mb-4">Incentive Slabs Configuration</h4>
+              <div className="border-t border-hairline-soft pt-6">
+                <h4 className="text-ink font-semibold text-sm mb-4">Incentive Slabs Configuration</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {['one_amt', 'two_amt', 'thrid_amt', 'forth_amt', 'fifth_amt', 'sixth_amt'].map((slab, index) => (
                     <div key={slab}>
-                      <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-semibold uppercase mb-1">{index + 1}st Slab (₹)</label>
+                      <label className="block text-muted text-[10px] font-semibold uppercase mb-1" htmlFor={`form-employee-slab-${slab}`}>{index + 1}st Slab (₹)</label>
                       <input
+                        id={`form-employee-slab-${slab}`}
                         type="number"
                         value={form[slab]}
                         onChange={(e) => setForm({ ...form, [slab]: parseFloat(e.target.value) || 0 })}
-                        className="w-full px-2 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs bg-transparent dark:text-white"
+                        className="input-field h-8 text-xs px-2"
                       />
                     </div>
                   ))}
@@ -637,34 +650,37 @@ const Employees = () => {
               </div>
 
               {/* Multiselect assigned users */}
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-6">
-                <label className="block text-slate-800 dark:text-white font-bold text-sm mb-2">Assign Team / Managers</label>
-                <div className="border border-slate-200 dark:border-slate-700 rounded-xl p-4 max-h-40 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="border-t border-hairline-soft pt-6">
+                <label className="block text-ink font-semibold text-sm mb-2" id="assign-team-label">Assign Team / Managers</label>
+                <div className="border border-hairline rounded-lg p-4 max-h-40 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-3">
                   {assignees.map((userItem) => (
                     <button
+                      id={`assign-user-btn-${userItem.tablename}`}
                       key={userItem.tablename}
                       type="button"
                       onClick={() => toggleAssigneeSelect(userItem.tablename)}
-                      className={`p-2.5 rounded-xl border text-xs text-left transition-all font-semibold flex flex-col justify-center ${form.assign_user.includes(userItem.tablename) ? 'bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-900/50 text-indigo-700 dark:text-indigo-400 shadow-sm shadow-indigo-500/10' : 'border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30 text-slate-600 dark:text-slate-400'}`}
+                      className={`p-2.5 rounded-md border text-xs text-left transition-all font-semibold flex flex-col justify-center ${form.assign_user.includes(userItem.tablename) ? 'bg-canvas text-ink border-ink shadow-card' : 'border-hairline hover:bg-surface-soft text-body'}`}
                     >
-                      <span className="font-bold">{userItem.username}</span>
-                      <span className="text-xxs uppercase tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">{userItem.user_type}</span>
+                      <span className="font-semibold">{userItem.username}</span>
+                      <span className="text-xxs uppercase tracking-wider text-muted mt-0.5">{userItem.user_type}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 dark:border-slate-800 pt-6 flex justify-end gap-3">
+              <div className="border-t border-hairline-soft pt-6 flex justify-end gap-3">
                 <button
+                  id="form-employee-cancel"
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-6 py-2.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-all"
+                  className="btn-secondary"
                 >
                   Cancel
                 </button>
                 <button
+                  id="form-employee-save"
                   type="submit"
-                  className="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-500/10 transition-all"
+                  className="btn-primary"
                 >
                   Save Record
                 </button>

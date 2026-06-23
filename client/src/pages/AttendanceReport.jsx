@@ -77,50 +77,58 @@ const AttendanceReport = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Dynamic Summary Cards - respects premium legacy look */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <div className="bg-white border border-sky-200 rounded-full px-5 py-3 shadow-sm text-center">
-          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Total Headcount</span>
-          <span className="text-sm font-black text-sky-700 block mt-0.5">{stats.total}</span>
-        </div>
-        <div className="bg-white border border-emerald-200 rounded-full px-5 py-3 shadow-sm text-center">
-          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Present</span>
-          <span className="text-sm font-black text-emerald-700 block mt-0.5">
-            {stats.present + stats.late} ({stats.presentPercent || 0}%)
-          </span>
-        </div>
-        <div className="bg-white border border-rose-200 rounded-full px-5 py-3 shadow-sm text-center">
-          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Absents</span>
-          <span className="text-sm font-black text-rose-700 block mt-0.5">{stats.absent}</span>
-        </div>
-        <div className="bg-white border border-amber-200 rounded-full px-5 py-3 shadow-sm text-center">
-          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Late Arrivals</span>
-          <span className="text-sm font-black text-amber-700 block mt-0.5">{stats.late}</span>
-        </div>
-        <div className="bg-white border border-indigo-200 rounded-full px-5 py-3 shadow-sm text-center col-span-2 md:col-span-1">
-          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">On Leave</span>
-          <span className="text-sm font-black text-indigo-700 block mt-0.5">{stats.leave}</span>
+    <div className="page-shell">
+      <div className="page-header">
+        <div>
+          <p className="page-eyebrow mb-1">Workforce Analytics</p>
+          <h1 className="page-title">Attendance Report</h1>
+          <p className="page-subtitle">Track punch logs, work hours, and location history across your team.</p>
         </div>
       </div>
 
-      {/* Control Toolbar */}
-      <div className="bg-white border border-slate-100 p-4 rounded-2xl flex flex-wrap gap-4 items-center justify-between shadow-sm">
+      <div className="stat-grid">
+        <div className="stat-card text-center">
+          <span className="stat-card-label">Total Headcount</span>
+          <span className="stat-card-value">{stats.total}</span>
+        </div>
+        <div className="stat-card text-center">
+          <span className="stat-card-label">Present</span>
+          <span className="stat-card-value">
+            {stats.present + stats.late} ({stats.presentPercent || 0}%)
+          </span>
+        </div>
+        <div className="stat-card text-center">
+          <span className="stat-card-label">Absents</span>
+          <span className="stat-card-value">{stats.absent}</span>
+        </div>
+        <div className="stat-card text-center">
+          <span className="stat-card-label">Late Arrivals</span>
+          <span className="stat-card-value">{stats.late}</span>
+        </div>
+        <div className="stat-card text-center col-span-2 md:col-span-1">
+          <span className="stat-card-label">On Leave</span>
+          <span className="stat-card-value">{stats.leave}</span>
+        </div>
+      </div>
+
+      <div className="toolbar">
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="relative w-full sm:w-64">
+          <div className="search-wrap">
             <input
+              id="attendance-search-input"
               type="text"
               placeholder="Search attendance..."
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-              className="px-4 py-2 pl-9 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 text-xs w-full bg-transparent"
+              className="search-input text-xs"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-muted-soft absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
 
           <button
+            id="attendance-filter-toggle-btn"
             onClick={() => setShowFilters(!showFilters)}
-            className={`p-2 border rounded-xl hover:bg-slate-50 transition-all ${showFilters ? 'bg-indigo-50 border-indigo-200 text-indigo-600' : 'border-slate-200 text-slate-600'}`}
+            className={`filter-btn ${showFilters ? 'filter-btn-active' : ''}`}
           >
             <Filter className="w-4 h-4" />
           </button>
@@ -128,8 +136,9 @@ const AttendanceReport = () => {
 
         <div className="flex items-center gap-2">
           <button
+            id="attendance-reload-btn"
             onClick={fetchLogs}
-            className="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-500 transition-all"
+            className="filter-btn text-muted"
             title="Reload Data"
           >
             <RefreshCw className="w-4 h-4" />
@@ -137,15 +146,15 @@ const AttendanceReport = () => {
         </div>
       </div>
 
-      {/* Advanced Filters */}
       {showFilters && (
-        <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in text-xs font-semibold">
+        <div className="filter-panel grid-cols-1 md:grid-cols-3 text-xs">
           <div>
-            <label className="block text-slate-500 text-xxs font-bold uppercase mb-1">Status</label>
+            <label className="label-xs">Status</label>
             <select
+              id="attendance-filter-status"
               value={filters.status}
               onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 bg-transparent text-xs"
+              className="select-field text-xs"
             >
               <option value="">All Statuses</option>
               <option value="Present">Present</option>
@@ -155,39 +164,40 @@ const AttendanceReport = () => {
             </select>
           </div>
           <div>
-            <label className="block text-slate-500 text-xxs font-bold uppercase mb-1">From Date</label>
+            <label className="label-xs">From Date</label>
             <input
+              id="attendance-filter-from"
               type="date"
               value={filters.from}
               onChange={(e) => setFilters({ ...filters, from: e.target.value })}
-              className="w-full px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 text-xs text-slate-500"
+              className="input-field text-xs"
             />
           </div>
           <div>
-            <label className="block text-slate-500 text-xxs font-bold uppercase mb-1">To Date</label>
+            <label className="label-xs">To Date</label>
             <input
+              id="attendance-filter-to"
               type="date"
               value={filters.to}
               onChange={(e) => setFilters({ ...filters, to: e.target.value })}
-              className="w-full px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 text-xs text-slate-500"
+              className="input-field text-xs"
             />
           </div>
         </div>
       )}
 
       {error && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-700 px-4 py-3 rounded-xl flex items-center gap-2 text-xs font-semibold">
-          <AlertCircle className="w-4.5 h-4.5 shrink-0 text-rose-500" />
+        <div className="alert-error">
+          <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* Main Table */}
-      <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+      <div className="table-container">
         <div className="overflow-x-auto w-full">
-          <table className="w-full border-collapse text-left text-xs">
+          <table className="table-shell text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+              <tr>
                 <th className="px-6 py-4">ID</th>
                 <th className="px-6 py-4">Unique ID</th>
                 <th className="px-6 py-4">Name</th>
@@ -200,40 +210,41 @@ const AttendanceReport = () => {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
+            <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="10" className="text-center py-10 text-slate-400 font-semibold">
+                  <td colSpan="10" className="text-center py-10 text-muted font-semibold">
                     <div className="flex items-center justify-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-brand-500" />
+                      <Loader2 className="w-4 h-4 animate-spin text-ink" />
                       <span>Fetching logs from database...</span>
                     </div>
                   </td>
                 </tr>
               ) : logs.map((log, index) => (
-                <tr key={log._id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 text-slate-400 font-mono">#{index + 1}</td>
-                  <td className="px-6 py-4 font-mono font-bold text-slate-500">{log.user?.employee_id || '-'}</td>
-                  <td className="px-6 py-4 font-extrabold text-slate-800 capitalize">{log.user?.username}</td>
-                  <td className="px-6 py-4 font-normal text-slate-500">{log.user?.useremail}</td>
-                  <td className="px-6 py-4 capitalize text-brand-600 font-bold text-[10px]">{log.user?.user_type}</td>
+                <tr key={log._id}>
+                  <td className="px-6 py-4 text-muted font-mono">#{index + 1}</td>
+                  <td className="px-6 py-4 font-mono font-semibold text-muted">{log.user?.employee_id || '-'}</td>
+                  <td className="px-6 py-4 font-semibold text-ink capitalize">{log.user?.username}</td>
+                  <td className="px-6 py-4 font-normal text-muted">{log.user?.useremail}</td>
+                  <td className="px-6 py-4 capitalize text-ink font-semibold text-[10px]">{log.user?.user_type}</td>
                   <td className="px-6 py-4">
                     {log.punchIn ? new Date(log.punchIn).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-'}
                   </td>
                   <td className="px-6 py-4">
                     {log.punchOut ? new Date(log.punchOut).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-'}
                   </td>
-                  <td className="px-6 py-4 font-bold">{log.totalHours ? `${log.totalHours} hrs` : '-'}</td>
+                  <td className="px-6 py-4 font-semibold">{log.totalHours ? `${log.totalHours} hrs` : '-'}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase ${log.status === 'Present' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : log.status === 'Late' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-rose-50 text-rose-700 border border-rose-100'}`}>
+                    <span className={`${log.status === 'Present' ? 'badge-success' : log.status === 'Late' ? 'badge-warning' : log.status === 'Leave' ? 'badge-neutral' : 'badge-error'} uppercase text-[10px]`}>
                       {log.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     {log.locationHistory && log.locationHistory.length > 0 && (
                       <button
+                        id={`view-route-btn-${log._id}`}
                         onClick={() => setSelectedLog(log)}
-                        className="px-2.5 py-1 hover:bg-brand-50 text-brand-600 rounded-lg font-bold text-[10px] border border-brand-100 transition-colors"
+                        className="btn-secondary btn-sm"
                       >
                         View Route ({log.locationHistory.length})
                       </button>
@@ -243,7 +254,7 @@ const AttendanceReport = () => {
               ))}
               {!loading && logs.length === 0 && (
                 <tr>
-                  <td colSpan="10" className="text-center py-10 text-slate-400 font-semibold">No attendance entries recorded.</td>
+                  <td colSpan="10" className="text-center py-10 text-muted font-semibold">No attendance entries recorded.</td>
                 </tr>
               )}
             </tbody>
@@ -251,25 +262,21 @@ const AttendanceReport = () => {
         </div>
       </div>
 
-      {/* Coordinate History Modal */}
       {selectedLog && (
-        <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-6 z-50">
-          <div className="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl max-h-[80vh] flex flex-col">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-              <h3 className="font-extrabold text-slate-800 text-xs uppercase">Location Tracking Log ({selectedLog.date})</h3>
-              <button
-                onClick={() => setSelectedLog(null)}
-                className="px-3 py-1.5 hover:bg-slate-50 border border-slate-200 text-slate-500 rounded-lg text-xs font-bold transition-all"
-              >
+        <div className="modal-overlay">
+          <div className="modal-panel-md">
+            <div className="flex items-center justify-between border-b border-hairline pb-4 mb-4">
+              <h3 className="font-semibold text-ink text-xs uppercase">Location Tracking Log ({selectedLog.date})</h3>
+              <button id="close-log-modal-btn" onClick={() => setSelectedLog(null)} className="btn-secondary btn-sm">
                 Close
               </button>
             </div>
             <div className="flex-1 overflow-y-auto space-y-2 pr-1 text-xs">
-              <p className="font-extrabold mb-3 text-slate-500">Employee: {selectedLog.user?.username}</p>
+              <p className="font-semibold mb-3 text-muted">Employee: {selectedLog.user?.username}</p>
               {selectedLog.locationHistory.map((loc, idx) => (
-                <div key={idx} className="p-2 border border-slate-50 rounded-xl hover:bg-slate-50 flex items-center justify-between text-xxs font-mono">
+                <div key={idx} className="p-2 border border-hairline-soft rounded-md flex items-center justify-between text-xs font-mono">
                   <span>Coordinates: {loc.latitude.toFixed(6)}, {loc.longitude.toFixed(6)}</span>
-                  <span className="text-slate-400">{new Date(loc.capturedAt).toLocaleTimeString('en-US')}</span>
+                  <span className="text-muted">{new Date(loc.capturedAt).toLocaleTimeString('en-US')}</span>
                 </div>
               ))}
             </div>

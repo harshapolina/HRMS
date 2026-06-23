@@ -138,57 +138,60 @@ const CompanyAssets = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="page-shell space-y-8">
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-brand-950 to-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div className="page-header">
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-brand-400 font-extrabold">Inventory Portal</span>
-          <h1 className="text-2xl font-black text-white mt-1">Company Assets & FNF</h1>
+          <p className="page-eyebrow mb-1">Inventory Portal</p>
+          <h1 className="page-title">Company Assets &amp; FNF</h1>
+          <p className="page-subtitle">Manage hardware registry, device checkouts, and full &amp; final employee settlements.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Asset Catalog */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+        <div className="bg-canvas border border-hairline-soft rounded-lg p-6 shadow-sm space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-slate-700 dark:text-white font-extrabold text-sm uppercase tracking-wider">Asset Registry</h3>
+            <h3 className="text-body font-semibold text-sm uppercase tracking-wider">Asset Registry</h3>
             <button
+              id="asset-add-btn"
               onClick={() => setShowAssetModal(true)}
-              className="px-3 py-1.5 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-xl text-xs font-bold transition-colors"
+              className="btn-secondary btn-sm"
             >
               + Add Hardware
             </button>
           </div>
 
-          <div className="border border-slate-100 dark:border-slate-800 rounded-2xl max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
+          <div className="border border-hairline-soft rounded-lg max-h-60 overflow-y-auto divide-y divide-hairline-soft">
             {assets.map(asset => (
-              <div key={asset._id} className="p-3 flex items-center justify-between text-xs hover:bg-slate-50 dark:hover:bg-slate-800/30">
+              <div key={asset._id} className="p-3 flex items-center justify-between text-xs hover:bg-surface-soft">
                 <div>
-                  <span className="font-extrabold text-slate-800 dark:text-white block">{asset.name}</span>
-                  <span className="block text-[10px] text-slate-400 dark:text-slate-500">{asset.type} | SN: {asset.serialNumber}</span>
+                  <span className="font-semibold text-ink block">{asset.name}</span>
+                  <span className="block text-[10px] text-muted">{asset.type} | SN: {asset.serialNumber}</span>
                 </div>
-                <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${asset.status === 'Available' ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
+                <span className={`${asset.status === 'Available' ? 'badge-success' : 'badge-neutral'} uppercase text-[9px]`}>
                   {asset.status}
                 </span>
               </div>
             ))}
             {assets.length === 0 && (
-              <p className="text-center py-10 text-slate-400 dark:text-slate-500 text-xs font-semibold">No assets in registry.</p>
+              <p className="text-center py-10 text-muted text-xs font-semibold">No assets in registry.</p>
             )}
           </div>
         </div>
 
         {/* Assignment Form */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-          <h3 className="text-slate-700 dark:text-white font-extrabold text-sm uppercase tracking-wider">Assign Asset</h3>
-          <form onSubmit={handleAssignAsset} className="space-y-3 p-4 border border-slate-100 dark:border-slate-800 rounded-2xl bg-slate-50/50 dark:bg-slate-950/40">
+        <div className="bg-canvas border border-hairline-soft rounded-lg p-6 shadow-sm space-y-4">
+          <h3 className="text-body font-semibold text-sm uppercase tracking-wider">Assign Asset</h3>
+          <form onSubmit={handleAssignAsset} className="space-y-3 p-4 border border-hairline-soft rounded-lg bg-surface-soft/50">
             <div>
-              <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Select Available Hardware</label>
+              <label className="label-xs" htmlFor="assign-asset-select">Select Available Hardware</label>
               <select
+                id="assign-asset-select"
                 value={assignForm.assetId}
                 required
                 onChange={(e) => setAssignForm({ ...assignForm, assetId: e.target.value })}
-                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+                className="select-field text-xs"
               >
                 <option value="">Select Asset</option>
                 {assets.filter(a => a.status === 'Available').map(a => (
@@ -197,12 +200,13 @@ const CompanyAssets = () => {
               </select>
             </div>
             <div>
-              <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Assign To Employee</label>
+              <label className="label-xs" htmlFor="assign-user-select">Assign To Employee</label>
               <select
+                id="assign-user-select"
                 value={assignForm.userId}
                 required
                 onChange={(e) => setAssignForm({ ...assignForm, userId: e.target.value })}
-                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+                className="select-field text-xs"
               >
                 <option value="">Select User</option>
                 {employees.filter(emp => emp.user_type !== 'superuseradmin').map(emp => (
@@ -211,18 +215,20 @@ const CompanyAssets = () => {
               </select>
             </div>
             <div>
-              <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Notes</label>
+              <label className="label-xs" htmlFor="assign-notes-input">Notes</label>
               <input
+                id="assign-notes-input"
                 type="text"
                 placeholder="Mouse, charger, key config..."
                 value={assignForm.notes}
                 onChange={(e) => setAssignForm({ ...assignForm, notes: e.target.value })}
-                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+                className="input-field text-xs"
               />
             </div>
             <button
+              id="assign-asset-submit-btn"
               type="submit"
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-colors shadow-sm"
+              className="btn-primary btn-sm"
             >
               Confirm Checkout
             </button>
@@ -231,12 +237,12 @@ const CompanyAssets = () => {
       </div>
 
       {/* Assignments Registry */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-        <h3 className="text-slate-700 dark:text-white font-extrabold text-sm uppercase tracking-wider">Active Device Assignments</h3>
-        <div className="overflow-x-auto border border-slate-100 dark:border-slate-800 rounded-2xl">
+      <div className="bg-canvas border border-hairline-soft rounded-lg p-6 shadow-sm space-y-4">
+        <h3 className="text-body font-semibold text-sm uppercase tracking-wider">Active Device Assignments</h3>
+        <div className="overflow-x-auto border border-hairline-soft rounded-lg">
           <table className="w-full border-collapse text-left text-xs">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+              <tr className="bg-surface-soft border-b border-hairline-soft text-muted font-semibold uppercase tracking-wider">
                 <th className="px-6 py-4">Hardware Details</th>
                 <th className="px-6 py-4">Employee</th>
                 <th className="px-6 py-4">Checkout Date</th>
@@ -244,23 +250,24 @@ const CompanyAssets = () => {
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300 font-medium">
+            <tbody className="divide-y divide-hairline-soft text-body font-medium">
               {assignments.map(as => (
-                <tr key={as._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                <tr key={as._id} className="hover:bg-surface-soft/50 transition-colors">
                   <td className="px-6 py-4">
-                    <span className="font-extrabold text-slate-800 dark:text-white block">{as.asset?.name}</span>
-                    <span className="block text-[10px] text-slate-400 dark:text-slate-500">{as.asset?.type} | SN: {as.asset?.serialNumber}</span>
+                    <span className="font-semibold text-ink block">{as.asset?.name}</span>
+                    <span className="block text-[10px] text-muted">{as.asset?.type} | SN: {as.asset?.serialNumber}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="font-extrabold text-slate-800 dark:text-white block capitalize">{as.user?.username}</span>
-                    <span className="block text-[10px] text-slate-400 dark:text-slate-500">{as.user?.employee_id}</span>
+                    <span className="font-semibold text-ink block capitalize">{as.user?.username}</span>
+                    <span className="block text-[10px] text-muted">{as.user?.employee_id}</span>
                   </td>
                   <td className="px-6 py-4">{new Date(as.assignedDate).toLocaleDateString('en-GB')}</td>
-                  <td className="px-6 py-4 max-w-[150px] truncate text-slate-500 dark:text-slate-400 font-normal" title={as.notes}>{as.notes || '-'}</td>
+                  <td className="px-6 py-4 max-w-[150px] truncate text-muted font-normal" title={as.notes}>{as.notes || '-'}</td>
                   <td className="px-6 py-4 text-right">
                     <button
+                      id={`return-asset-btn-${as._id}`}
                       onClick={() => handleReturnAsset(as._id)}
-                      className="px-2.5 py-1.5 bg-rose-50 dark:bg-rose-950/30 hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-700 dark:text-rose-400 border border-rose-100 dark:border-rose-900/50 rounded-lg text-[10px] font-bold transition-all"
+                      className="btn-danger"
                     >
                       Mark Returned
                     </button>
@@ -269,7 +276,7 @@ const CompanyAssets = () => {
               ))}
               {assignments.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="text-center py-10 text-slate-400 dark:text-slate-500 font-semibold">No active hardware checkouts found.</td>
+                  <td colSpan="5" className="text-center py-10 text-muted font-semibold">No active hardware checkouts found.</td>
                 </tr>
               )}
             </tbody>
@@ -278,19 +285,20 @@ const CompanyAssets = () => {
       </div>
 
       {/* FNF SETTLEMENT CONTAINER */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-        <h3 className="text-slate-700 dark:text-white font-extrabold text-sm uppercase tracking-wider">Employee Full & Final (FNF) Settlement</h3>
+      <div className="bg-canvas border border-hairline-soft rounded-lg p-6 shadow-sm space-y-4">
+        <h3 className="text-body font-semibold text-sm uppercase tracking-wider">Employee Full & Final (FNF) Settlement</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <label className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase shrink-0">Select Resigning Employee</label>
+              <label className="text-muted text-xs font-semibold uppercase shrink-0" htmlFor="fnf-employee-select">Select Resigning Employee</label>
               <select
+                id="fnf-employee-select"
                 value={selectedFNFUser}
                 onChange={(e) => {
                   setSelectedFNFUser(e.target.value);
                   handleFetchFNF(e.target.value);
                 }}
-                className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+                className="select-field text-xs flex-1"
               >
                 <option value="">Select Employee</option>
                 {employees.filter(emp => emp.user_type !== 'superuseradmin').map(emp => (
@@ -300,19 +308,19 @@ const CompanyAssets = () => {
             </div>
 
             {fnfCalculation && (
-              <div className="space-y-3 p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-100 dark:border-slate-800 rounded-2xl text-xs text-slate-700 dark:text-slate-300">
-                <h4 className="font-extrabold text-slate-800 dark:text-white uppercase text-[10px] tracking-wider mb-2">Inventory & Audit Clearance</h4>
+              <div className="space-y-3 p-4 bg-surface-soft border border-hairline-soft rounded-lg text-xs text-body">
+                <h4 className="font-semibold text-ink uppercase text-[10px] tracking-wider mb-2">Inventory & Audit Clearance</h4>
                 <p><strong>Employee:</strong> {fnfCalculation.user.username} ({fnfCalculation.user.employee_id})</p>
                 <p><strong>Monthly Payout CTC:</strong> ₹{fnfCalculation.user.salary.toLocaleString()}</p>
                 
                 {fnfCalculation.pendingAssetsCount > 0 ? (
-                  <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50 rounded-xl text-amber-800 dark:text-amber-400 font-bold flex items-center gap-2 mt-1">
-                    <AlertCircle className="w-4 h-4 shrink-0 text-amber-500" />
+                  <div className="p-3 alert-warning flex items-center gap-2 mt-1">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-warning" />
                     Employee has {fnfCalculation.pendingAssetsCount} unreturned device(s) checked out!
                   </div>
                 ) : (
-                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 rounded-xl text-emerald-800 dark:text-emerald-400 font-bold flex items-center gap-2 mt-1">
-                    <Check className="w-4 h-4 shrink-0 text-emerald-500" />
+                  <div className="p-3 alert-success flex items-center gap-2 mt-1">
+                    <Check className="w-4 h-4 shrink-0 text-success" />
                     Zero pending hardware checked out. Inventory Clear.
                   </div>
                 )}
@@ -321,65 +329,65 @@ const CompanyAssets = () => {
           </div>
 
           {fnfCalculation && (
-            <form onSubmit={handleSaveFNF} className="space-y-4 p-5 border border-slate-100 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-950/20 shadow-sm text-slate-600 dark:text-slate-400">
-              <h4 className="font-extrabold text-slate-800 dark:text-white text-xs uppercase mb-2">Final Settlement Statements</h4>
+            <form onSubmit={handleSaveFNF} className="space-y-4 p-5 border border-hairline-soft rounded-lg bg-canvas shadow-sm text-body">
+              <h4 className="font-semibold text-ink text-xs uppercase mb-2">Final Settlement Statements</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Last Working Day</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Last Working Day</label>
                   <input
                     type="date"
                     required
                     value={fnfForm.lastWorkingDay}
                     onChange={(e) => setFnfForm({ ...fnfForm, lastWorkingDay: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-ink bg-canvas"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Unpaid Salary (INR)</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Unpaid Salary (INR)</label>
                   <input
                     type="number"
                     value={fnfForm.unpaidSalary}
                     onChange={(e) => setFnfForm({ ...fnfForm, unpaidSalary: parseFloat(e.target.value) || 0 })}
                     onBlur={calculateFNFNet}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs focus:outline-none bg-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Leave Encashment (INR)</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Leave Encashment (INR)</label>
                   <input
                     type="number"
                     value={fnfForm.leaveEncashment}
                     onChange={(e) => setFnfForm({ ...fnfForm, leaveEncashment: parseFloat(e.target.value) || 0 })}
                     onBlur={calculateFNFNet}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs focus:outline-none bg-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Bonus & Incentives (INR)</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Bonus & Incentives (INR)</label>
                   <input
                     type="number"
                     value={fnfForm.bonusIncentives}
                     onChange={(e) => setFnfForm({ ...fnfForm, bonusIncentives: parseFloat(e.target.value) || 0 })}
                     onBlur={calculateFNFNet}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs focus:outline-none bg-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Deductions (INR)</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Deductions (INR)</label>
                   <input
                     type="number"
                     value={fnfForm.deductions}
                     onChange={(e) => setFnfForm({ ...fnfForm, deductions: parseFloat(e.target.value) || 0 })}
                     onBlur={calculateFNFNet}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs focus:outline-none bg-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Status</label>
+                  <label className="block text-muted text-[10px] font-semibold uppercase mb-1">Status</label>
                   <select
                     value={fnfForm.status}
                     onChange={(e) => setFnfForm({ ...fnfForm, status: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs bg-white dark:bg-slate-900 dark:text-white"
+                    className="w-full border border-hairline rounded-lg px-3 py-2 text-xs bg-canvas"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Settled">Settled</option>
@@ -393,21 +401,22 @@ const CompanyAssets = () => {
                   id="assetsReturned"
                   checked={fnfForm.assetsReturned}
                   onChange={(e) => setFnfForm({ ...fnfForm, assetsReturned: e.target.checked })}
-                  className="rounded border-slate-300 text-brand-500 focus:ring-brand-500 dark:bg-slate-800"
+                  className="rounded border-hairline text-accent focus:ring-ink"
                 />
-                <label htmlFor="assetsReturned" className="text-[10px] font-bold text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                <label htmlFor="assetsReturned" className="text-[10px] font-semibold text-body cursor-pointer select-none">
                   Audit Clear: All checked out devices returned
                 </label>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+              <div className="flex items-center justify-between pt-4 border-t border-hairline-soft mt-4">
                 <div>
-                  <span className="block text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase">Net Settlement Amount</span>
-                  <span className="block text-lg font-black text-indigo-600 dark:text-indigo-400">₹{fnfForm.netSettlement.toLocaleString()}</span>
+                  <span className="block text-[9px] font-semibold text-muted uppercase">Net Settlement Amount</span>
+                  <span className="block text-lg font-display font-semibold text-ink">₹{fnfForm.netSettlement.toLocaleString()}</span>
                 </div>
                 <button
+                  id="fnf-save-btn"
                   type="submit"
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black shadow-sm"
+                  className="btn-primary"
                 >
                   Save Settlement
                 </button>
@@ -419,33 +428,22 @@ const CompanyAssets = () => {
 
       {/* Add Asset Modal */}
       {showAssetModal && (
-        <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-6 z-50">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
-              <h3 className="font-extrabold text-slate-800 dark:text-white text-sm uppercase">Add New Asset</h3>
-              <button onClick={() => setShowAssetModal(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+        <div className="modal-overlay">
+          <div className="modal-panel-md">
+            <div className="modal-header mb-0 pb-4">
+              <h3 className="font-semibold text-ink text-sm">Add New Asset</h3>
+              <button onClick={() => setShowAssetModal(false)} className="btn-icon text-muted">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleAddAsset} className="space-y-4">
+            <form onSubmit={handleAddAsset} className="space-y-4 mt-4">
               <div>
-                <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Asset Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. MacBook Pro M3"
-                  value={assetForm.name}
-                  onChange={(e) => setAssetForm({ ...assetForm, name: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Asset Name</label>
+                <input type="text" required placeholder="e.g. MacBook Pro M3" value={assetForm.name} onChange={(e) => setAssetForm({ ...assetForm, name: e.target.value })} className="input-field text-xs" />
               </div>
               <div>
-                <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Asset Type</label>
-                <select
-                  value={assetForm.type}
-                  onChange={(e) => setAssetForm({ ...assetForm, type: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-transparent dark:text-white"
-                >
+                <label className="label-xs">Asset Type</label>
+                <select value={assetForm.type} onChange={(e) => setAssetForm({ ...assetForm, type: e.target.value })} className="select-field text-xs">
                   <option value="Laptop">Laptop</option>
                   <option value="Mobile">Mobile</option>
                   <option value="Accessory">Accessory</option>
@@ -453,30 +451,12 @@ const CompanyAssets = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Serial Number</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. C02XG123XYZ"
-                  value={assetForm.serialNumber}
-                  onChange={(e) => setAssetForm({ ...assetForm, serialNumber: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Serial Number</label>
+                <input type="text" required placeholder="e.g. C02XG123XYZ" value={assetForm.serialNumber} onChange={(e) => setAssetForm({ ...assetForm, serialNumber: e.target.value })} className="input-field text-xs" />
               </div>
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setShowAssetModal(false)}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl text-xs font-bold transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-xl text-xs font-bold transition-all"
-                >
-                  Save to Registry
-                </button>
+              <div className="modal-footer mb-0 pt-4">
+                <button type="button" onClick={() => setShowAssetModal(false)} className="btn-secondary btn-sm">Cancel</button>
+                <button type="submit" className="btn-primary btn-sm">Save to Registry</button>
               </div>
             </form>
           </div>

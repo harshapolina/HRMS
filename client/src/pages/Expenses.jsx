@@ -11,7 +11,6 @@ const Expenses = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
 
-  // Form Fields
   const [form, setForm] = useState({
     category: '',
     amount: '',
@@ -94,7 +93,6 @@ const Expenses = () => {
     );
   });
 
-  // Group by category for Chart visualization
   const getChartData = () => {
     const categories = {};
     filteredExpenses.forEach((e) => {
@@ -107,93 +105,82 @@ const Expenses = () => {
   };
 
   const chartData = getChartData();
-  const COLORS = ['#477ca9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#3b82f6'];
+  const COLORS = ['#111111', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#6b7280'];
 
   return (
-    <div className="space-y-6 text-slate-800 dark:text-slate-200">
-      {/* Cards & Controls */}
-      <div className="flex flex-col md:flex-row gap-6 items-stretch justify-between">
-        
-        {/* Ledger Card */}
-        <div className="flex-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex items-center justify-between">
-          <div>
-            <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider block">Total Ledger Expenses</span>
-            <span className="text-3xl font-extrabold text-slate-800 dark:text-white mt-2 block">₹{totalAmount.toLocaleString()}</span>
-          </div>
-          <div className="p-4 bg-brand-500/10 rounded-xl">
-            <Wallet className="w-8 h-8 text-brand-500" />
-          </div>
+    <div className="page-shell">
+      <div className="page-header">
+        <div>
+          <p className="page-eyebrow mb-1">Finance Ledger</p>
+          <h1 className="page-title">Ledger Expenses</h1>
+          <p className="page-subtitle">Track company outflows and category-wise spending.</p>
         </div>
+        <div className="page-header-actions">
+          <span className="badge-pill">₹{totalAmount.toLocaleString()} total</span>
+        </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-4 justify-end flex-wrap">
-          <div className="relative w-full sm:w-60">
+      <div className="toolbar">
+        <div className="toolbar-left">
+          <div className="search-wrap">
             <input
               type="text"
               placeholder="Search expenses..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="px-4 py-2.5 pl-9 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs w-full bg-transparent dark:text-white font-medium"
+              className="search-input text-xs"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <Search className="w-4 h-4 text-muted-soft absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
-
-          <button
-            onClick={() => setShowAddForm(true)}
-            className="px-5 py-2.5 bg-brand-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-brand-500/10 hover:bg-brand-600 flex items-center gap-2 transition-all w-full sm:w-auto justify-center"
-          >
+        </div>
+        <div className="toolbar-right">
+          <button onClick={() => setShowAddForm(true)} className="btn-primary btn-sm">
             <PlusCircle className="w-4 h-4" /> Add Ledger Record
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Expense List Table */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/25 dark:bg-slate-800/50">
-            <h3 className="text-slate-800 dark:text-white font-bold text-sm">Ledger Statements</h3>
+        <div className="lg:col-span-2 table-container flex flex-col">
+          <div className="card-section-header">
+            <h3 className="section-title text-sm">Ledger Statements</h3>
           </div>
           <div className="flex-1 overflow-x-auto">
-            <table className="w-full border-collapse text-left text-sm text-slate-700 dark:text-slate-300">
+            <table className="table-shell text-sm">
               <thead>
-                <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800 text-brand-600 dark:text-brand-400 font-bold text-xs uppercase tracking-wider">
-                  <th className="px-6 py-4">Category</th>
-                  <th className="px-6 py-4">Payment Date</th>
-                  <th className="px-6 py-4">Description</th>
-                  <th className="px-6 py-4">Amount</th>
-                  <th className="px-6 py-4 text-right">Action</th>
+                <tr>
+                  <th>Category</th>
+                  <th>Payment Date</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th className="text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              <tbody>
                 {loading && filteredExpenses.length === 0 ? (
                   <tr>
                     <td colSpan="5" className="text-center py-10">
-                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-brand-500 mx-auto"></div>
+                      <div className="spinner mx-auto h-8 w-8" />
                     </td>
                   </tr>
                 ) : filteredExpenses.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center py-10 text-slate-400 dark:text-slate-500">
-                      No matching expense statements found.
-                    </td>
+                    <td colSpan="5" className="text-center py-10 text-muted">No matching expense statements found.</td>
                   </tr>
                 ) : (
                   filteredExpenses.map((exp) => (
-                    <tr key={exp._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all">
-                      <td className="px-6 py-4 font-bold text-slate-800 dark:text-white capitalize">{exp.category}</td>
-                      <td className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    <tr key={exp._id}>
+                      <td className="font-semibold text-ink capitalize">{exp.category}</td>
+                      <td className="text-xs font-medium text-muted">
                         {exp.payment_date ? new Date(exp.payment_date).toLocaleDateString() : '-'}
                       </td>
-                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400 truncate max-w-[200px]" title={exp.description}>
+                      <td className="text-muted truncate max-w-[200px]" title={exp.description}>
                         {exp.description || '-'}
                       </td>
-                      <td className="px-6 py-4 font-extrabold text-brand-600 dark:text-brand-400">₹{(exp.amount || 0).toLocaleString()}</td>
-                      <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => handleDelete(exp._id)}
-                          className="p-1.5 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-400 rounded-lg transition-all"
-                        >
-                          <Trash2 className="w-4.5 h-4.5" />
+                      <td className="font-semibold text-ink">₹{(exp.amount || 0).toLocaleString()}</td>
+                      <td className="text-right">
+                        <button onClick={() => handleDelete(exp._id)} className="btn-icon-danger w-8 h-8">
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </td>
                     </tr>
@@ -204,31 +191,20 @@ const Expenses = () => {
           </div>
         </div>
 
-        {/* Expenses Pie Chart */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-          <div>
-            <h3 className="text-slate-800 dark:text-white font-bold text-sm mb-4">Outflow Breakdown</h3>
-          </div>
-          <div className="h-64 flex items-center justify-center">
+        <div className="card p-6 flex flex-col">
+          <h3 className="section-title text-sm mb-4">Outflow Breakdown</h3>
+          <div className="h-64 flex items-center justify-center flex-1">
             {chartData.length === 0 ? (
-              <p className="text-slate-400 dark:text-slate-500 text-xs font-semibold">No ledger data available for visualization.</p>
+              <p className="text-muted text-xs font-medium">No ledger data available for visualization.</p>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie
-                    data={chartData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
+                  <Pie data={chartData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
                     {chartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => `₹${value.toLocaleString()}`} contentStyle={{ backgroundColor: 'rgb(15 23 42)', border: 'none', borderRadius: '8px', color: 'white' }} />
+                  <Tooltip formatter={(value) => `₹${value.toLocaleString()}`} contentStyle={{ backgroundColor: '#111111', border: 'none', borderRadius: '8px', color: 'white', fontSize: 12 }} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -237,71 +213,35 @@ const Expenses = () => {
         </div>
       </div>
 
-      {/* Add Expense Modal */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-6 z-50 animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-md shadow-2xl p-6 space-y-4 text-slate-600 dark:text-slate-450">
-            <div className="flex items-center justify-between">
-              <h3 className="text-slate-800 dark:text-white font-bold text-base">Add Ledger Expense</h3>
-              <button onClick={() => setShowAddForm(false)} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+        <div className="modal-overlay">
+          <div className="modal-panel-md space-y-4">
+            <div className="modal-header mb-0 pb-4">
+              <h3 className="font-semibold text-ink text-base">Add Ledger Expense</h3>
+              <button onClick={() => setShowAddForm(false)} className="btn-icon text-muted">
                 <X className="w-5 h-5" />
               </button>
             </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
               <div>
-                <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold mb-1">Expense Category *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Server, Rent, Office Supplies"
-                  value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Expense Category *</label>
+                <input type="text" required placeholder="e.g. Server, Rent, Office Supplies" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="input-field text-xs" />
               </div>
               <div>
-                <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold mb-1">Payment Amount (₹) *</label>
-                <input
-                  type="number"
-                  required
-                  value={form.amount}
-                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Payment Amount (₹) *</label>
+                <input type="number" required value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} className="input-field text-xs" />
               </div>
               <div>
-                <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold mb-1">Payment Date</label>
-                <input
-                  type="date"
-                  value={form.payment_date}
-                  onChange={(e) => setForm({ ...form, payment_date: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Payment Date</label>
+                <input type="date" value={form.payment_date} onChange={(e) => setForm({ ...form, payment_date: e.target.value })} className="input-field text-xs" />
               </div>
               <div>
-                <label className="block text-slate-600 dark:text-slate-400 text-xs font-semibold mb-1">Statement Description</label>
-                <textarea
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs h-20 resize-none bg-transparent dark:text-white"
-                />
+                <label className="label-xs">Statement Description</label>
+                <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input-field text-xs h-20 resize-none py-2" />
               </div>
-
-              <div className="pt-2 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowAddForm(false)}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold shadow-md"
-                >
-                  Save Record
-                </button>
+              <div className="modal-footer mb-0 pt-4">
+                <button type="button" onClick={() => setShowAddForm(false)} className="btn-secondary btn-sm">Cancel</button>
+                <button type="submit" className="btn-primary btn-sm">Save Record</button>
               </div>
             </form>
           </div>

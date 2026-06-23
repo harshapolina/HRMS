@@ -259,15 +259,23 @@ const LiveTracking = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Controls Bar */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl flex flex-wrap gap-4 items-end shadow-sm">
+    <div className="page-shell">
+      <div className="page-header">
+        <div>
+          <p className="page-eyebrow mb-1">Field Operations</p>
+          <h1 className="page-title">Live Tracking</h1>
+          <p className="page-subtitle">Monitor real-time employee locations and view historical route data.</p>
+        </div>
+      </div>
+
+      <div className="toolbar items-end">
         <div className="flex flex-col gap-1 flex-1 min-w-[200px]">
-          <label className="text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wider">Select Employee</label>
+          <label className="label-xs" htmlFor="livetracking-employee-select">Select Employee</label>
           <select
+            id="livetracking-employee-select"
             value={selectedUser}
             onChange={(e) => setSelectedUser(e.target.value)}
-            className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-white dark:bg-slate-900 dark:text-white"
+            className="select-field text-xs"
           >
             <option value="all">All Active Employees (Live)</option>
             {employees.map(emp => (
@@ -277,35 +285,37 @@ const LiveTracking = () => {
         </div>
 
         <div className="flex flex-col gap-1 flex-1 min-w-[200px]">
-          <label className="text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wider">Date (For History Route)</label>
+          <label className="label-xs" htmlFor="livetracking-history-date">Date (For History Route)</label>
           <input
+            id="livetracking-history-date"
             type="date"
             value={historyDate}
             onChange={(e) => setHistoryDate(e.target.value)}
-            className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none text-slate-500 bg-transparent dark:text-white"
+            className="input-field text-xs"
           />
         </div>
 
         <div className="flex gap-2 w-full md:w-auto">
           <button
+            id="livetracking-history-btn"
             onClick={loadHistory}
             disabled={loading}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-600/10 flex items-center gap-1.5"
+            className="btn-primary btn-sm"
           >
             <Clock className="w-3.5 h-3.5" /> {loading ? 'Loading...' : 'View History Route'}
           </button>
-          
+
           <button
+            id="livetracking-live-btn"
             onClick={resetToLive}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+            className="btn-secondary btn-sm"
           >
-            <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> Back to Live
+            <Radio className="w-3.5 h-3.5 text-success" /> Back to Live
           </button>
         </div>
       </div>
 
-      {/* Leaflet Map Wrap */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm h-[65vh] relative min-h-[500px]">
+      <div className="card overflow-hidden h-[65vh] relative min-h-[500px]">
         <div ref={mapContainerRef} className="h-full w-full z-10" />
       </div>
     </div>

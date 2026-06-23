@@ -315,46 +315,53 @@ const OfferLetterPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-shell">
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-brand-950 to-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div className="page-header">
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-brand-400 font-extrabold">Operations Portal</span>
-          <h1 className="text-2xl font-black text-white mt-1">Offer Letter Console</h1>
+          <p className="page-eyebrow mb-1">Operations Portal</p>
+          <h1 className="page-title">Offer Letter Console</h1>
+          <p className="page-subtitle">Create, edit, and dispatch professional offer letters to candidates.</p>
         </div>
-        <button
-          onClick={() => setShowOfferModal(true)}
-          className="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-brand-500/10 flex items-center gap-1.5"
-        >
-          <Plus className="w-4 h-4" /> Create Offer Letter
-        </button>
+        <div className="page-header-actions">
+          <button
+            id="offer-create-btn"
+            onClick={() => setShowOfferModal(true)}
+            className="btn-primary"
+          >
+            <Plus className="w-4 h-4" /> Create Offer Letter
+          </button>
+        </div>
       </div>
 
       {/* Control Toolbar */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl flex flex-wrap gap-4 items-center justify-between shadow-sm">
+      <div className="toolbar">
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="relative w-full sm:w-64">
+          <div className="search-wrap">
             <input
+              id="offer-search-input"
               type="text"
               placeholder="Search candidate name or position..."
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value })}
               onKeyDown={(e) => e.key === 'Enter' && fetchOffers()}
-              className="px-4 py-2 pl-9 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 text-xs w-full bg-transparent dark:text-white"
+              className="search-input text-xs"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-muted-soft absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
 
           <button
+            id="offer-filter-toggle-btn"
             onClick={() => setShowFilters(!showFilters)}
-            className={`p-2 border rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all ${showFilters ? 'bg-indigo-50 dark:bg-indigo-950 border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400' : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'}`}
+            className={`filter-btn ${showFilters ? 'filter-btn-active' : ''}`}
           >
             <Filter className="w-4 h-4" />
           </button>
-          
+
           <button
+            id="offer-search-submit-btn"
             onClick={fetchOffers}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all"
+            className="btn-primary btn-sm"
           >
             Search
           </button>
@@ -363,13 +370,14 @@ const OfferLetterPage = () => {
 
       {/* Advanced Filters */}
       {showFilters && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in text-xs font-semibold">
+        <div className="filter-panel grid-cols-1 md:grid-cols-2">
           <div>
-            <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Status</label>
+            <label className="label-xs" htmlFor="offer-filter-status">Status</label>
             <select
+              id="offer-filter-status"
               value={filters.status}
               onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:border-brand-500 bg-transparent text-xs dark:text-white dark:bg-slate-900"
+              className="select-field text-xs"
             >
               <option value="">All Statuses</option>
               <option value="Draft">Draft</option>
@@ -383,29 +391,30 @@ const OfferLetterPage = () => {
       {/* Candidate Offer Drafts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {offers.map(offer => (
-          <div key={offer._id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl space-y-4 hover:shadow-md transition-shadow relative">
+          <div key={offer._id} className="p-5 bg-canvas border border-hairline-soft rounded-lg space-y-4 transition-shadow relative">
             <div className="flex items-start justify-between">
               <div>
-                <h4 className="font-extrabold text-slate-800 dark:text-white text-xs capitalize">{offer.candidateName}</h4>
-                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 capitalize">{offer.position} | {offer.department || 'Operations'}</p>
+                <h4 className="font-semibold text-ink text-xs capitalize">{offer.candidateName}</h4>
+                <p className="text-[10px] text-muted mt-1 capitalize">{offer.position} | {offer.department || 'Operations'}</p>
               </div>
-              <span className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase ${offer.status === 'Sent' ? 'bg-indigo-50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400' : offer.status === 'Accepted' ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
+              <span className={`${offer.status === 'Accepted' ? 'badge-success' : 'badge-neutral'} uppercase text-[9px]`}>
                 {offer.status}
               </span>
             </div>
 
-            <div className="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+            <div className="text-[11px] text-muted space-y-1">
               <p><strong>CTC Salary:</strong> ₹{(offer.monthlySalary * 12).toLocaleString()} LPA (₹{offer.monthlySalary.toLocaleString()}/mo)</p>
               <p><strong>Joining Date:</strong> {new Date(offer.joiningDate).toLocaleDateString('en-GB')}</p>
               {offer.emailedAt && (
-                <p className="text-slate-400 dark:text-slate-500 text-[10px]"><strong>Sent:</strong> {new Date(offer.emailedAt).toLocaleDateString('en-GB')} by {offer.emailedBy}</p>
+                <p className="text-muted text-[10px]"><strong>Sent:</strong> {new Date(offer.emailedAt).toLocaleDateString('en-GB')} by {offer.emailedBy}</p>
               )}
             </div>
 
-            <div className="flex gap-2 pt-2 border-t border-slate-50 dark:border-slate-800 justify-between items-center">
+            <div className="flex gap-2 pt-2 border-t border-hairline-soft justify-between items-center">
               <button
+                id={`offer-preview-btn-${offer._id}`}
                 onClick={() => setPreviewingOffer(offer)}
-                className="text-[10px] text-brand-600 dark:text-brand-400 font-bold hover:underline flex items-center gap-1"
+                className="text-[10px] text-ink font-semibold hover:underline flex items-center gap-1"
               >
                 <Eye className="w-3.5 h-3.5" /> Preview Document
               </button>
@@ -413,15 +422,17 @@ const OfferLetterPage = () => {
               <div className="flex gap-2">
                 {offer.status === 'Draft' && (
                   <button
+                    id={`offer-send-btn-${offer._id}`}
                     onClick={() => handleSendOffer(offer._id)}
-                    className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 rounded-lg text-[10px] font-extrabold transition-all flex items-center gap-1"
+                    className="btn-secondary btn-sm"
                   >
                     <Mail className="w-3 h-3" /> Email Offer
                   </button>
                 )}
                 <button
+                  id={`offer-delete-btn-${offer._id}`}
                   onClick={() => handleDeleteOffer(offer._id)}
-                  className="p-1 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-400 rounded-lg transition-colors"
+                  className="btn-icon text-error hover:bg-error/10"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -430,7 +441,7 @@ const OfferLetterPage = () => {
           </div>
         ))}
         {offers.length === 0 && (
-          <p className="text-center col-span-2 py-20 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-slate-400 dark:text-slate-500 font-semibold text-xs">
+          <p className="text-center col-span-2 py-20 bg-canvas border border-hairline-soft rounded-lg text-muted font-semibold text-xs">
             No candidate offer letters created yet.
           </p>
         )}
@@ -438,55 +449,55 @@ const OfferLetterPage = () => {
 
       {/* Offer Letter Document Preview & Editor Modal */}
       {previewingOffer && (
-        <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-6 z-50">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-3xl w-full p-6 shadow-2xl overflow-hidden max-h-[95vh] flex flex-col">
+        <div className="modal-overlay">
+          <div className="modal-panel-xl overflow-hidden max-h-[95vh]">
             
             {/* Modal Title Block */}
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-4">
-              <h3 className="font-extrabold text-slate-800 dark:text-white text-xs uppercase flex items-center gap-1.5">
-                <PenTool className="w-4 h-4 text-brand-500" />
+            <div className="flex items-center justify-between border-b border-hairline-soft pb-4 mb-4">
+              <h3 className="font-semibold text-ink text-xs uppercase flex items-center gap-1.5">
+                <PenTool className="w-4 h-4 text-accent" />
                 Offer Letter Document Editor ({previewingOffer.candidateName})
               </h3>
               <button
                 onClick={() => setPreviewingOffer(null)}
-                className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400"
+                className="p-1.5 hover:bg-surface-soft rounded-lg text-muted"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Document Formatting Toolbar */}
-            <div className="flex flex-wrap gap-1 bg-slate-50 dark:bg-slate-800 p-2 rounded-xl mb-3 border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-300">
-              <button type="button" onClick={() => handleToolbarCmd('bold')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Bold"><Bold className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('underline')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Underline"><Underline className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('removeFormat')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Clear Format"><Eraser className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-slate-200 dark:bg-slate-700 my-1 mx-1" />
+            <div className="flex flex-wrap gap-1 bg-surface-soft p-2 rounded-lg mb-3 border border-hairline-soft text-body">
+              <button type="button" onClick={() => handleToolbarCmd('bold')} className="p-1.5 hover:bg-surface-strong rounded" title="Bold"><Bold className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('underline')} className="p-1.5 hover:bg-surface-strong rounded" title="Underline"><Underline className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('removeFormat')} className="p-1.5 hover:bg-surface-strong rounded" title="Clear Format"><Eraser className="w-4 h-4" /></button>
+              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
               
-              <button type="button" onClick={() => handleToolbarCmd('insertUnorderedList')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Bullet List"><List className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('insertOrderedList')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Numbered List"><ListOrdered className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-slate-200 dark:bg-slate-700 my-1 mx-1" />
+              <button type="button" onClick={() => handleToolbarCmd('insertUnorderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Bullet List"><List className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('insertOrderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Numbered List"><ListOrdered className="w-4 h-4" /></button>
+              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
               
-              <button type="button" onClick={() => handleToolbarCmd('justifyLeft')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Align Left"><AlignLeft className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyCenter')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Align Center"><AlignCenter className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyRight')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Align Right"><AlignRight className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyFull')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Justify"><AlignJustify className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-slate-200 dark:bg-slate-700 my-1 mx-1" />
+              <button type="button" onClick={() => handleToolbarCmd('justifyLeft')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Left"><AlignLeft className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('justifyCenter')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Center"><AlignCenter className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('justifyRight')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Right"><AlignRight className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('justifyFull')} className="p-1.5 hover:bg-surface-strong rounded" title="Justify"><AlignJustify className="w-4 h-4" /></button>
+              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
               
-              <button type="button" onClick={handleTablePrompt} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Insert Table"><Table className="w-4 h-4" /></button>
-              <button type="button" onClick={handleLinkPrompt} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Insert Link"><Link2 className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('insertHorizontalRule')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-750 rounded" title="Horizontal Line"><Minus className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-slate-200 dark:bg-slate-700 my-1 mx-1" />
+              <button type="button" onClick={handleTablePrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Table"><Table className="w-4 h-4" /></button>
+              <button type="button" onClick={handleLinkPrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Link"><Link2 className="w-4 h-4" /></button>
+              <button type="button" onClick={() => handleToolbarCmd('insertHorizontalRule')} className="p-1.5 hover:bg-surface-strong rounded" title="Horizontal Line"><Minus className="w-4 h-4" /></button>
+              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
               
-              <button type="button" onClick={() => setCodeMode(!codeMode)} className={`p-1.5 rounded ${codeMode ? 'bg-indigo-500 text-white' : 'hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300'}`} title="Toggle HTML View"><Code className="w-4 h-4" /></button>
+              <button type="button" onClick={() => setCodeMode(!codeMode)} className={`p-1.5 rounded ${codeMode ? 'bg-surface-soft0 text-white' : 'hover:bg-surface-strong text-body '}`} title="Toggle HTML View"><Code className="w-4 h-4" /></button>
             </div>
             
             {/* Editable Content Frame - Force light background style for standard letter reading */}
-            <div className="flex-1 overflow-y-auto min-h-0 bg-white border border-slate-300 rounded-2xl shadow-inner relative">
+            <div className="flex-1 overflow-y-auto min-h-0 bg-canvas border border-hairline rounded-lg shadow-inner relative">
               {codeMode ? (
                 <textarea
                   value={editingHtml}
                   onChange={(e) => setEditingHtml(e.target.value)}
-                  className="w-full h-full font-mono text-[11px] p-8 focus:outline-none bg-slate-950 text-slate-200 resize-none min-h-[45vh]"
+                  className="w-full h-full font-mono text-[11px] p-8 focus:outline-none bg-surface-dark text-muted-soft resize-none min-h-[45vh]"
                 />
               ) : (
                 <div
@@ -496,7 +507,7 @@ const OfferLetterPage = () => {
                     if (editorRef.current) setEditingHtml(editorRef.current.innerHTML);
                   }}
                   dangerouslySetInnerHTML={{ __html: editingHtml }}
-                  className="p-8 text-slate-900 focus:outline-none min-h-[45vh] leading-relaxed"
+                  className="p-8 text-ink focus:outline-none min-h-[45vh] leading-relaxed"
                   style={{
                     backgroundImage: 'url("https://www.searchhomesindia.com/assets/images/logo.png")',
                     backgroundRepeat: 'no-repeat',
@@ -510,20 +521,22 @@ const OfferLetterPage = () => {
             </div>
             
             {/* Modal Actions Footer */}
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800 mt-4 justify-between items-center shrink-0">
+            <div className="flex flex-wrap gap-2 pt-4 border-t border-hairline-soft mt-4 justify-between items-center shrink-0">
               <div className="flex gap-2">
                 <button
+                  id="offer-add-signature-btn"
                   onMouseDown={(e) => {
                     e.preventDefault();
                     handleOpenSignatureModal();
                   }}
-                  className="px-3.5 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-brand-600 dark:text-brand-400 rounded-xl text-xs font-bold transition-colors flex items-center gap-1"
+                  className="btn-secondary btn-sm"
                 >
                   <PenTool className="w-3.5 h-3.5" /> Add Signature
                 </button>
                 <button
+                  id="offer-print-btn"
                   onClick={() => window.print()}
-                  className="px-3.5 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl text-xs font-bold transition-colors flex items-center gap-1"
+                  className="btn-secondary btn-sm"
                 >
                   <Eye className="w-3.5 h-3.5" /> Preview
                 </button>
@@ -531,24 +544,27 @@ const OfferLetterPage = () => {
 
               <div className="flex gap-2">
                 <button
+                  id="offer-close-editor-btn"
                   onClick={() => setPreviewingOffer(null)}
-                  className="px-4 py-2 bg-slate-100 dark:bg-slate-850 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold transition-all"
+                  className="btn-secondary"
                 >
                   Close
                 </button>
                 <button
+                  id="offer-reset-template-btn"
                   onClick={() => {
                     if (window.confirm('Reset all modifications and restore the default candidate offer letter template?')) {
                       setEditingHtml(getDefaultHtmlTemplate(previewingOffer));
                     }
                   }}
-                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+                  className="btn-secondary btn-sm"
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Reset to Template
                 </button>
                 <button
+                  id="offer-save-letter-btn"
                   onClick={saveEditedLetter}
-                  className="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-black shadow-md shadow-brand-500/10 transition-all flex items-center gap-1"
+                  className="btn-primary"
                 >
                   <Check className="w-3.5 h-3.5" /> Save Letter
                 </button>
@@ -561,35 +577,37 @@ const OfferLetterPage = () => {
 
       {/* Inline Signature Creator Modal Overlay */}
       {showSignatureModal && (
-        <div className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-6 z-[60] animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h4 className="font-extrabold text-slate-800 dark:text-white text-xs uppercase flex items-center gap-1.5">
-                <PenTool className="w-4 h-4 text-indigo-500" />
+        <div className="modal-overlay z-[60]">
+          <div className="modal-panel-md space-y-4">
+            <div className="flex items-center justify-between border-b border-hairline-soft pb-3">
+              <h4 className="font-semibold text-ink text-xs uppercase flex items-center gap-1.5">
+                <PenTool className="w-4 h-4 text-accent" />
                 Insert Signature Block
               </h4>
-              <button onClick={() => setShowSignatureModal(false)} className="p-1 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+              <button id="close-sig-modal-btn" onClick={() => setShowSignatureModal(false)} className="btn-icon text-muted">
                 <X className="w-4.5 h-4.5" />
               </button>
             </div>
             
-            <div className="space-y-3 text-xs font-bold text-slate-600 dark:text-slate-400">
+            <div className="space-y-3 text-xs font-semibold text-body">
               <div>
-                <label className="block text-[10px] uppercase mb-1">Name to sign</label>
+                <label className="label-xs" htmlFor="sig-name-input">Name to sign</label>
                 <input
+                  id="sig-name-input"
                   type="text"
                   value={sigForm.name}
                   onChange={(e) => setSigForm({ ...sigForm, name: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500 bg-transparent dark:text-white"
+                  className="input-field"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase mb-1">Handwriting Cursive Style</label>
+                <label className="label-xs" htmlFor="sig-font-select">Handwriting Cursive Style</label>
                 <select
+                  id="sig-font-select"
                   value={sigForm.font}
                   onChange={(e) => setSigForm({ ...sigForm, font: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 focus:outline-none bg-transparent dark:text-white"
+                  className="select-field"
                 >
                   <option value="Dancing Script">Dancing Script (Elegant)</option>
                   <option value="Great Vibes">Great Vibes (Formal)</option>
@@ -598,11 +616,12 @@ const OfferLetterPage = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase mb-1">Placement Target</label>
+                <label className="label-xs" htmlFor="sig-slot-select">Placement Target</label>
                 <select
+                  id="sig-slot-select"
                   value={sigForm.slot}
                   onChange={(e) => setSigForm({ ...sigForm, slot: e.target.value })}
-                  className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 focus:outline-none bg-transparent dark:text-white"
+                  className="select-field"
                 >
                   <option value="cursor">Active Cursor / Selection Point</option>
                   <option value="hr">HR Signature (Shivali V Rai)</option>
@@ -610,8 +629,8 @@ const OfferLetterPage = () => {
                 </select>
               </div>
 
-              <div className="border border-slate-100 dark:border-slate-800 p-4 rounded-2xl bg-slate-50/50 dark:bg-slate-950/50 text-center select-none">
-                <span className="text-[10px] text-slate-400 block mb-1">Signature Preview:</span>
+              <div className="border border-hairline-soft p-4 rounded-lg bg-surface-soft/50 text-center select-none">
+                <span className="text-[10px] text-muted block mb-1">Signature Preview:</span>
                 <span style={{ fontFamily: `'${sigForm.font}', cursive`, fontSize: '30px', color: '#1e3a8a' }} className="block py-2">
                   {sigForm.name}
                 </span>
@@ -620,16 +639,18 @@ const OfferLetterPage = () => {
 
             <div className="flex justify-end gap-2 pt-2">
               <button
+                id="sig-cancel-btn"
                 type="button"
                 onClick={() => setShowSignatureModal(false)}
-                className="px-4 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 rounded-xl text-xs font-bold transition-all"
+                className="btn-secondary"
               >
                 Cancel
               </button>
               <button
+                id="sig-insert-btn"
                 type="button"
                 onClick={handleInsertSignature}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black shadow-sm transition-all"
+                className="btn-primary"
               >
                 Insert Signature
               </button>
@@ -640,113 +661,123 @@ const OfferLetterPage = () => {
 
       {/* Create Offer Modal */}
       {showOfferModal && (
-        <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center p-6 z-50">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
-              <h3 className="font-extrabold text-slate-800 dark:text-white text-sm uppercase">Generate Offer Letter</h3>
-              <button onClick={() => setShowOfferModal(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+        <div className="modal-overlay">
+          <div className="modal-panel-lg max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-hairline-soft pb-4 mb-6">
+              <h3 className="font-semibold text-ink text-sm uppercase">Generate Offer Letter</h3>
+              <button id="close-offer-modal-btn" onClick={() => setShowOfferModal(false)} className="btn-icon text-muted">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleCreateOffer} className="space-y-4 text-xs font-semibold text-slate-600 dark:text-slate-400">
+            <form onSubmit={handleCreateOffer} className="space-y-4 text-xs font-semibold text-body">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Candidate Name *</label>
+                  <label className="label-xs" htmlFor="offer-candidate-name">Candidate Name *</label>
                   <input
+                    id="offer-candidate-name"
                     type="text"
                     required
                     placeholder="Candidate Name"
                     value={offerForm.candidateName}
                     onChange={(e) => setOfferForm({ ...offerForm, candidateName: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Email Address *</label>
+                  <label className="label-xs" htmlFor="offer-email">Email Address *</label>
                   <input
+                    id="offer-email"
                     type="email"
                     required
                     placeholder="candidate@email.com"
                     value={offerForm.email}
                     onChange={(e) => setOfferForm({ ...offerForm, email: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-500 bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Phone Number *</label>
+                  <label className="label-xs" htmlFor="offer-phone">Phone Number *</label>
                   <input
+                    id="offer-phone"
                     type="text"
                     required
                     placeholder="9876543210"
                     value={offerForm.phone}
                     onChange={(e) => setOfferForm({ ...offerForm, phone: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Job Title / Position *</label>
+                  <label className="label-xs" htmlFor="offer-position">Job Title / Position *</label>
                   <input
+                    id="offer-position"
                     type="text"
                     required
                     placeholder="e.g. Sales Executive"
                     value={offerForm.position}
                     onChange={(e) => setOfferForm({ ...offerForm, position: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Department</label>
+                  <label className="label-xs" htmlFor="offer-department">Department</label>
                   <input
+                    id="offer-department"
                     type="text"
                     placeholder="e.g. Sales, Marketing"
                     value={offerForm.department}
                     onChange={(e) => setOfferForm({ ...offerForm, department: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Monthly Salary CTC (INR) *</label>
+                  <label className="label-xs" htmlFor="offer-salary">Monthly Salary CTC (INR) *</label>
                   <input
+                    id="offer-salary"
                     type="number"
                     required
                     placeholder="e.g. 35000"
                     value={offerForm.monthlySalary}
                     onChange={(e) => setOfferForm({ ...offerForm, monthlySalary: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Joining Date *</label>
+                  <label className="label-xs" htmlFor="offer-joining-date">Joining Date *</label>
                   <input
+                    id="offer-joining-date"
                     type="date"
                     required
                     value={offerForm.joiningDate}
                     onChange={(e) => setOfferForm({ ...offerForm, joiningDate: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none text-slate-500 bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase mb-1">Reporting Manager</label>
+                  <label className="label-xs" htmlFor="offer-manager">Reporting Manager</label>
                   <input
+                    id="offer-manager"
                     type="text"
                     placeholder="Manager Name"
                     value={offerForm.reportingManager}
                     onChange={(e) => setOfferForm({ ...offerForm, reportingManager: e.target.value })}
-                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs focus:outline-none bg-transparent dark:text-white"
+                    className="input-field"
                   />
                 </div>
               </div>
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-hairline-soft">
                 <button
+                  id="offer-modal-cancel-btn"
                   type="button"
                   onClick={() => setShowOfferModal(false)}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl text-xs font-bold transition-all"
+                  className="btn-secondary"
                 >
                   Cancel
                 </button>
                 <button
+                  id="offer-modal-save-btn"
                   type="submit"
-                  className="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-black shadow-md shadow-brand-500/10 transition-all"
+                  className="btn-primary"
                 >
                   Generate & Save
                 </button>
