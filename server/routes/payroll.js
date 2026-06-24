@@ -4,6 +4,7 @@ import User from '../models/User.js';
 import Attendance from '../models/Attendance.js';
 import LeaveRequest from '../models/LeaveRequest.js';
 import Holiday from '../models/Holiday.js';
+import Setting from '../models/Setting.js';
 import { protect, adminOnly } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -61,6 +62,18 @@ router.get('/my', protect, async (req, res) => {
   }
 });
 
+// Admin: Get payroll records of a specific user
+router.get('/user/:userId', protect, adminOnly, async (req, res) => {
+  try {
+    const records = await Payroll.find({ user: req.params.userId })
+      .populate('user', 'username employee_id user_type')
+      .sort({ createdAt: -1 });
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Admin: Run draft payroll calculations
 router.get('/calculate', protect, adminOnly, async (req, res) => {
   try {
@@ -89,6 +102,17 @@ router.get('/calculate', protect, adminOnly, async (req, res) => {
     const holidaysCount = holidays.length;
 
     const sundaysCount = countSundays(startDate, endDate);
+
+    // Fetch custom deductions from DB settings
+    let customDeductions = [];
+    try {
+      const deductionsRecord = await Setting.findOne({ key: 'custom_deductions' });
+      if (deductionsRecord && Array.isArray(deductionsRecord.value)) {
+        customDeductions = deductionsRecord.value.filter(d => d.status === 'Active');
+      }
+    } catch (err) {
+      console.error('[Payroll] Error loading custom deductions:', err.message);
+    }
 
     const calculations = [];
 
@@ -141,29 +165,61 @@ router.get('/calculate', protect, adminOnly, async (req, res) => {
 
       // CTC Calculations
       const monthlyCTC = emp.salary || 0;
-      const actualCTC = Math.round(monthlyCTC * (paidDays / daysInMonth));
 
-      // Calculate Earnings and Deductions breakdown
-      const basic = Math.round(actualCTC * 0.5);
-      const hra = Math.round(actualCTC * 0.2);
-      const conveyance = Math.round(actualCTC * 0.07);
-      
-      // PF Employer: 12% of basic up to 1800
-      const pfEmployer = Math.min(1800, Math.round(basic * 0.12));
-      
-      // Gross Monthly Salary
-      const monthlyGross = actualCTC - pfEmployer;
-      
-      // Special allowance: balancing figure
-      const special = Math.max(0, monthlyGross - (basic + hra + conveyance));
-      
-      // Employee deductions
+      const hasManual = !!(
+        (emp.one_amt && parseFloat(emp.one_amt) > 0) ||
+        (emp.two_amt && parseFloat(emp.two_amt) > 0) ||
+        (emp.thrid_amt && parseFloat(emp.thrid_amt) > 0) ||
+        (emp.forth_amt && parseFloat(emp.forth_amt) > 0) ||
+        (emp.fifth_amt && parseFloat(emp.fifth_amt) > 0) ||
+        (emp.sixth_amt && parseFloat(emp.sixth_amt) > 0)
+      );
+
+      const basic = hasManual ? (parseFloat(emp.one_amt) || 0) : Math.round(monthlyCTC * 0.5);
+      const hra = hasManual ? (parseFloat(emp.two_amt) || 0) : Math.round(monthlyCTC * 0.2);
+      const conveyance = hasManual ? (parseFloat(emp.thrid_amt) || 0) : Math.round(monthlyCTC * 0.07);
+      const pfEmployer = hasManual ? (parseFloat(emp.fifth_amt) || 0) : Math.min(1800, Math.round(basic * 0.12));
+      const monthlyGross = monthlyCTC - pfEmployer;
+      const special = hasManual ? (parseFloat(emp.forth_amt) || 0) : Math.max(0, monthlyGross - (basic + hra + conveyance));
+
+      // Employee deductions (without LOP first)
       const pfEmployee = pfEmployer;
-      const professionalTax = actualCTC > 15000 ? 200 : 0;
-      const medical = actualCTC > 10000 ? 817 : 0;
-      const totalDeductions = pfEmployee + professionalTax + medical;
+      const professionalTax = monthlyCTC > 15000 ? 200 : 0;
+      let medical = 0;
+      if (hasManual) {
+        medical = Math.max(0, (parseFloat(emp.sixth_amt) || 0) - pfEmployee - professionalTax);
+      } else {
+        medical = monthlyCTC > 10000 ? 817 : 0;
+      }
 
-      const netPay = Math.max(0, monthlyGross - totalDeductions);
+      // Working days & LOP Deduction
+      const workingDays = daysInMonth - sundaysCount;
+      const lopDeduction = workingDays > 0 ? Math.round((monthlyGross / workingDays) * lopDays) : 0;
+
+      // Apply dynamic Settings-defined custom deductions
+      const appliedCustomDeductions = [];
+      let customDeductionsSum = 0;
+      customDeductions.forEach(ded => {
+        let amt = 0;
+        if (ded.type === 'flat') {
+          amt = parseFloat(ded.value) || 0;
+        } else if (ded.type === 'percentage') {
+          amt = Math.round((monthlyCTC * (parseFloat(ded.value) || 0)) / 100);
+        }
+        if (amt > 0) {
+          appliedCustomDeductions.push({
+            name: ded.name,
+            amount: amt
+          });
+          customDeductionsSum += amt;
+        }
+      });
+
+      // Total Deductions
+      const totalDeductions = pfEmployee + professionalTax + medical + lopDeduction + customDeductionsSum;
+
+      // Net Pay
+      const netPay = Math.round(monthlyGross - totalDeductions);
 
       calculations.push({
         userId: emp._id,
@@ -178,11 +234,13 @@ router.get('/calculate', protect, adminOnly, async (req, res) => {
         netSalary: netPay,
         payslipData: {
           earnings: { basic, hra, conveyance, special, pfEmployer, gross: monthlyGross },
-          deductions: { pfEmployee, professionalTax, medical, total: totalDeductions },
+          deductions: { pfEmployee, professionalTax, medical, lopDeduction, custom: appliedCustomDeductions, total: totalDeductions },
           netPay,
           paidDays,
           lopDays,
-          totalDays: daysInMonth
+          totalDays: daysInMonth,
+          workingDays,
+          sundaysCount
         }
       });
     }

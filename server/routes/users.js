@@ -29,6 +29,14 @@ router.get('/', async (req, res) => {
     if (req.query.role) filter.user_type = req.query.role;
     if (req.query.status !== undefined && req.query.status !== '') filter.is_active = req.query.status === '1';
     if (req.query.project) filter.project_name = { $regex: req.query.project, $options: 'i' };
+    if (req.query.assigned === '1') {
+      filter.is_active = true;
+      filter.assign_user = { $exists: true, $not: { $size: 0 } };
+    }
+    if (req.query.hasSalary === '1') {
+      filter.is_active = true;
+      filter.salary = { $gt: 0 };
+    }
 
     const total = await User.countDocuments(filter);
     const users = await User.find(filter)

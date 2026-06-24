@@ -24,40 +24,123 @@ const getKolkataDetails = () => {
 };
 
 // Admin: Get all attendance logs
+// Admin: Get all attendance logs
 router.get('/', protect, adminOnly, async (req, res) => {
   try {
-    const { search, status, from, to } = req.query;
-    console.log('[API GET /] Received query params:', { search, status, from, to });
-    let query = {};
+    const { search, status, from, to, userId } = req.query;
+    console.log('[API GET /] Received query params:', { search, status, from, to, userId });
 
-    if (status) query.status = status;
-    if (from || to) {
-      query.date = {};
-      if (from) query.date.$gte = from;
-      if (to) query.date.$lte = to;
+    // 1. If specific userId is requested, return their raw logs (useful for monthly calendar summary)
+    if (userId) {
+      let query = { user: userId };
+      if (from || to) {
+        query.date = {};
+        if (from) query.date.$gte = from;
+        if (to) query.date.$lte = to;
+      }
+      const logs = await Attendance.find(query)
+        .populate('user', 'username employee_id user_type useremail phonenumber project_name')
+        .sort({ date: -1, createdAt: -1 });
+      return res.json(logs);
     }
 
-    // If search is supplied, match username, email, or employee ID
+    // 2. Fetch matched active users who are not superuseradmin
+    let userQuery = { user_type: { $ne: 'superuseradmin' }, is_active: { $ne: false } };
     if (search) {
-      const users = await User.find({
-        $or: [
-          { username: { $regex: search, $options: 'i' } },
-          { useremail: { $regex: search, $options: 'i' } },
-          { employee_id: { $regex: search, $options: 'i' } }
-        ]
-      }, '_id');
-      const userIds = users.map(u => u._id);
-      query.user = { $in: userIds };
+      userQuery.$or = [
+        { username: { $regex: search, $options: 'i' } },
+        { useremail: { $regex: search, $options: 'i' } },
+        { employee_id: { $regex: search, $options: 'i' } }
+      ];
+    }
+    const matchedUsers = await User.find(userQuery);
+    const matchedUserIds = matchedUsers.map(u => u._id);
+
+    // 3. Build Attendance Query for existing logs
+    let attendanceQuery = { user: { $in: matchedUserIds } };
+    if (from || to) {
+      attendanceQuery.date = {};
+      if (from) attendanceQuery.date.$gte = from;
+      if (to) attendanceQuery.date.$lte = to;
+    }
+    if (status) {
+      attendanceQuery.status = status;
     }
 
-    console.log('[API GET /] Built Mongo Query:', query);
-
-    const logs = await Attendance.find(query)
+    const existingLogs = await Attendance.find(attendanceQuery)
       .populate('user', 'username employee_id user_type useremail phonenumber project_name')
       .sort({ date: -1, createdAt: -1 });
 
-    console.log('[API GET /] Found logs count:', logs.length);
-    res.json(logs);
+    // 4. Resolve date range to populate placeholders for absent (un-punched) users
+    const { dateStr } = getKolkataDetails();
+    const startDate = from || dateStr;
+    const endDate = to || dateStr;
+
+    // Helper to get dates in range
+    const getDatesInRange = (fromStr, toStr) => {
+      const dates = [];
+      let current = new Date(fromStr);
+      const end = new Date(toStr);
+      let cap = 0;
+      while (current <= end && cap < 31) {
+        dates.push(current.toISOString().split('T')[0]);
+        current.setDate(current.getDate() + 1);
+        cap++;
+      }
+      return dates;
+    };
+    const dates = getDatesInRange(startDate, endDate);
+
+    // Create lookup map of existing logs: "userId_date" -> log
+    const logMap = new Map();
+    existingLogs.forEach(log => {
+      const uId = log.user?._id?.toString() || log.user?.toString();
+      logMap.set(`${uId}_${log.date}`, log);
+    });
+
+    const combinedLogs = [];
+    for (const date of dates) {
+      for (const user of matchedUsers) {
+        const key = `${user._id.toString()}_${date}`;
+        if (logMap.has(key)) {
+          combinedLogs.push(logMap.get(key));
+        } else {
+          // If status filter is active, only include if they filtered by 'Absent'
+          if (status && status !== 'Absent') {
+            continue;
+          }
+          
+          combinedLogs.push({
+            _id: `placeholder_${user._id}_${date}`,
+            user: {
+              _id: user._id,
+              username: user.username,
+              employee_id: user.employee_id,
+              user_type: user.user_type,
+              useremail: user.useremail,
+              phonenumber: user.phonenumber,
+              project_name: user.project_name
+            },
+            date,
+            punchIn: null,
+            punchOut: null,
+            totalHours: null,
+            status: 'Absent', // Not punched in means absent
+            locationHistory: []
+          });
+        }
+      }
+    }
+
+    // Sort logs by date descending, then user username ascending
+    combinedLogs.sort((a, b) => {
+      const dateCompare = new Date(b.date) - new Date(a.date);
+      if (dateCompare !== 0) return dateCompare;
+      return (a.user?.username || '').localeCompare(b.user?.username || '');
+    });
+
+    console.log('[API GET /] Combined logs count:', combinedLogs.length);
+    res.json(combinedLogs);
   } catch (err) {
     console.error('[API GET /] Error:', err.message);
     res.status(500).json({ message: err.message });

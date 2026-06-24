@@ -25,6 +25,7 @@ import noticeRoutes from './routes/notices.js';
 import configRoutes from './routes/config.js';
 import cronRoutes from './routes/cron.js';
 import trackingRoutes from './routes/tracking.js';
+import settingsRoutes from './routes/settings.js';
 import Lead from './models/Lead.js';
 import User from './models/User.js';
 
@@ -68,6 +69,7 @@ app.use('/api/notices', noticeRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/cron', cronRoutes);
 app.use('/api/tracking', trackingRoutes);
+app.use('/api/settings', settingsRoutes);
 
 app.get('/', (req, res) => {
   res.send('HRMS MERN Application API is Online.');
