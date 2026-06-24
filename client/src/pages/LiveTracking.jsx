@@ -21,6 +21,9 @@ const LiveTracking = () => {
   const liveMarkersRef = useRef({});
   const historyLayerRef = useRef(null);
   const socketRef = useRef(null);
+  const fetchLiveLocationsRef = useRef(null);
+  const isViewingHistoryRef = useRef(isViewingHistory);
+  const selectedUserRef = useRef(selectedUser);
 
   // Initialize Map
   useEffect(() => {
@@ -46,8 +49,27 @@ const LiveTracking = () => {
     socketRef.current = socket;
 
     socket.on('live_location_update', (data) => {
-      if (isViewingHistory) return;
+      if (isViewingHistoryRef.current) return;
       handleLiveLocationUpdate(data);
+    });
+
+    socket.on('attendance_update', (log) => {
+      if (isViewingHistoryRef.current) return;
+      const uId = log.user?._id || log.user;
+      
+      // If the user has punched out, remove their marker from the map
+      if (log.punchOut) {
+        if (liveMarkersRef.current[uId]) {
+          if (mapInstanceRef.current && mapInstanceRef.current.hasLayer(liveMarkersRef.current[uId])) {
+            mapInstanceRef.current.removeLayer(liveMarkersRef.current[uId]);
+          }
+          delete liveMarkersRef.current[uId];
+        }
+      } else {
+        if (fetchLiveLocationsRef.current) {
+          fetchLiveLocationsRef.current();
+        }
+      }
     });
 
     return () => {
@@ -55,6 +77,13 @@ const LiveTracking = () => {
       map.remove();
     };
   }, []);
+
+  // Update refs on every render to avoid stale closures in socket event listeners
+  useEffect(() => {
+    fetchLiveLocationsRef.current = fetchLiveLocations;
+    isViewingHistoryRef.current = isViewingHistory;
+    selectedUserRef.current = selectedUser;
+  });
 
   // Fetch employees
   const fetchEmployees = async () => {
@@ -96,6 +125,9 @@ const LiveTracking = () => {
         // If employee matches filter, and has active shift coordinates
         if (selectedUser !== 'all' && log.user?._id !== selectedUser) return;
         
+        // Skip users who have already punched out
+        if (log.punchOut) return;
+        
         if (log.locationHistory && log.locationHistory.length > 0) {
           const latestPoint = log.locationHistory[log.locationHistory.length - 1];
           const latlng = [latestPoint.latitude, latestPoint.longitude];
@@ -123,7 +155,7 @@ const LiveTracking = () => {
   // Handle real-time socket events
   const handleLiveLocationUpdate = (data) => {
     const { userId, username, latitude, longitude, time } = data;
-    if (selectedUser !== 'all' && userId !== selectedUser) return;
+    if (selectedUserRef.current !== 'all' && userId !== selectedUserRef.current) return;
 
     const latlng = [latitude, longitude];
     const onlineIcon = window.L.divIcon({
@@ -260,14 +292,6 @@ const LiveTracking = () => {
 
   return (
     <div className="page-shell">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Field Operations</p>
-          <h1 className="page-title">Live Tracking</h1>
-          <p className="page-subtitle">Monitor real-time employee locations and view historical route data.</p>
-        </div>
-      </div>
-
       <div className="toolbar items-end">
         <div className="flex flex-col gap-1 flex-1 min-w-[200px]">
           <label className="label-xs" htmlFor="livetracking-employee-select">Select Employee</label>

@@ -109,16 +109,6 @@ const Expenses = () => {
 
   return (
     <div className="page-shell">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Finance Ledger</p>
-          <h1 className="page-title">Ledger Expenses</h1>
-          <p className="page-subtitle">Track company outflows and category-wise spending.</p>
-        </div>
-        <div className="page-header-actions">
-          <span className="badge-pill">₹{totalAmount.toLocaleString()} total</span>
-        </div>
-      </div>
 
       <div className="toolbar">
         <div className="toolbar-left">
@@ -132,6 +122,7 @@ const Expenses = () => {
             />
             <Search className="w-4 h-4 text-muted-soft absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
+          <span className="badge-pill">₹{totalAmount.toLocaleString()} total</span>
         </div>
         <div className="toolbar-right">
           <button onClick={() => setShowAddForm(true)} className="btn-primary btn-sm">

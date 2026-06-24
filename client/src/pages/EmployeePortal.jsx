@@ -1,11 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Clock, Calendar, CheckCircle, AlertCircle, FileText, Send, User, ChevronRight, Moon, Sun } from 'lucide-react';
+import { Clock, Calendar, CheckCircle, AlertCircle, FileText, Send, User, ChevronRight, Moon, Sun, X, Download } from 'lucide-react';
 import io from 'socket.io-client';
 
 const EmployeePortal = () => {
   const [activeTab, setActiveTab] = useState('attendance');
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  const getSundaysCountForMonth = (monthYearStr) => {
+    if (!monthYearStr) return 4;
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const parts = monthYearStr.split(' ');
+    if (parts.length !== 2) return 4;
+    const monthIndex = monthNames.indexOf(parts[0]);
+    const year = parseInt(parts[1], 10);
+    if (monthIndex === -1 || isNaN(year)) return 4;
+    
+    let count = 0;
+    const date = new Date(year, monthIndex, 1);
+    while (date.getMonth() === monthIndex) {
+      if (date.getDay() === 0) count++;
+      date.setDate(date.getDate() + 1);
+    }
+    return count;
+  };
   
   // Attendance states
   const [todayLog, setTodayLog] = useState({ status: 'Not Logged' });
@@ -13,6 +31,7 @@ const EmployeePortal = () => {
   const [locationText, setLocationText] = useState('Location not acquired');
   const [coords, setCoords] = useState(null);
   const [trackingActive, setTrackingActive] = useState(false);
+  const lastCoordsRef = useRef(null);
 
   // Leave states
   const [leaveBalances, setLeaveBalances] = useState({ sickRemaining: 12, casualRemaining: 12, paidRemaining: 15, unpaidUsed: 0 });
@@ -75,56 +94,63 @@ const EmployeePortal = () => {
   // Live Tracking effect: watch location in real-time if punched in and not out
   useEffect(() => {
     let watchId;
-    if (todayLog.punchIn && !todayLog.punchOut) {
-      setTrackingActive(true);
-      
-      if (navigator.geolocation) {
-        let lastCoords = null;
-
-        // Haversine formula to calculate distance in meters
-        const getDistance = (lat1, lon1, lat2, lon2) => {
-          const R = 6371e3; // Earth's radius in meters
-          const phi1 = (lat1 * Math.PI) / 180;
-          const phi2 = (lat2 * Math.PI) / 180;
-          const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
-          const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
-
-          const a =
-            Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
-            Math.cos(phi1) * Math.cos(phi2) *
-            Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-          return R * c; // distance in meters
-        };
-
-        watchId = navigator.geolocation.watchPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            
-            // If we have previous coordinates, check if user moved at least 10 meters
-            if (lastCoords) {
-              const distance = getDistance(lastCoords.latitude, lastCoords.longitude, latitude, longitude);
-              if (distance < 10) {
-                console.log(`User is stationary (moved ${distance.toFixed(1)}m). Skipping update.`);
-                return;
-              }
-            }
-
-            try {
-              await axios.post('/api/attendance/location', { latitude, longitude });
-              console.log('Real-time location updated (moved):', latitude, longitude);
-              lastCoords = { latitude, longitude };
-            } catch (err) {
-              console.error('Error sending real-time coordinates:', err);
-            }
-          },
-          (error) => console.error('Geolocation watch error:', error),
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
-      }
-    } else {
+    
+    if (!todayLog.punchIn || todayLog.punchOut) {
+      lastCoordsRef.current = null;
       setTrackingActive(false);
+      return;
+    }
+
+    setTrackingActive(true);
+    
+    if (navigator.geolocation) {
+      // Haversine formula to calculate distance in meters
+      const getDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371e3; // Earth's radius in meters
+        const phi1 = (lat1 * Math.PI) / 180;
+        const phi2 = (lat2 * Math.PI) / 180;
+        const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
+        const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
+
+        const a =
+          Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+          Math.cos(phi1) * Math.cos(phi2) *
+          Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // distance in meters
+      };
+
+      watchId = navigator.geolocation.watchPosition(
+        async (position) => {
+          const { latitude, longitude, accuracy } = position.coords;
+          
+          // Filter out low-accuracy readings (e.g., > 40 meters) to avoid false updates due to indoors GPS drift
+          if (accuracy && accuracy > 40) {
+            console.log(`GPS accuracy is poor (${accuracy.toFixed(1)}m). Skipping update.`);
+            return;
+          }
+
+          // If we have previous coordinates, check if user moved at least 25 meters
+          if (lastCoordsRef.current) {
+            const distance = getDistance(lastCoordsRef.current.latitude, lastCoordsRef.current.longitude, latitude, longitude);
+            if (distance < 25) {
+              console.log(`User is stationary (moved ${distance.toFixed(1)}m). Skipping update.`);
+              return;
+            }
+          }
+
+          try {
+            await axios.post('/api/attendance/location', { latitude, longitude });
+            console.log('Real-time location updated (moved):', latitude, longitude);
+            lastCoordsRef.current = { latitude, longitude };
+          } catch (err) {
+            console.error('Error sending real-time coordinates:', err);
+          }
+        },
+        (error) => console.error('Geolocation watch error:', error),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 }
+      );
     }
 
     return () => {
@@ -158,6 +184,10 @@ const EmployeePortal = () => {
     try {
       const res = await axios.get('/api/attendance/today');
       setTodayLog(res.data);
+      if (res.data && res.data.locationHistory && res.data.locationHistory.length > 0) {
+        const lastPoint = res.data.locationHistory[res.data.locationHistory.length - 1];
+        lastCoordsRef.current = { latitude: lastPoint.latitude, longitude: lastPoint.longitude };
+      }
     } catch (err) {
       console.error(err);
     }
@@ -205,6 +235,9 @@ const EmployeePortal = () => {
     const performPunchIn = async (punchCoords) => {
       try {
         await axios.post('/api/attendance/punch-in', punchCoords || {});
+        if (punchCoords && punchCoords.latitude && punchCoords.longitude) {
+          lastCoordsRef.current = { latitude: punchCoords.latitude, longitude: punchCoords.longitude };
+        }
         fetchTodayLog();
         fetchPunchLogs();
       } catch (err) {
@@ -281,24 +314,6 @@ const EmployeePortal = () => {
 
   return (
     <div className="page-shell max-w-4xl mx-auto">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Employee Portal</p>
-          <h1 className="page-title">Personal Workstation</h1>
-          <p className="page-subtitle">Clock in, request leave, and access your payslips.</p>
-        </div>
-        <div className="page-header-actions">
-          {trackingActive && (
-            <div className="badge-success uppercase tracking-wider gap-2">
-              <span className="w-2 h-2 bg-success rounded-full inline-block" />
-              Live GPS Syncing
-            </div>
-          )}
-          <button onClick={acquireLocation} className="btn-secondary btn-sm">
-            Refresh Coordinates
-          </button>
-        </div>
-      </div>
 
       <div className="tab-bar">
         {['attendance', 'leaves', 'payslips', 'holidays'].map(tab => (
@@ -316,6 +331,12 @@ const EmployeePortal = () => {
         {activeTab === 'attendance' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex flex-col items-center justify-center p-6 bg-surface-soft border border-hairline-soft rounded-lg text-center space-y-4">
+              {trackingActive && (
+                <div className="badge-success uppercase tracking-wider gap-2 px-3 py-1.5 rounded-full text-xs">
+                  <span className="w-2 h-2 bg-success rounded-full inline-block animate-pulse" />
+                  Live GPS Syncing
+                </div>
+              )}
               <div className="w-16 h-16 rounded-lg bg-surface-soft border border-hairline-soft flex items-center justify-center text-accent">
                 <Clock className="w-8 h-8" />
               </div>
@@ -329,10 +350,16 @@ const EmployeePortal = () => {
 
               <div className="w-full pt-4">
                 {locationText && (
-                  <p className="text-xxs text-muted font-semibold mb-4 capitalize">
+                  <p className="text-xxs text-muted font-semibold mb-3 capitalize">
                     {locationText}
                   </p>
                 )}
+
+                <div className="flex gap-2 mb-4">
+                  <button type="button" onClick={acquireLocation} className="btn-secondary btn-sm w-full">
+                    Refresh Coordinates
+                  </button>
+                </div>
 
                 {!todayLog.punchIn ? (
                   <form onSubmit={handlePunchIn} className="w-full">
@@ -564,109 +591,170 @@ const EmployeePortal = () => {
       </div>
 
       {/* Interactive Payslip PDF Modal */}
-      {selectedPayslip && (
-        <div className="modal-overlay">
-          <div className="modal-panel-lg">
-            <div className="modal-header mb-0 pb-4">
-              <h3 className="font-semibold text-ink text-sm">Payslip Document</h3>
-              <button onClick={() => setSelectedPayslip(null)} className="btn-secondary btn-sm">Close</button>
-            </div>
+      {selectedPayslip && (() => {
+        const sundaysVal = selectedPayslip.payslipData?.sundaysCount ?? getSundaysCountForMonth(selectedPayslip.monthYear);
+        const workingDaysVal = selectedPayslip.payslipData?.workingDays ?? (selectedPayslip.totalDays - sundaysVal);
+        const customDeductionsSum = (selectedPayslip.payslipData?.deductions?.custom || []).reduce((acc, d) => acc + (d.amount || 0), 0);
+        const lopDeductionVal = selectedPayslip.payslipData?.deductions?.lopDeduction ?? (
+          (selectedPayslip.payslipData?.deductions?.total ?? 0) -
+          (selectedPayslip.payslipData?.deductions?.pfEmployee ?? 0) -
+          (selectedPayslip.payslipData?.deductions?.professionalTax ?? 0) -
+          (selectedPayslip.payslipData?.deductions?.medical ?? 0) -
+          customDeductionsSum
+        );
 
-            <div className="border border-hairline p-6 rounded-lg text-xs space-y-6 text-body bg-surface-soft/50 mt-6">
-              <div className="text-center border-b border-hairline pb-4">
-                <h2 className="font-semibold text-ink text-sm uppercase">Search Homes India Pvt Ltd</h2>
-                <p className="text-[10px] text-muted mt-0.5">Salary Statement for {selectedPayslip.monthYear}</p>
-              </div>
-
-              {/* Employee metadata */}
-              <div className="grid grid-cols-2 gap-4 border-b border-hairline pb-4 font-semibold text-[11px]">
-                <div>
-                  <p className="text-muted">Employee Name</p>
-                  <p className="text-ink font-semibold capitalize mt-0.5">{selectedPayslip.user?.username || 'Employee'}</p>
+        return (
+          <div className="modal-overlay" onClick={() => setSelectedPayslip(null)}>
+            <div className="modal-popup max-w-2xl" onClick={(e) => e.stopPropagation()}>
+              {/* Header */}
+              <div className="modal-popup-header bg-primary text-white flex justify-between items-center px-6 py-4 shrink-0 rounded-t-2xl">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-white" />
+                  <h3 className="font-semibold text-white text-sm">Payslip Preview</h3>
                 </div>
-                <div>
-                  <p className="text-muted">Employee ID</p>
-                  <p className="text-ink font-semibold mt-0.5">{selectedPayslip.user?.employee_id || '-'}</p>
-                </div>
-                <div>
-                  <p className="text-muted">Designation</p>
-                  <p className="text-ink font-semibold capitalize mt-0.5">{selectedPayslip.user?.user_type || 'User'}</p>
-                </div>
-                <div>
-                  <p className="text-muted">Paid Days</p>
-                  <p className="text-ink font-semibold mt-0.5">{selectedPayslip.payslipData?.paidDays} / {selectedPayslip.payslipData?.totalDays} days</p>
-                </div>
-              </div>
-
-              {/* Detailed Breakdown */}
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <h4 className="statement-section-title">Earnings</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Basic Salary (50%)</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.earnings?.basic?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>House Rent Allowance (HRA)</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.earnings?.hra?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Conveyance Allowance</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.earnings?.conveyance?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Special Allowance</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.earnings?.special?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>PF Employer Part</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.earnings?.pfEmployer?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between border-t border-hairline pt-2 font-semibold text-ink">
-                      <span>Gross Payout</span>
-                      <span>₹{selectedPayslip.payslipData?.earnings?.gross?.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="statement-section-title">Deductions</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>PF (Employee Part)</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.deductions?.pfEmployee?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Professional Tax (PT)</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.deductions?.professionalTax?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Medical Benefit</span>
-                      <span className="font-semibold">₹{selectedPayslip.payslipData?.deductions?.medical?.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between border-t border-hairline pt-2 font-semibold text-ink">
-                      <span>Total Deductions</span>
-                      <span>₹{selectedPayslip.payslipData?.deductions?.total?.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Net Payout Wrap */}
-              <div className="border-t border-hairline pt-4 flex items-center justify-between bg-surface-soft border border-hairline-soft p-4 rounded-lg">
-                <div>
-                  <span className="statement-net-label">Net Take Home Pay</span>
-                  <span className="statement-net-value">₹{selectedPayslip.netSalary.toLocaleString()}</span>
-                </div>
-                <button onClick={() => window.print()} className="btn-secondary btn-sm shrink-0">
-                  Print Payslip
+                <button
+                  onClick={() => setSelectedPayslip(null)}
+                  className="p-1.5 hover:bg-white/10 rounded-lg text-white/80 hover:text-white transition-colors shrink-0"
+                  aria-label="Close Preview"
+                >
+                  <X className="w-5 h-5" />
                 </button>
+              </div>
+
+              {/* Body */}
+              <div className="modal-panel-body p-6 space-y-6 text-body">
+                {/* Employee Details Grid */}
+                <div className="border border-hairline rounded-lg overflow-hidden bg-canvas">
+                  <table className="w-full text-xs text-left border-collapse border-spacing-0">
+                    <tbody>
+                      <tr className="border-b border-hairline">
+                        <td className="px-4 py-3 border-r border-hairline w-1/2">
+                          <span className="font-semibold text-muted">Employee Name:</span> <span className="font-bold text-ink capitalize ml-1">{selectedPayslip.user?.username || 'Employee'}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="font-semibold text-muted">Designation:</span> <span className="font-bold text-ink capitalize ml-1">{selectedPayslip.user?.user_type || 'User'}</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b border-hairline">
+                        <td className="px-4 py-3 border-r border-hairline">
+                          <span className="font-semibold text-muted">Working Days:</span> <span className="font-bold text-ink ml-1">{workingDaysVal}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="font-semibold text-muted">Loss of Pay (Days):</span> <span className="font-bold text-ink text-error ml-1">{selectedPayslip.payslipData?.lopDays ?? 0}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2" className="px-4 py-3">
+                          <span className="font-semibold text-muted">Calendar:</span> <span className="font-bold text-ink ml-1">{selectedPayslip.totalDays} days</span>
+                          <span className="text-muted mx-2">|</span>
+                          <span className="font-semibold text-muted">Sundays (excluded):</span> <span className="font-bold text-ink ml-1">{sundaysVal}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Earnings & Deductions Tables */}
+                {selectedPayslip.payslipData && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Earnings */}
+                    <div>
+                      <h4 className="text-xs font-bold text-primary tracking-wider uppercase mb-3">Earnings</h4>
+                      <div className="border border-hairline rounded-lg overflow-hidden">
+                        <table className="w-full text-xs text-left">
+                          <tbody className="divide-y divide-hairline">
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">Basic</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{selectedPayslip.payslipData.earnings.basic.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">HRA</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{selectedPayslip.payslipData.earnings.hra.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">Conveyance</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{selectedPayslip.payslipData.earnings.conveyance.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">Special Allowance</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{selectedPayslip.payslipData.earnings.special.toLocaleString()}</td>
+                            </tr>
+                            <tr className="bg-surface-soft font-bold text-ink border-t border-hairline">
+                              <td className="px-4 py-3">Total Earnings:</td>
+                              <td className="px-4 py-3 text-right">₹{selectedPayslip.payslipData.earnings.gross.toLocaleString()}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Deductions */}
+                    <div>
+                      <h4 className="text-xs font-bold text-primary tracking-wider uppercase mb-3">Deductions</h4>
+                      <div className="border border-hairline rounded-lg overflow-hidden">
+                        <table className="w-full text-xs text-left">
+                          <tbody className="divide-y divide-hairline">
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">PF</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-error">₹{selectedPayslip.payslipData.deductions.pfEmployee.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">Professional Tax</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-error">₹{selectedPayslip.payslipData.deductions.professionalTax.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">Medical Benefit</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-error">₹{selectedPayslip.payslipData.deductions.medical.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-2.5 text-muted">LOP Deduction</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-error">₹{lopDeductionVal.toLocaleString()}</td>
+                            </tr>
+                            {selectedPayslip.payslipData.deductions.custom && selectedPayslip.payslipData.deductions.custom.map((cust, idx) => (
+                              <tr key={idx}>
+                                <td className="px-4 py-2.5 text-muted">{cust.name}</td>
+                                <td className="px-4 py-2.5 text-right font-semibold text-error">₹{cust.amount.toLocaleString()}</td>
+                              </tr>
+                            ))}
+                            <tr className="bg-surface-soft font-bold text-error border-t border-hairline">
+                              <td className="px-4 py-3">Total Deductions:</td>
+                              <td className="px-4 py-3 text-right">₹{selectedPayslip.payslipData.deductions.total.toLocaleString()}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Net Payout Row & Close / Print Buttons */}
+                <div className="flex justify-between items-center border-t border-hairline pt-6 mt-4">
+                  <div>
+                    <span className="text-[10px] font-semibold text-muted uppercase tracking-wider block">Net Take Home Pay</span>
+                    <span className={`text-xl font-bold block mt-0.5 ${selectedPayslip.netSalary >= 0 ? 'text-success' : 'text-error'}`}>
+                      {selectedPayslip.netSalary < 0 ? '-' : ''}₹{Math.abs(selectedPayslip.netSalary).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setSelectedPayslip(null)}
+                      className="btn-secondary h-9 px-5 text-xs bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white border-none"
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={() => window.print()}
+                      className="btn-primary h-9 px-5 text-xs flex items-center gap-1.5"
+                    >
+                      <Download className="w-3.5 h-3.5" /> Print Payslip
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

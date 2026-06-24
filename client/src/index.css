@@ -169,6 +169,14 @@
     @apply card p-5;
   }
 
+  .stat-card-btn {
+    @apply stat-card cursor-pointer transition-all hover:border-ink text-left w-full;
+  }
+
+  .stat-card-btn-active {
+    @apply border-ink shadow-card bg-surface-soft/60;
+  }
+
   .stat-card-label {
     @apply text-muted text-xs font-medium uppercase tracking-wide block;
   }
@@ -251,12 +259,87 @@
   }
 
   /* Modals */
+  body.modal-scroll-lock,
+  main.modal-scroll-lock {
+    overflow: hidden !important;
+  }
+
   .modal-overlay {
-    @apply fixed inset-0 bg-surface-dark/40 backdrop-blur-sm flex items-center justify-center p-6 z-50;
+    @apply fixed inset-0 bg-surface-dark/40 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 z-[100] overflow-hidden;
+  }
+
+  .modal-overlay-nested {
+    @apply z-[110];
   }
 
   .modal-panel {
-    @apply bg-canvas border border-hairline rounded-lg shadow-elevated overflow-y-auto max-h-[90vh] flex flex-col p-6;
+    @apply bg-canvas border border-hairline rounded-lg shadow-elevated max-h-[min(90vh,calc(100dvh-3rem))] flex flex-col p-6 overflow-y-auto overscroll-contain;
+  }
+
+  .modal-popup {
+    @apply bg-canvas rounded-2xl shadow-elevated border border-hairline flex flex-col w-full max-w-4xl overflow-hidden;
+    height: min(90vh, calc(100dvh - 2rem));
+    max-height: min(90vh, calc(100dvh - 2rem));
+  }
+
+  .modal-popup-header {
+    @apply px-6 py-4 bg-canvas border-b border-hairline text-ink flex justify-between items-center shrink-0 rounded-t-2xl;
+  }
+
+  .modal-popup-tabs {
+    @apply flex bg-canvas px-2 sm:px-4 shrink-0 border-b border-hairline;
+  }
+
+  .modal-popup-tab {
+    @apply px-4 sm:px-5 py-3 text-sm font-medium capitalize transition-colors border-b-2 -mb-px whitespace-nowrap;
+  }
+
+  .modal-popup-tab-active {
+    @apply border-ink text-ink font-semibold;
+  }
+
+  .modal-popup-tab-inactive {
+    @apply border-transparent text-muted hover:text-ink;
+  }
+
+  .modal-panel-shell {
+    @apply modal-panel overflow-hidden p-0;
+  }
+
+  .modal-panel-body {
+    @apply flex-1 min-h-0 overflow-y-auto overscroll-contain touch-pan-y;
+  }
+
+  .toggle-switch {
+    @apply relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full bg-hairline transition-colors duration-200;
+  }
+
+  .toggle-switch-knob {
+    @apply pointer-events-none absolute top-0.5 left-0.5 block h-4 w-4 rounded-full bg-canvas shadow-sm transition-transform duration-200 ease-out;
+  }
+
+  .toggle-switch-input:checked + .toggle-switch {
+    @apply bg-ink;
+  }
+
+  .toggle-switch-input:checked + .toggle-switch .toggle-switch-knob {
+    transform: translateX(1rem);
+  }
+
+  .toggle-switch-dark {
+    @apply bg-white/30;
+  }
+
+  .toggle-switch-dark .toggle-switch-knob {
+    @apply bg-white shadow-none;
+  }
+
+  .toggle-switch-input:checked + .toggle-switch-dark {
+    @apply bg-white/50;
+  }
+
+  .status-badge-fixed {
+    @apply inline-flex items-center justify-center min-w-[4.75rem] shrink-0;
   }
 
   .modal-panel-lg {
@@ -293,6 +376,26 @@
 
   .tab-bar-item-inactive {
     @apply border-transparent text-muted;
+  }
+
+  .segment-tabs {
+    @apply flex flex-wrap gap-1 p-1 rounded-lg bg-surface-soft border border-hairline;
+  }
+
+  .segment-tab {
+    @apply px-4 py-2 text-[10px] font-semibold uppercase tracking-wider rounded-md transition-all border border-transparent whitespace-nowrap;
+  }
+
+  .segment-tab-active {
+    @apply bg-canvas text-ink shadow-card border-hairline;
+  }
+
+  .segment-tab-inactive {
+    @apply text-muted hover:text-ink;
+  }
+
+  .modal-section-title {
+    @apply text-muted text-[10px] font-semibold uppercase tracking-wider mb-3;
   }
 
   .paginator {

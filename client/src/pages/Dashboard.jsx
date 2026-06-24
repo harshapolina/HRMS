@@ -101,16 +101,6 @@ const Dashboard = () => {
 
   return (
     <div className="page-shell">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Enterprise Telemetry</p>
-          <h1 className="page-title">Welcome to HRMS Hub</h1>
-          <p className="page-subtitle">Real-time enterprise dashboard and lead lifecycle telemetry.</p>
-        </div>
-        <div className="page-header-actions">
-          <span id="dashboard-status-badge" className="badge-pill self-start md:self-auto">System Online</span>
-        </div>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cardData.map((card, i) => {

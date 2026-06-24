@@ -139,14 +139,6 @@ const CompanyAssets = () => {
 
   return (
     <div className="page-shell space-y-8">
-      {/* Page Header */}
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Inventory Portal</p>
-          <h1 className="page-title">Company Assets &amp; FNF</h1>
-          <p className="page-subtitle">Manage hardware registry, device checkouts, and full &amp; final employee settlements.</p>
-        </div>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Asset Catalog */}

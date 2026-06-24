@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { RefreshCw, FileText, X } from 'lucide-react';
 
@@ -10,12 +10,32 @@ const Payroll = () => {
   const [viewingDraftPayslip, setViewingDraftPayslip] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    calculatePayroll();
+  }, [payrollMonth]);
+
   const formatToMonthYearString = (yyyyMm) => {
     if (!yyyyMm) return '';
     const [year, month] = yyyyMm.split('-');
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const monthIndex = parseInt(month, 10) - 1;
     return `${monthNames[monthIndex]} ${year}`;
+  };
+
+  const getSundaysCountForMonth = (yyyyMm) => {
+    if (!yyyyMm) return 4;
+    const [year, month] = yyyyMm.split('-');
+    const yearInt = parseInt(year, 10);
+    const monthInt = parseInt(month, 10) - 1;
+    if (isNaN(yearInt) || isNaN(monthInt)) return 4;
+    
+    let count = 0;
+    const date = new Date(yearInt, monthInt, 1);
+    while (date.getMonth() === monthInt) {
+      if (date.getDay() === 0) count++;
+      date.setDate(date.getDate() + 1);
+    }
+    return count;
   };
 
   const calculatePayroll = async () => {
@@ -53,13 +73,7 @@ const Payroll = () => {
 
   return (
     <div className="page-shell">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Superadmin Panel</p>
-          <h1 className="page-title">Payroll Processing</h1>
-          <p className="page-subtitle">Calculate and finalize monthly payroll for all employees.</p>
-        </div>
-      </div>
+
 
       <div className="toolbar">
         <div className="toolbar-left">
@@ -133,64 +147,160 @@ const Payroll = () => {
         </div>
       )}
 
-      {viewingDraftPayslip && (
-        <div className="modal-overlay">
-          <div className="modal-panel-lg">
-            <div className="modal-header mb-0 pb-4">
-              <h3 className="font-semibold text-ink text-sm">Draft Salary Statement ({formatToMonthYearString(payrollMonth)})</h3>
-              <button id="close-statement-modal-btn" onClick={() => setViewingDraftPayslip(null)} className="btn-secondary btn-sm">Close</button>
-            </div>
+      {viewingDraftPayslip && (() => {
+        const sundaysVal = viewingDraftPayslip.payslipData.sundaysCount ?? getSundaysCountForMonth(payrollMonth);
+        const workingDaysVal = viewingDraftPayslip.payslipData.workingDays ?? (viewingDraftPayslip.totalDays - sundaysVal);
+        const customDeductionsSum = (viewingDraftPayslip.payslipData.deductions.custom || []).reduce((acc, d) => acc + (d.amount || 0), 0);
+        const lopDeductionVal = viewingDraftPayslip.payslipData.deductions.lopDeduction ?? (
+          viewingDraftPayslip.payslipData.deductions.total -
+          (viewingDraftPayslip.payslipData.deductions.pfEmployee ?? 0) -
+          (viewingDraftPayslip.payslipData.deductions.professionalTax ?? 0) -
+          (viewingDraftPayslip.payslipData.deductions.medical ?? 0) -
+          customDeductionsSum
+        );
 
-            <div className="border border-hairline p-6 rounded-lg text-xs space-y-6 text-body bg-surface-soft/50 mt-6">
-              <div className="text-center border-b border-hairline pb-4">
-                <h2 className="font-semibold text-ink text-sm uppercase">Draft Payroll Sheet</h2>
-                <p className="text-[10px] text-muted mt-0.5">{viewingDraftPayslip.username} ({viewingDraftPayslip.employee_id})</p>
+        return (
+          <div className="modal-overlay" onClick={() => setViewingDraftPayslip(null)}>
+            <div className="modal-popup max-w-2xl" onClick={(e) => e.stopPropagation()}>
+              {/* Header */}
+              <div className="modal-popup-header bg-primary text-white flex justify-between items-center px-6 py-4 shrink-0 rounded-t-2xl">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-white" />
+                  <h3 className="font-semibold text-white text-sm">Payslip Preview (Draft)</h3>
+                </div>
+                <button
+                  onClick={() => setViewingDraftPayslip(null)}
+                  className="p-1.5 hover:bg-white/10 rounded-lg text-white/80 hover:text-white transition-colors shrink-0"
+                  aria-label="Close Preview"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-b border-hairline pb-4 font-semibold text-[11px]">
-                <div>
-                  <p className="text-muted">Basic Payout CTC</p>
-                  <p className="text-ink font-semibold mt-0.5">₹{viewingDraftPayslip.baseSalary.toLocaleString()}</p>
+              {/* Body */}
+              <div className="modal-panel-body p-6 space-y-6 text-body">
+                {/* Employee Details Grid */}
+                <div className="border border-hairline rounded-lg overflow-hidden bg-canvas">
+                  <table className="w-full text-xs text-left border-collapse border-spacing-0">
+                    <tbody>
+                      <tr className="border-b border-hairline">
+                        <td className="px-4 py-3 border-r border-hairline w-1/2">
+                          <span className="font-semibold text-muted">Employee Name:</span> <span className="font-bold text-ink capitalize ml-1">{viewingDraftPayslip.username}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="font-semibold text-muted">Designation:</span> <span className="font-bold text-ink capitalize ml-1">{viewingDraftPayslip.user_type}</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b border-hairline">
+                        <td className="px-4 py-3 border-r border-hairline">
+                          <span className="font-semibold text-muted">Working Days:</span> <span className="font-bold text-ink ml-1">{workingDaysVal}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="font-semibold text-muted">Loss of Pay (Days):</span> <span className="font-bold text-ink text-error ml-1">{viewingDraftPayslip.lopDays}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2" className="px-4 py-3">
+                          <span className="font-semibold text-muted">Calendar:</span> <span className="font-bold text-ink ml-1">{viewingDraftPayslip.totalDays} days</span>
+                          <span className="text-muted mx-2">|</span>
+                          <span className="font-semibold text-muted">Sundays (excluded):</span> <span className="font-bold text-ink ml-1">{sundaysVal}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div>
-                  <p className="text-muted">Attendance Days</p>
-                  <p className="text-ink font-semibold mt-0.5">{viewingDraftPayslip.presentDays} Present / {viewingDraftPayslip.lopDays} LOP Days</p>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="statement-section-title">Earnings Breakdown</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between gap-4"><span>Basic Salary (50%)</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.earnings.basic.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>House Rent Allowance (HRA)</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.earnings.hra.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>Conveyance Allowance</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.earnings.conveyance.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>Special Allowance</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.earnings.special.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>PF Employer Part</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.earnings.pfEmployer.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4 border-t border-hairline pt-2 font-semibold text-ink"><span>Gross Payout</span><span>₹{viewingDraftPayslip.payslipData.earnings.gross.toLocaleString()}</span></div>
+                {/* Earnings & Deductions Tables */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Earnings */}
+                  <div>
+                    <h4 className="text-xs font-bold text-primary tracking-wider uppercase mb-3">Earnings</h4>
+                    <div className="border border-hairline rounded-lg overflow-hidden">
+                      <table className="w-full text-xs text-left">
+                        <tbody className="divide-y divide-hairline">
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">Basic</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{viewingDraftPayslip.payslipData.earnings.basic.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">HRA</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{viewingDraftPayslip.payslipData.earnings.hra.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">Conveyance</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{viewingDraftPayslip.payslipData.earnings.conveyance.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">Special Allowance</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-ink">₹{viewingDraftPayslip.payslipData.earnings.special.toLocaleString()}</td>
+                          </tr>
+                          <tr className="bg-surface-soft font-bold text-ink border-t border-hairline">
+                            <td className="px-4 py-3">Total Earnings:</td>
+                            <td className="px-4 py-3 text-right">₹{viewingDraftPayslip.payslipData.earnings.gross.toLocaleString()}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* Deductions */}
+                  <div>
+                    <h4 className="text-xs font-bold text-primary tracking-wider uppercase mb-3">Deductions</h4>
+                    <div className="border border-hairline rounded-lg overflow-hidden">
+                      <table className="w-full text-xs text-left">
+                        <tbody className="divide-y divide-hairline">
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">PF</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-error">₹{viewingDraftPayslip.payslipData.deductions.pfEmployee.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">Professional Tax</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-error">₹{viewingDraftPayslip.payslipData.deductions.professionalTax.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">Medical Benefit</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-error">₹{viewingDraftPayslip.payslipData.deductions.medical.toLocaleString()}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-2.5 text-muted">LOP Deduction</td>
+                            <td className="px-4 py-2.5 text-right font-semibold text-error">₹{lopDeductionVal.toLocaleString()}</td>
+                          </tr>
+                          {viewingDraftPayslip.payslipData.deductions.custom && viewingDraftPayslip.payslipData.deductions.custom.map((cust, idx) => (
+                            <tr key={idx}>
+                              <td className="px-4 py-2.5 text-muted">{cust.name}</td>
+                              <td className="px-4 py-2.5 text-right font-semibold text-error">₹{cust.amount.toLocaleString()}</td>
+                            </tr>
+                          ))}
+                          <tr className="bg-surface-soft font-bold text-error border-t border-hairline">
+                            <td className="px-4 py-3">Total Deductions:</td>
+                            <td className="px-4 py-3 text-right">₹{viewingDraftPayslip.payslipData.deductions.total.toLocaleString()}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h4 className="statement-section-title">Deductions Breakdown</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between gap-4"><span>PF (Employee Part)</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.deductions.pfEmployee.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>Professional Tax (PT)</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.deductions.professionalTax.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4"><span>Medical Benefit</span><span className="font-semibold">₹{viewingDraftPayslip.payslipData.deductions.medical.toLocaleString()}</span></div>
-                    <div className="flex justify-between gap-4 border-t border-hairline pt-2 font-semibold text-ink"><span>Total Deductions</span><span>₹{viewingDraftPayslip.payslipData.deductions.total.toLocaleString()}</span></div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="border-t border-hairline pt-4 flex items-center justify-between bg-surface-soft border border-hairline p-4 rounded-lg">
-                <div>
-                  <span className="statement-net-label">Net Salary Payout</span>
-                  <span className="statement-net-value">₹{viewingDraftPayslip.netSalary.toLocaleString()}</span>
+                {/* Net Payout Row & Close Button */}
+                <div className="flex justify-between items-center border-t border-hairline pt-6 mt-4">
+                  <div>
+                    <span className="text-[10px] font-semibold text-muted uppercase tracking-wider block">Net Take Home Pay</span>
+                    <span className={`text-xl font-bold block mt-0.5 ${viewingDraftPayslip.netSalary >= 0 ? 'text-success' : 'text-error'}`}>
+                      {viewingDraftPayslip.netSalary < 0 ? '-' : ''}₹{Math.abs(viewingDraftPayslip.netSalary).toLocaleString()}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setViewingDraftPayslip(null)}
+                    className="btn-secondary h-9 px-5 text-xs bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white border-none"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

@@ -19,6 +19,12 @@ import offerRoutes from './routes/offers.js';
 import assetRoutes from './routes/assets.js';
 import holidayRoutes from './routes/holidays.js';
 import fnfRoutes from './routes/fnf.js';
+import eoiRoutes from './routes/eois.js';
+import bookingRoutes from './routes/bookings.js';
+import noticeRoutes from './routes/notices.js';
+import configRoutes from './routes/config.js';
+import cronRoutes from './routes/cron.js';
+import trackingRoutes from './routes/tracking.js';
 import Lead from './models/Lead.js';
 import User from './models/User.js';
 
@@ -56,6 +62,12 @@ app.use('/api/offers', offerRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/holidays', holidayRoutes);
 app.use('/api/fnf', fnfRoutes);
+app.use('/api/eois', eoiRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/notices', noticeRoutes);
+app.use('/api/config', configRoutes);
+app.use('/api/cron', cronRoutes);
+app.use('/api/tracking', trackingRoutes);
 
 app.get('/', (req, res) => {
   res.send('HRMS MERN Application API is Online.');

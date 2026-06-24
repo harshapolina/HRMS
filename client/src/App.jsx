@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -14,6 +15,13 @@ import OfferLetterPage from './pages/OfferLetterPage';
 import PayslipsPage from './pages/PayslipsPage';
 import CompanyAssets from './pages/CompanyAssets';
 import SettingsPage from './pages/Settings';
+import EOIPage from './pages/EOIPage';
+import PropertyBookings from './pages/PropertyBookings';
+import NoticeAlerts from './pages/NoticeAlerts';
+import GlobalConfig from './pages/GlobalConfig';
+import CronTracker from './pages/CronTracker';
+import IncentiveTracker from './pages/IncentiveTracker';
+import PaymentTracker from './pages/PaymentTracker';
 
 import {
   LayoutDashboard,
@@ -33,11 +41,20 @@ import {
   FileText,
   Receipt,
   HardDrive,
+  Sun,
+  Moon,
   Settings,
   ChevronLeft,
   ChevronRight,
   PanelLeftClose,
-  PanelLeftOpen
+  PanelLeftOpen,
+  ClipboardList,
+  Key,
+  Award,
+  DollarSign,
+  Activity,
+  Megaphone,
+  Sliders
 } from 'lucide-react';
 import io from 'socket.io-client';
 
@@ -49,6 +66,8 @@ const MainApp = () => {
   const [notifications, setNotifications] = useState([]);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
   const [pageKey, setPageKey] = useState(0);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [pendingNotice, setPendingNotice] = useState(null);
   const notifRef = useRef(null);
 
   // Close notification dropdown on outside click
@@ -61,6 +80,32 @@ const MainApp = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (user && user.tablename) {
+      checkPendingNotice();
+    }
+  }, [user]);
+
+  const checkPendingNotice = async () => {
+    try {
+      const res = await axios.get('/api/notices/pending');
+      setPendingNotice(res.data || null);
+    } catch (err) {
+      console.error('Error checking pending notices', err);
+    }
+  };
+
+  const handleAcceptNotice = async () => {
+    if (!pendingNotice) return;
+    try {
+      await axios.post('/api/notices/accept', { alert_id: pendingNotice._id });
+      setPendingNotice(null);
+      checkPendingNotice();
+    } catch (err) {
+      alert('Accept failed: ' + err.message);
+    }
+  };
 
   useEffect(() => {
     const socket = io('http://localhost:5001');
@@ -93,7 +138,14 @@ const MainApp = () => {
     { id: 'settings', label: 'HR Settings', icon: Settings, roles: ['superuseradmin', 'hradmin'] },
     { id: 'my_portal', label: 'My Portal', icon: UserCheck, roles: ['promoter', 'business head', 'manager', 'team lead', 'user'] },
     { id: 'leads', label: 'Leads & Chats', icon: MessageSquare, roles: ['superuseradmin', 'promoter', 'business head', 'manager', 'team lead', 'user'] },
-    { id: 'expenses', label: 'Ledger Expenses', icon: CreditCard, roles: ['superuseradmin'] }
+    { id: 'expenses', label: 'Ledger Expenses', icon: CreditCard, roles: ['superuseradmin'] },
+    { id: 'eois', label: 'EOI List', icon: ClipboardList, roles: ['superuseradmin', 'promoter', 'business head', 'manager', 'team lead', 'user', 'hradmin'] },
+    { id: 'bookings', label: 'Property Bookings', icon: Key, roles: ['superuseradmin', 'promoter', 'business head', 'manager', 'team lead', 'user', 'hradmin'] },
+    { id: 'incentive_tracker', label: 'Incentive target Payouts', icon: Award, roles: ['superuseradmin', 'hradmin'] },
+    { id: 'payment_tracker', label: 'Accounts Milestone', icon: DollarSign, roles: ['superuseradmin'] },
+    { id: 'cron_tracker', label: 'Leads Automation Cron', icon: Activity, roles: ['superuseradmin'] },
+    { id: 'create_notice', label: 'Notice Board Publisher', icon: Megaphone, roles: ['superuseradmin'] },
+    { id: 'global_config', label: 'Integrations Config', icon: Sliders, roles: ['superuseradmin'] }
   ];
 
   const allowedMenuItems = menuItems.filter(item => item.roles.includes(user.user_type));
@@ -120,6 +172,13 @@ const MainApp = () => {
       case 'my_portal': return <EmployeePortal />;
       case 'leads': return <LeadsBoard />;
       case 'expenses': return <Expenses />;
+      case 'eois': return <EOIPage />;
+      case 'bookings': return <PropertyBookings />;
+      case 'incentive_tracker': return <IncentiveTracker />;
+      case 'payment_tracker': return <PaymentTracker />;
+      case 'cron_tracker': return <CronTracker />;
+      case 'create_notice': return <NoticeAlerts />;
+      case 'global_config': return <GlobalConfig />;
       default: return <Dashboard />;
     }
   };
@@ -288,6 +347,34 @@ const MainApp = () => {
           </div>
         </main>
       </div>
+      {/* Global Blocking Notice Payout / Alert Modal */}
+      {pendingNotice && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-6 z-[9999]">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-lg shadow-2xl p-8 space-y-6">
+            <div className="flex items-center gap-3 text-rose-500 border-b border-slate-100 dark:border-slate-800 pb-4">
+              <Megaphone className="w-8 h-8 animate-bounce" />
+              <div>
+                <h3 className="text-slate-800 dark:text-white font-extrabold text-lg uppercase tracking-wider">Mandatory Announcement</h3>
+                <p className="text-[10px] text-slate-400 mt-0.5">Please accept to continue</p>
+              </div>
+            </div>
+            
+            <div 
+              className="text-slate-700 dark:text-slate-300 text-xs leading-relaxed max-h-60 overflow-y-auto pr-2 prose dark:prose-invert"
+              dangerouslySetInnerHTML={{ __html: pendingNotice.alert_message }}
+            />
+
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+              <button
+                onClick={handleAcceptNotice}
+                className="px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-brand-500/20 transition-all w-full text-center"
+              >
+                I Have Read & Accept
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

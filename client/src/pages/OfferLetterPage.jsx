@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import axios from 'axios';
 import { 
   Search, Filter, Plus, Mail, Eye, Trash2, X,
@@ -316,23 +317,7 @@ const OfferLetterPage = () => {
 
   return (
     <div className="page-shell">
-      {/* Page Header */}
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Operations Portal</p>
-          <h1 className="page-title">Offer Letter Console</h1>
-          <p className="page-subtitle">Create, edit, and dispatch professional offer letters to candidates.</p>
-        </div>
-        <div className="page-header-actions">
-          <button
-            id="offer-create-btn"
-            onClick={() => setShowOfferModal(true)}
-            className="btn-primary"
-          >
-            <Plus className="w-4 h-4" /> Create Offer Letter
-          </button>
-        </div>
-      </div>
+
 
       {/* Control Toolbar */}
       <div className="toolbar">
@@ -364,6 +349,13 @@ const OfferLetterPage = () => {
             className="btn-primary btn-sm"
           >
             Search
+          </button>
+          <button
+            id="offer-create-btn"
+            onClick={() => setShowOfferModal(true)}
+            className="btn-primary"
+          >
+            <Plus className="w-4 h-4" /> Create Offer Letter
           </button>
         </div>
       </div>
@@ -448,80 +440,83 @@ const OfferLetterPage = () => {
       </div>
 
       {/* Offer Letter Document Preview & Editor Modal */}
-      {previewingOffer && (
-        <div className="modal-overlay">
-          <div className="modal-panel-xl overflow-hidden max-h-[95vh]">
+      {previewingOffer && createPortal(
+        <div className="modal-overlay" onClick={() => setPreviewingOffer(null)}>
+          <div className="modal-popup max-w-4xl" onClick={(e) => e.stopPropagation()}>
             
             {/* Modal Title Block */}
-            <div className="flex items-center justify-between border-b border-hairline-soft pb-4 mb-4">
-              <h3 className="font-semibold text-ink text-xs uppercase flex items-center gap-1.5">
-                <PenTool className="w-4 h-4 text-accent" />
+            <div className="modal-popup-header bg-primary text-white flex justify-between items-center px-6 py-4 shrink-0 rounded-t-2xl">
+              <h3 className="font-semibold text-white text-sm flex items-center gap-1.5">
+                <PenTool className="w-4.5 h-4.5 text-white" />
                 Offer Letter Document Editor ({previewingOffer.candidateName})
               </h3>
               <button
                 onClick={() => setPreviewingOffer(null)}
-                className="p-1.5 hover:bg-surface-soft rounded-lg text-muted"
+                className="p-1.5 hover:bg-white/10 rounded-lg text-white/80 hover:text-white transition-colors shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Document Formatting Toolbar */}
-            <div className="flex flex-wrap gap-1 bg-surface-soft p-2 rounded-lg mb-3 border border-hairline-soft text-body">
-              <button type="button" onClick={() => handleToolbarCmd('bold')} className="p-1.5 hover:bg-surface-strong rounded" title="Bold"><Bold className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('underline')} className="p-1.5 hover:bg-surface-strong rounded" title="Underline"><Underline className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('removeFormat')} className="p-1.5 hover:bg-surface-strong rounded" title="Clear Format"><Eraser className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
+            {/* Scrollable Body */}
+            <div className="modal-panel-body p-6 flex flex-col min-h-0 space-y-4">
+              {/* Document Formatting Toolbar */}
+              <div className="flex flex-wrap gap-1 bg-surface-soft p-2 rounded-lg border border-hairline-soft text-body shrink-0">
+                <button type="button" onClick={() => handleToolbarCmd('bold')} className="p-1.5 hover:bg-surface-strong rounded" title="Bold"><Bold className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('underline')} className="p-1.5 hover:bg-surface-strong rounded" title="Underline"><Underline className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('removeFormat')} className="p-1.5 hover:bg-surface-strong rounded" title="Clear Format"><Eraser className="w-4 h-4" /></button>
+                <div className="w-[1px] bg-surface-strong my-1 mx-1" />
+                
+                <button type="button" onClick={() => handleToolbarCmd('insertUnorderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Bullet List"><List className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('insertOrderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Numbered List"><ListOrdered className="w-4 h-4" /></button>
+                <div className="w-[1px] bg-surface-strong my-1 mx-1" />
+                
+                <button type="button" onClick={() => handleToolbarCmd('justifyLeft')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Left"><AlignLeft className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('justifyCenter')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Center"><AlignCenter className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('justifyRight')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Right"><AlignRight className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('justifyFull')} className="p-1.5 hover:bg-surface-strong rounded" title="Justify"><AlignJustify className="w-4 h-4" /></button>
+                <div className="w-[1px] bg-surface-strong my-1 mx-1" />
+                
+                <button type="button" onClick={handleTablePrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Table"><Table className="w-4 h-4" /></button>
+                <button type="button" onClick={handleLinkPrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Link"><Link2 className="w-4 h-4" /></button>
+                <button type="button" onClick={() => handleToolbarCmd('insertHorizontalRule')} className="p-1.5 hover:bg-surface-strong rounded" title="Horizontal Line"><Minus className="w-4 h-4" /></button>
+                <div className="w-[1px] bg-surface-strong my-1 mx-1" />
+                
+                <button type="button" onClick={() => setCodeMode(!codeMode)} className={`p-1.5 rounded ${codeMode ? 'bg-surface-soft0 text-white' : 'hover:bg-surface-strong text-body '}`} title="Toggle HTML View"><Code className="w-4 h-4" /></button>
+              </div>
               
-              <button type="button" onClick={() => handleToolbarCmd('insertUnorderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Bullet List"><List className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('insertOrderedList')} className="p-1.5 hover:bg-surface-strong rounded" title="Numbered List"><ListOrdered className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
-              
-              <button type="button" onClick={() => handleToolbarCmd('justifyLeft')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Left"><AlignLeft className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyCenter')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Center"><AlignCenter className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyRight')} className="p-1.5 hover:bg-surface-strong rounded" title="Align Right"><AlignRight className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('justifyFull')} className="p-1.5 hover:bg-surface-strong rounded" title="Justify"><AlignJustify className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
-              
-              <button type="button" onClick={handleTablePrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Table"><Table className="w-4 h-4" /></button>
-              <button type="button" onClick={handleLinkPrompt} className="p-1.5 hover:bg-surface-strong rounded" title="Insert Link"><Link2 className="w-4 h-4" /></button>
-              <button type="button" onClick={() => handleToolbarCmd('insertHorizontalRule')} className="p-1.5 hover:bg-surface-strong rounded" title="Horizontal Line"><Minus className="w-4 h-4" /></button>
-              <div className="w-[1px] bg-surface-strong my-1 mx-1" />
-              
-              <button type="button" onClick={() => setCodeMode(!codeMode)} className={`p-1.5 rounded ${codeMode ? 'bg-surface-soft0 text-white' : 'hover:bg-surface-strong text-body '}`} title="Toggle HTML View"><Code className="w-4 h-4" /></button>
-            </div>
-            
-            {/* Editable Content Frame - Force light background style for standard letter reading */}
-            <div className="flex-1 overflow-y-auto min-h-0 bg-canvas border border-hairline rounded-lg shadow-inner relative">
-              {codeMode ? (
-                <textarea
-                  value={editingHtml}
-                  onChange={(e) => setEditingHtml(e.target.value)}
-                  className="w-full h-full font-mono text-[11px] p-8 focus:outline-none bg-surface-dark text-muted-soft resize-none min-h-[45vh]"
-                />
-              ) : (
-                <div
-                  ref={editorRef}
-                  contentEditable={true}
-                  onBlur={() => {
-                    if (editorRef.current) setEditingHtml(editorRef.current.innerHTML);
-                  }}
-                  dangerouslySetInnerHTML={{ __html: editingHtml }}
-                  className="p-8 text-ink focus:outline-none min-h-[45vh] leading-relaxed"
-                  style={{
-                    backgroundImage: 'url("https://www.searchhomesindia.com/assets/images/logo.png")',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                    backgroundSize: '25%',
-                    backgroundBlendMode: 'overlay',
-                    opacity: 0.99
-                  }}
-                />
-              )}
+              {/* Editable Content Frame - Force light background style for standard letter reading */}
+              <div className="flex-1 overflow-y-auto min-h-0 bg-canvas border border-hairline rounded-lg shadow-inner relative">
+                {codeMode ? (
+                  <textarea
+                    value={editingHtml}
+                    onChange={(e) => setEditingHtml(e.target.value)}
+                    className="w-full h-full font-mono text-[11px] p-8 focus:outline-none bg-surface-dark text-muted-soft resize-none min-h-[45vh]"
+                  />
+                ) : (
+                  <div
+                    ref={editorRef}
+                    contentEditable={true}
+                    onBlur={() => {
+                      if (editorRef.current) setEditingHtml(editorRef.current.innerHTML);
+                    }}
+                    dangerouslySetInnerHTML={{ __html: editingHtml }}
+                    className="p-8 text-ink focus:outline-none min-h-[45vh] leading-relaxed"
+                    style={{
+                      backgroundImage: 'url("https://www.searchhomesindia.com/assets/images/logo.png")',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center',
+                      backgroundSize: '25%',
+                      backgroundBlendMode: 'overlay',
+                      opacity: 0.99
+                    }}
+                  />
+                )}
+              </div>
             </div>
             
             {/* Modal Actions Footer */}
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-hairline-soft mt-4 justify-between items-center shrink-0">
+            <div className="flex flex-wrap gap-2 px-6 py-4 border-t border-hairline bg-surface-soft justify-between items-center shrink-0 rounded-b-2xl">
               <div className="flex gap-2">
                 <button
                   id="offer-add-signature-btn"
@@ -572,11 +567,12 @@ const OfferLetterPage = () => {
             </div>
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Inline Signature Creator Modal Overlay */}
-      {showSignatureModal && (
+      {showSignatureModal && createPortal(
         <div className="modal-overlay z-[60]">
           <div className="modal-panel-md space-y-4">
             <div className="flex items-center justify-between border-b border-hairline-soft pb-3">
@@ -656,11 +652,12 @@ const OfferLetterPage = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Create Offer Modal */}
-      {showOfferModal && (
+      {showOfferModal && createPortal(
         <div className="modal-overlay">
           <div className="modal-panel-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-hairline-soft pb-4 mb-6">
@@ -784,7 +781,8 @@ const OfferLetterPage = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

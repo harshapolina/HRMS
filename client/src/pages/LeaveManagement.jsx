@@ -32,12 +32,13 @@ const LeaveManagement = () => {
 
   useEffect(() => {
     fetchLeaveRequests();
-  }, [filters.status]);
+  }, []);
 
   const fetchLeaveRequests = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/leaves', { params: filters });
+      // Don't pass status to the backend to get all requests for counts counting
+      const res = await axios.get('/api/leaves', { params: { search: filters.search } });
       setLeaveRequests(res.data);
     } catch (err) {
       console.error(err);
@@ -57,14 +58,56 @@ const LeaveManagement = () => {
     }
   };
 
+  const total = leaveRequests.length;
+  const pending = leaveRequests.filter(r => r.status === 'Pending').length;
+  const approved = leaveRequests.filter(r => r.status === 'Approved').length;
+  const rejected = leaveRequests.filter(r => r.status === 'Rejected').length;
+  const pendingPercent = total > 0 ? Math.round((pending / total) * 100) : 0;
+
+  const displayedRequests = leaveRequests.filter(req => {
+    if (filters.status && req.status !== filters.status) return false;
+    return true;
+  });
+
   return (
     <div className="page-shell">
-      <div className="page-header">
-        <div>
-          <p className="page-eyebrow mb-1">Operations Portal</p>
-          <h1 className="page-title">Leave Management</h1>
-          <p className="page-subtitle">Review, approve, or reject employee leave requests.</p>
-        </div>
+
+      <div className="flex flex-wrap gap-4 mb-6">
+        <button
+          type="button"
+          onClick={() => setFilters(prev => ({ ...prev, status: prev.status === 'Pending' ? '' : 'Pending' }))}
+          className={`px-6 py-2.5 rounded-full border text-xs font-semibold tracking-wide transition-all shadow-sm cursor-pointer whitespace-nowrap ${
+            filters.status === 'Pending'
+              ? 'bg-amber-500 text-white border-amber-600 shadow-md scale-105'
+              : 'border-amber-500 text-amber-600 bg-canvas hover:bg-amber-50/20'
+          }`}
+        >
+          Pending : {pending} ({pendingPercent}%)
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setFilters(prev => ({ ...prev, status: prev.status === 'Approved' ? '' : 'Approved' }))}
+          className={`px-6 py-2.5 rounded-full border text-xs font-semibold tracking-wide transition-all shadow-sm cursor-pointer whitespace-nowrap ${
+            filters.status === 'Approved'
+              ? 'bg-emerald-500 text-white border-emerald-600 shadow-md scale-105'
+              : 'border-emerald-500 text-emerald-600 bg-canvas hover:bg-emerald-50/20'
+          }`}
+        >
+          Approved : {approved}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setFilters(prev => ({ ...prev, status: prev.status === 'Rejected' ? '' : 'Rejected' }))}
+          className={`px-6 py-2.5 rounded-full border text-xs font-semibold tracking-wide transition-all shadow-sm cursor-pointer whitespace-nowrap ${
+            filters.status === 'Rejected'
+              ? 'bg-rose-500 text-white border-rose-600 shadow-md scale-105'
+              : 'border-rose-500 text-rose-600 bg-canvas hover:bg-rose-50/20'
+          }`}
+        >
+          Rejected : {rejected}
+        </button>
       </div>
 
       <div className="toolbar">
@@ -137,7 +180,7 @@ const LeaveManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {leaveRequests.map((reqItem) => (
+              {displayedRequests.map((reqItem) => (
                 <tr key={reqItem._id}>
                   <td className="px-6 py-4">
                     <span className="font-semibold text-ink block capitalize">{reqItem.user?.username || 'Unknown'}</span>
@@ -196,7 +239,7 @@ const LeaveManagement = () => {
                   </td>
                 </tr>
               ))}
-              {leaveRequests.length === 0 && (
+              {displayedRequests.length === 0 && (
                 <tr>
                   <td colSpan="5" className="text-center py-10 text-muted font-semibold">No leave request entries found.</td>
                 </tr>
